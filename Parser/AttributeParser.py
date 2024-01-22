@@ -6,20 +6,19 @@ class AttributeParser(ParseInterface):
         self.registery = registery
 
     def parse(self, code: str):
-        if self.current_class:
-            attribute_pattern = re.compile(r'(?P<visibility>public|protected|private)?\s+\$(?P<attribute_name>\w+)\s*(?P<attribute_type>\w*)\s*;')
+        attribute_pattern = re.compile(r'(?P<visibility>public|protected|private)?\s+\$(?P<attribute_name>\w+)\s*(?P<attribute_type>\w*)\s*;')
 
-            for match in re.finditer(attribute_pattern, code, re.MULTILINE | re.DOTALL):
-                visibility = match.group('visibility')
-                attribute_name = match.group('attribute_name')
-                attribute_type = match.group('attribute_type')
+        for match in re.finditer(attribute_pattern, code, re.MULTILINE | re.DOTALL):
+            visibility = match.group('visibility')
+            attribute_name = match.group('attribute_name')
+            attribute_type = match.group('attribute_type')
 
-                attribute_info = {
-                    "name": attribute_name,
-                    "visibility": visibility,
-                    "type": attribute_type
-                }
+            attribute_info = {
+                "name": attribute_name,
+                "visibility": visibility,
+                "type": attribute_type
+            }
 
-                # Ajouter l'attribut au registre avec le couple (parent, enfant)
-                self.registery.add_children(self.current_class, attribute_info)
-
+            # Ajouter l'attribut au registre avec le couple (parent, enfant)
+            class_node = self.registery.get_parent(self.current_class)
+            class_node.add_child(ArbreElement(attribute_name))

@@ -9,9 +9,9 @@ class ParserManager():
         self.registery = Registery()
         self.current_class = None
         self.parsers = [
-            StructureParser(self.registery,  self.current_class),
-            MethodParser(self.registery,  self.current_class),
-            AttributeParser(self.registery,  self.current_class)
+            StructureParser(self.registery),
+            AttributeParser(self.registery),
+            MethodParser(self.registery)
         ]
 
     def parse_file(self, file_path):

@@ -2,41 +2,40 @@ from interface import ParseInterface
 import re
 
 class StructureParser(ParseInterface):
-    def __init__(self, registery, current_class):
+    def __init__(self, registery):
         self.registery = registery
-        self.current_class = current_class
 
     def parse(self, code: str):
-        # Logique pour identifier les déclarations de classes, interfaces, entités, etc.
         class_pattern = re.compile(r'\s*(?P<visibility>public|protected|private)?\s*class\s+(?P<class_name>\w+)\s*')
         interface_pattern = re.compile(r'\s*(?P<visibility>public|protected|private)?\s*interface\s+(?P<interface_name>\w+)\s*')
         entity_pattern = re.compile(r'\s*(?P<visibility>public|protected|private)?\s*entity\s+(?P<entity_name>\w+)\s*')
 
-        # Recherche de déclarations de classes
         for match in re.finditer(class_pattern, code):
             visibility = match.group('visibility')
             class_name = match.group('class_name')
-            self.current_class = class_name  # Mettez à jour current_class
 
-            # Enregistrez la classe dans le registre
-            self.registery.add_parent(class_name)
+            class_node = ArbreElement(class_name)
+            self.registery.add_child(class_node)
 
-        # Recherche de déclarations d'interfaces
+            # Utilisez set_parent pour mettre à jour le parent de la classe actuelle
+            class_node.set_parent(self.registery.get_parent(class_name))
+
         for match in re.finditer(interface_pattern, code):
             visibility = match.group('visibility')
             interface_name = match.group('interface_name')
-            self.current_class = interface_name  # Mettez à jour current_class
 
-            # Enregistrez l'interface dans le registre
-            self.registery.add_parent(interface_name)
+            interface_node = ArbreElement(interface_name)
+            self.registery.add_child(interface_node)
 
-        # Recherche de déclarations d'entités
+            # Utilisez set_parent pour mettre à jour le parent de l'interface actuelle
+            interface_node.set_parent(self.registery.get_parent(interface_name))
+
         for match in re.finditer(entity_pattern, code):
             visibility = match.group('visibility')
             entity_name = match.group('entity_name')
-            self.current_class = entity_name  # Mettez à jour current_class
 
-            # Enregistrez l'entité dans le registre
-            self.registery.add_parent(entity_name)
+            entity_node = ArbreElement(entity_name)
+            self.registery.add_child(entity_node)
 
-        # Vous pouvez ajouter d'autres types (entités, etc.) de la même manière
+            # Utilisez set_parent pour mettre à jour le parent de l'entité actuelle
+            entity_node.set_parent(self.registery.get_parent(entity_name))
