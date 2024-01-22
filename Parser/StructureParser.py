@@ -8,9 +8,9 @@ class StructureParser(ParseInterface):
 
     def parse(self, code: str):
         # Logique pour identifier les déclarations de classes, interfaces, entités, etc.
-        class_pattern = r'\s*(?P<visibility>public|protected|private)?\s*class\s+(?P<class_name>\w+)\s*'
-        interface_pattern = r'\s*(?P<visibility>public|protected|private)?\s*interface\s+(?P<interface_name>\w+)\s*'
-        entity_pattern = r'\s*(?P<visibility>public|protected|private)?\s*entity\s+(?P<entity_name>\w+)\s*'
+        class_pattern = re.compile(r'\s*(?P<visibility>public|protected|private)?\s*class\s+(?P<class_name>\w+)\s*')
+        interface_pattern = re.compile(r'\s*(?P<visibility>public|protected|private)?\s*interface\s+(?P<interface_name>\w+)\s*')
+        entity_pattern = re.compile(r'\s*(?P<visibility>public|protected|private)?\s*entity\s+(?P<entity_name>\w+)\s*')
 
         # Recherche de déclarations de classes
         for match in re.finditer(class_pattern, code):

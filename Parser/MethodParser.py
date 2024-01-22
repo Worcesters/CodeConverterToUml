@@ -2,13 +2,14 @@ from interface import ParseInterface
 import re
 
 class MethodParser(ParseInterface):
-    def __init__(self, registery):
+    def __init__(self, registery, current_class):
         self.registery = registery
+        self.current_class = current_class
 
     def parse(self, line: str):
-        if current_class:
+        if self.current_class:
             
-            method_pattern = r'(?P<visibility>public|protected|private)?\s+(?P<abstract>abstract)?\s*function\s+(?P<method_name>\w+)\s*\((?P<method_params>[^)]*)\)\s*(?::\s*(?P<return_type>\w+))?\s*[{;]?'
+            method_pattern = re.compile(r'(?P<visibility>public|protected|private)?\s+(?P<abstract>abstract)?\s*function\s+(?P<method_name>\w+)\s*\((?P<method_params>[^)]*)\)\s*(?::\s*(?P<return_type>\w+))?\s*[{;]?')
             
             for match in re.finditer(method_pattern, line, re.MULTILINE | re.DOTALL):
                 visibility = match.group('visibility')
@@ -25,7 +26,7 @@ class MethodParser(ParseInterface):
                     "params": param_list,
                     "return_type": return_type
                 }
-                self.registery.add_children(current_class, method_info)
+                self.registery.add_children(self.current_class, method_info)
     
     def parse_parameters(self, params):
         param_pattern = r'\$?(?P<param_name>\w+)(?::\s*(?P<param_type>\w+))?'

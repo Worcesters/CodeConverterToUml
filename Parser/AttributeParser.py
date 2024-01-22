@@ -5,9 +5,9 @@ class AttributeParser(ParseInterface):
     def __init__(self, registery):
         self.registery = registery
 
-    def parse(self, code: str, current_class):
-        if current_class:
-            attribute_pattern = r'(?P<visibility>public|protected|private)?\s+\$(?P<attribute_name>\w+)\s*(?P<attribute_type>\w*)\s*;'
+    def parse(self, code: str):
+        if self.current_class:
+            attribute_pattern = re.compile(r'(?P<visibility>public|protected|private)?\s+\$(?P<attribute_name>\w+)\s*(?P<attribute_type>\w*)\s*;')
 
             for match in re.finditer(attribute_pattern, code, re.MULTILINE | re.DOTALL):
                 visibility = match.group('visibility')
@@ -21,5 +21,5 @@ class AttributeParser(ParseInterface):
                 }
 
                 # Ajouter l'attribut au registre avec le couple (parent, enfant)
-                self.registery.add_children(current_class, attribute_info)
+                self.registery.add_children(self.current_class, attribute_info)
 
