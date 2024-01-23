@@ -24,9 +24,7 @@ class MethodParser(ParseInterface):
                 "return_type": return_type
             }
 
-            # Utilisez add_child pour ajouter la méthode à la classe actuelle
-            class_node = self.registery.get_parent(self.current_class)
-            class_node.add_child(ArbreElement(method_name))
+            self.registry.add_element_to_root(method_info)
 
     def parse_parameters(self, params):
         param_pattern = r'\$?(?P<param_name>\w+)(?::\s*(?P<param_type>\w+))?'

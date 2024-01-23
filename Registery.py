@@ -1,8 +1,11 @@
 from Arbre import Arbre
 
 class Registery(Arbre):
-    def add_class(self, class_name: str):
-        class_node = ArbreElement(class_name)
-        self.root.add_child(class_node)
-        return class_node
+    def __init__(self):
+        super().__init__()
     
+    def add_element_to_root(self, element_name):
+        self.add_child_to_root(element_name)
+    
+    def initialize_project_with_root(self, root_element_name):
+        self.add_root(root_element_name)
