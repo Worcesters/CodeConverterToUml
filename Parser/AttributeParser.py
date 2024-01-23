@@ -19,6 +19,4 @@ class AttributeParser(ParseInterface):
                 "type": attribute_type
             }
 
-            # Ajouter l'attribut au registre avec le couple (parent, enfant)
-            class_node = self.registery.get_parent(self.current_class)
-            class_node.add_child(ArbreElement(attribute_name))
+            self.registry.add_child_to_root(attribute_info)
