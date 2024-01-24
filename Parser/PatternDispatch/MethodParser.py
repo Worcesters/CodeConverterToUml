@@ -1,4 +1,4 @@
-from interface import ParseInterface
+from ..Interface import ParseInterface
 import re
 
 class MethodParser(ParseInterface):
@@ -20,7 +20,7 @@ class MethodParser(ParseInterface):
                 "return_type": match.group('return_type')
             }
 
-            self.registry.add_child_to_root(method_info)
+            self.registery.get_root().add_child(method_info)
 
     def parse_parameters(self, params):
         param_pattern = r'\$?(?P<param_name>\w+)(?::\s*(?P<param_type>\w+))?'

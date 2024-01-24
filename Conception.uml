@@ -5,9 +5,11 @@ interface ParseInterface{
   + {abstract} parse(self, line: str)
 }
 
-class Registery extends Arbre{
 
+class Registery extends Arbre{
+   + initialize_project_with_root()
 }
+
 
 class MethodParser implements ParseInterface{}
 
@@ -17,6 +19,12 @@ class StructureParser implements ParseInterface{}
 
 class Arbre{
    + root: ArbreElement
+}
+
+enum Language{
+PHP
+PYTHON
+JAVA
 }
 
 class ArbreElement {
@@ -39,8 +47,7 @@ class CodeStructureDiagram {
 }
 
 class ParseManager {
-    - registery: Registery
-    - current_class: str
+    - backup: Registery
     - parsers: List[Parser]
     + parse_file(self, file_path)
     + parse_files(self, file_paths)
@@ -51,13 +58,11 @@ class ParseManager {
 MethodParser *-- params'/
 
 
-ParseManager --> StructureParser
-ParseManager --> MethodParser
-ParseManager --> AttributeParser
+ParseManager o-- ParseInterface 
 
-MethodParser --> Registery
-AttributeParser --> Registery
-StructureParser --> Registery
+
+ParseInterface --> Registery
+
 
 Arbre --> ArbreElement 
 

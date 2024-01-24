@@ -1,4 +1,4 @@
-from interface import ParseInterface
+from ..Interface import ParseInterface
 import re
 
 class StructureParser(ParseInterface):
@@ -16,7 +16,7 @@ class StructureParser(ParseInterface):
                 'class_name': match.group('class_name') 
             }
 
-            self.registry.set_parent_to_root(class_info)
+            self.registry.get_root().set_parent(class_info)
 
         for match in re.finditer(interface_pattern, code):
             interface_info = {
@@ -24,7 +24,7 @@ class StructureParser(ParseInterface):
                 'interface_name': match.group('interface_name') 
             }
 
-            self.registry.set_parent_to_root(interface_info)
+            self.registry.get_root().set_parent(interface_info)
 
         for match in re.finditer(entity_pattern, code):
             entity_info = {
@@ -32,4 +32,4 @@ class StructureParser(ParseInterface):
                 'entity_name': match.group('entity_name') 
             }
 
-            self.registry.set_parent_to_root(entity_info)
+            self.registry.get_root().set_parent(entity_info)

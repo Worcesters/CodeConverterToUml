@@ -1,9 +1,9 @@
-from interface import ParseInterface
+from ..Interface import ParseInterface
 import re
 
 class AttributeParser(ParseInterface):
-    def __init__(self, registery):
-        self.registery = registery
+    def __init__(self, backup):
+        self.backup = backup
 
     def parse(self, code: str):
         attribute_pattern = re.compile(r'(?P<visibility>public|protected|private)?\s+\$(?P<attribute_name>\w+)\s*(?P<attribute_type>\w*)\s*;')
@@ -19,4 +19,4 @@ class AttributeParser(ParseInterface):
                 "type": attribute_type
             }
 
-            self.registry.add_child_to_root(attribute_info)
+            self.backup.get_root().add_child(attribute_info)

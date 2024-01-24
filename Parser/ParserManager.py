@@ -1,4 +1,3 @@
-from Parser import MethodParser, StructureParser, AttributeParser
 import Registery
 import os
 import tkinter as tk
@@ -7,12 +6,18 @@ from tkinter import filedialog
 class ParserManager():
     def __init__(self):
         self.registery = Registery()
-        self.current_class = None
         self.parsers = [
-            StructureParser(self.registery),
-            AttributeParser(self.registery),
-            MethodParser(self.registery)
+            #StructureParser(self.registery),
+            #AttributeParser(self.registery),
+            #MethodParser(self.registery)
         ]
+    
+    def set_parser(self, parsers: list):
+        for parser in parsers:
+            self.parsers.append(parser)
+    
+    def reset_parsers(self):
+        self.parsers.clear()
 
     def parse_file(self, file_path):
         if os.path.exists(file_path):

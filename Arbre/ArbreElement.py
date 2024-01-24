@@ -3,7 +3,7 @@ from typing import List
 class ArbreElement:
     def __init__(self, element):
         self.element = element
-        self.children = []  # List of children
+        self.children = []
         self.parent = None
 
     def set_parent(self, parent: 'ArbreElement') -> None:
@@ -11,7 +11,7 @@ class ArbreElement:
 
     def add_child(self, child: 'ArbreElement') -> None:
         child.set_parent(self)
-        self.children.append(child)  # Simply add the child to the children list
+        self.children.append(child)
 
     def add_children(self, children: List['ArbreElement']) -> None:
         for child in children:
