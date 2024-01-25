@@ -1,8 +1,8 @@
-from Arbre import Arbre
+from TreeModule import Tree
 
-class Registery(Arbre):
+class CodeConverterRegistry(Tree):
     def __init__(self):
-        super().__init__()
+        Tree.__init__()
         self.initialize_project_with_root("CodeConverterToUml")
     
     def initialize_project_with_root(self, root_element_name):

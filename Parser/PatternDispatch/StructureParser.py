@@ -2,8 +2,8 @@ from ..Interface import ParseInterface
 import re
 
 class StructureParser(ParseInterface):
-    def __init__(self, registery):
-        self.registery = registery
+    def __init__(self, code_converter_registry):
+        self.code_converter_registry = code_converter_registry
 
     def parse(self, code: str):
         class_pattern = re.compile(r'\s*(?P<visibility>public|protected|private)?\s*class\s+(?P<class_name>\w+)\s*')

@@ -1,15 +1,15 @@
-import Registery
+import CodeConverterRegistry
 import os
 import tkinter as tk
 from tkinter import filedialog
 
 class ParserManager():
     def __init__(self):
-        self.registery = Registery()
+        self.code_converter_registry = CodeConverterRegistry()
         self.parsers = [
-            #StructureParser(self.registery),
-            #AttributeParser(self.registery),
-            #MethodParser(self.registery)
+            #StructureParser(self.code_converter_registry),
+            #AttributeParser(self.code_converter_registry),
+            #MethodParser(self.code_converter_registry)
         ]
     
     def set_parser(self, parsers: list):

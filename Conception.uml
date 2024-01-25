@@ -6,7 +6,7 @@ interface ParseInterface{
 }
 
 
-class Registery extends Arbre{
+class CodeConverterRegistry extends Arbre{
    + initialize_project_with_root()
 }
 
@@ -47,7 +47,7 @@ class CodeStructureDiagram {
 }
 
 class ParseManager {
-    - backup: Registery
+    - backup: CodeConverterRegistry
     - parsers: List[Parser]
     + parse_file(self, file_path)
     + parse_files(self, file_paths)
@@ -61,10 +61,10 @@ MethodParser *-- params'/
 ParseManager o-- ParseInterface 
 
 
-ParseInterface --> Registery
+ParseInterface --> CodeConverterRegistry
 
 
 Arbre --> ArbreElement 
 
-Registery --> CodeStructureDiagram
+CodeConverterRegistry --> CodeStructureDiagram
 @enduml

@@ -2,8 +2,8 @@ from ..Interface import ParseInterface
 import re
 
 class MethodParser(ParseInterface):
-    def __init__(self, registery):
-        self.registery = registery
+    def __init__(self, code_converter_registry):
+        self.code_converter_registry = code_converter_registry
 
     def parse(self, line: str):
         method_pattern = re.compile(r'(?P<visibility>public|protected|private)?\s+(?P<abstract>abstract)?\s*function\s+(?P<method_name>\w+)\s*\((?P<method_params>[^)]*)\)\s*(?::\s*(?P<return_type>\w+))?\s*[{;]?')
@@ -20,7 +20,7 @@ class MethodParser(ParseInterface):
                 "return_type": match.group('return_type')
             }
 
-            self.registery.get_root().add_child(method_info)
+            self.code_converter_registry.get_root().add_child(method_info)
 
     def parse_parameters(self, params):
         param_pattern = r'\$?(?P<param_name>\w+)(?::\s*(?P<param_type>\w+))?'
