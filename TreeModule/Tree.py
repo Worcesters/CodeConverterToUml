@@ -1,4 +1,4 @@
-from . import TreeElement
+from TreeModule.TreeElement import TreeElement
 
 class Tree:
     def __init__(self):

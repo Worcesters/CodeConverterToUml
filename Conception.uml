@@ -1,70 +1,112 @@
 @startuml
 
-
-interface ParseInterface{
-  + {abstract} parse(self, line: str)
-}
-
-
-class CodeConverterRegistry extends Arbre{
+class Registry {
    + initialize_project_with_root()
 }
 
+package "ParserModule" {
+ interface ParseInterface {
+    + {abstract} parse(line: str)
+ }
+ ParseInterface --> Registry
 
-class MethodParser implements ParseInterface{}
+ abstract class MethodParser {
+   + visibility
+   + return_type
+   + name: str
+   + abstract: bool
+   + params: []
+ }
+ MethodParser ..|> ParseInterface
 
-class AttributeParser implements ParseInterface{}
+ abstract class AttributeParser {
+   + name: str
+   + visibility: str
+   + type
+ }
+ AttributeParser ..|> ParseInterface
 
-class StructureParser implements ParseInterface{}
+ abstract class StructureParser {
+   + name: str
+   + visibility: str
+ }
+ StructureParser ..|> ParseInterface
 
-class Arbre{
-   + root: ArbreElement
+ class PHP_StructureParser {}
+ PHP_StructureParser --|> StructureParser
+
+ class PHP_AttributeParser {}
+ PHP_AttributeParser --|> AttributeParser
+
+ class PHP_MethodParser {}
+ PHP_MethodParser --|> MethodParser
+
+ class PYTHON_StructureParser {}
+ PYTHON_StructureParser --|> StructureParser
+
+ class PYTHON_AttributeParser {}
+ PYTHON_AttributeParser --|> AttributeParser
+
+ class PYTHON_MethodParser {}
+ PYTHON_MethodParser --|> MethodParser
 }
 
-enum Language{
-PHP
-PYTHON
-JAVA
+Factory ..> PHP_StructureParser
+Factory ..> PYTHON_StructureParser
+Factory ..> PYTHON_AttributeParser
+Factory ..> PHP_AttributeParser
+Factory ..> PYTHON_MethodParser
+Factory ..> PHP_MethodParser
+
+enum Language {
+    PHP
+    PYTHON
+    JAVA
 }
 
-class ArbreElement {
-   + parent
-   + children
-   + set_parent()
-   + add_child()
-   + add_children()
-   + get_child(num_child: int): ArbreElement
-   + get_children(): ArbreElement[]
-   + get_parent(): ArbreElement
+class Factory {
+    - language: Language
+}
+Language <-- Factory : uses >
+
+package "TreeModule" {
+ class Tree {
+    + root: TreeElement
+ }
+ Tree --> TreeElement
+ Registry --|> Tree
+
+ class TreeElement {
+    + parent: TreeElement
+    + children: TreeElement[]
+    + set_parent(parent: TreeElement)
+    + add_child(child: TreeElement)
+    + add_children(children : TreeElement[])
+    + get_child(num_child: int): TreeElement
+    + get_children(): TreeElement[]
+    + get_parent(): TreeElement
+ }
 }
 
 class CodeStructureDiagram {
-    + add_hierarchy(self, hierarchy)
-    + add_class(self, class_obj)
-    + add_method(self, method)
-    + add_interface(self, interface)
-    + generate_diagram_code(self)
+    + add_hierarchy(hierarchy)
+    + add_class(class_obj)
+    + add_method(method)
+    + add_interface(interface)
+    + generate_diagram_code()
 }
 
 class ParseManager {
-    - backup: CodeConverterRegistry
-    - parsers: List[Parser]
-    + parse_file(self, file_path)
-    + parse_files(self, file_paths)
-    + parse_folders(self, folder_path)
+    - registry: Registry 
+    - parsers: ParseInterface[]
+    + parse_file(file_path)
+    + parse_files(file_paths)
+    + parse_folders(folder_path)
+    + add_parsers(parser)
+    + reset_parsers()
 }
 
-/'MethodParser *-- method
-MethodParser *-- params'/
-
-
 ParseManager o-- ParseInterface 
+Registry --> CodeStructureDiagram
 
-
-ParseInterface --> CodeConverterRegistry
-
-
-Arbre --> ArbreElement 
-
-CodeConverterRegistry --> CodeStructureDiagram
 @enduml
