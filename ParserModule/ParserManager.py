@@ -1,10 +1,12 @@
 from RegistryFactory import Registry
+from ParserModule.Parser.ParseDispatcher import ParseDispatcher
 import os
 
 class ParserManager():
-    def __init__(self):
+    def __init__(self, dispatcher: ParseDispatcher):
         self.registry = Registry()
         self.parsers = []
+        self.dispatcher = dispatcher
     
     def set_parser(self, parsers: list):
         for parser in parsers:

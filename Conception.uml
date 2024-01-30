@@ -10,7 +10,7 @@ package "ParserModule" {
  }
  ParseInterface --> Registry
 
- abstract class MethodParser {
+ class MethodParser {
    + visibility
    + return_type
    + name: str
@@ -19,44 +19,19 @@ package "ParserModule" {
  }
  MethodParser ..|> ParseInterface
 
- abstract class AttributeParser {
+ class AttributeParser {
    + name: str
    + visibility: str
    + type
  }
  AttributeParser ..|> ParseInterface
 
- abstract class StructureParser {
+ class StructureParser {
    + name: str
    + visibility: str
  }
  StructureParser ..|> ParseInterface
-
- class PHP_StructureParser {}
- PHP_StructureParser --|> StructureParser
-
- class PHP_AttributeParser {}
- PHP_AttributeParser --|> AttributeParser
-
- class PHP_MethodParser {}
- PHP_MethodParser --|> MethodParser
-
- class PYTHON_StructureParser {}
- PYTHON_StructureParser --|> StructureParser
-
- class PYTHON_AttributeParser {}
- PYTHON_AttributeParser --|> AttributeParser
-
- class PYTHON_MethodParser {}
- PYTHON_MethodParser --|> MethodParser
 }
-
-Factory ..> PHP_StructureParser
-Factory ..> PYTHON_StructureParser
-Factory ..> PYTHON_AttributeParser
-Factory ..> PHP_AttributeParser
-Factory ..> PYTHON_MethodParser
-Factory ..> PHP_MethodParser
 
 enum Language {
     PHP
@@ -64,10 +39,13 @@ enum Language {
     JAVA
 }
 
-class Factory {
+class ParseDispatcher{
     - language: Language
+    + patterns{Language{}}
+    + get_pattern(pattern_key)
 }
-Language <-- Factory : uses >
+Language <-- ParseDispatcher: uses >
+ParseDispatcher o-- ParseInterface: dispatches >
 
 package "TreeModule" {
  class Tree {

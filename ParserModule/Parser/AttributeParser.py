@@ -1,18 +1,25 @@
 from ParserModule.Interface import ParseInterface
 import re
-from abc import ABC, abstractmethod
 
+class AttributeParser(ParseInterface):
+    def __init__(self, registry, dispatcher):
+        self.registry = registry
+        self.dispatcher = dispatcher
 
-class AttributeParser(ParseInterface, ABC):
-    name: str
-    visibility: str
-    type: str
-    
-    def __init__(self, name: str, visibility: str, type: str):
-        self.name = name
-        self.visibility = visibility
-        self.type = type
+    def parse(self, code: str):
+        # Récupérer le motif regex pour les attributs
+        attribute_pattern_str = self.dispatcher.get_pattern('attribute_pattern')
+        attribute_pattern = re.compile(attribute_pattern_str, re.MULTILINE | re.DOTALL)
 
-    @abstractmethod
-    def parse(self, line: str):
-        pass
+        for match in re.finditer(attribute_pattern, code):
+            visibility = match.group('visibility') or 'public'  # 'public' par défaut si non spécifié
+            attribute_name = match.group('attribute_name')
+            attribute_type = match.group('attribute_type') or 'mixed'  # 'mixed' par défaut si non spécifié
+
+            attribute_info = {
+                "name": attribute_name,
+                "visibility": visibility,
+                "type": attribute_type
+            }
+
+            self.registry.get_root().add_child(attribute_info)

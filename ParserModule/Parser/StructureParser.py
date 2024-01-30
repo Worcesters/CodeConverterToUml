@@ -1,15 +1,27 @@
 from ParserModule.Interface import ParseInterface
 import re
-from abc import ABC, abstractmethod
 
-class StructureParser(ParseInterface, ABC):
-    name: str
-    visibility: str
-    
-    def __init__(self, name: str, visibility: str):
-        self.name = name
-        self.visibility = visibility
+class StructureParser(ParseInterface):
+    def __init__(self, registry, dispatcher):
+        self.registry = registry
+        self.dispatcher = dispatcher
 
-    @abstractmethod
-    def parse(self, line: str):
-        pass
+    def parse(self, code: str):
+        # Récupérer le motif regex pour les structures (classes, interfaces, etc.)
+        structure_pattern_str = self.dispatcher.get_pattern('structure_pattern')
+        structure_pattern = re.compile(structure_pattern_str, re.MULTILINE | re.DOTALL)
+
+        for match in re.finditer(structure_pattern, code):
+            structure_type = match.group('type')
+            structure_name = match.group('name')
+            extends = match.group('extends') or 'None'
+            implements = match.group('implements') or 'None'
+
+            structure_info = {
+                'type': structure_type,
+                'name': structure_name,
+                'extends': extends,
+                'implements': implements
+            }
+
+            self.registry.get_root().add_child(structure_info)
