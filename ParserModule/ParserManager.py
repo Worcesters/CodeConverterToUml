@@ -5,6 +5,7 @@ import os
 class ParserManager():
     def __init__(self, dispatcher: ParseDispatcher):
         self.registry = Registry()
+        print('initialisation Registry done')
         self.parsers = []
         self.dispatcher = dispatcher
     

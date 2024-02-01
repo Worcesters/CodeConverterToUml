@@ -2,6 +2,7 @@ from Definition.Language import Language
 class ParseDispatcher:
     def __init__(self, language: Language):
         self.language = language
+        print('initialisation ParseDispatcher done')
         self.patterns = {
             Language.PHP: {
                 'method_pattern': 
