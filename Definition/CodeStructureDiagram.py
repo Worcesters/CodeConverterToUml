@@ -1,36 +1,47 @@
 class CodeStructureDiagram:
-    def __init__(self, backup):
-        self.backup = backup
+    def __init__(self, registry):
+        self.registry = registry
 
-    def traverse_tree(self, node, uml_elements):
-        if node is None:
-            return
+    def convert_to_plantuml(self):
+        # Commence par le début du diagramme UML
+        plantuml_code = "@startuml\n"
+        
+        # Ajoute chaque élément du registre au diagramme UML
+        root = self.registry.get_root()
+        for element in root.get_children():
+            plantuml_code += self.process_element(element)
+        
+        plantuml_code += "@enduml"
+        return plantuml_code
 
-        # Traiter le noeud actuel en fonction de son type (classe, interface, méthode, etc.)
-        uml_elements.append(self.generate_uml_element(node))
-
-        # Parcourir les enfants du noeud
-        for child in node.get_children():
-            self.traverse_tree(child, uml_elements)
-
-    def generate_uml_element(self, node):
-        # Générer la représentation UML pour le noeud
-        # Cette méthode doit être adaptée en fonction de la structure de vos noeuds
-        if node.is_class():
-            return f"class {node.name} {{ ... }}"
-        elif node.is_method():
-            return f"{node.name}() ..."
-        # Ajouter des cas pour d'autres types si nécessaire
-        return ""
-
-    def generate_diagram_code(self):
-        uml_elements = []
-        self.traverse_tree(self.backup.get_root(), uml_elements)
-
-        diagram_code = f"""
-        @startuml
-        skinparam classAttributeIconSize 0
-        {' '.join(uml_elements)}
-        @enduml
+    def process_element(self, element):
         """
-        return diagram_code
+        Traite chaque élément du registre et retourne le code PlantUML correspondant.
+        """
+        uml_code = ""
+        if element.type == 'class':
+            uml_code += f"class {element.name} "
+            if element.extends:
+                uml_code += f"extends {element.extends} "
+            if element.implements:
+                # Supposons que 'implements' est une liste
+                uml_code += f"implements {', '.join(element.implements)} "
+            uml_code += "{\n"
+            for child in element.get_children():
+                uml_code += self.process_element(child)
+            uml_code += "}\n"
+        elif element.type == 'interface':
+            uml_code += f"interface {element.name}"+"{\n"
+            for child in element.get_children():
+                uml_code += self.process_element(child)
+            uml_code += "}\n"
+        # Ajoutez ici d'autres types d'éléments si nécessaire
+        
+        return uml_code
+
+    def save_to_file(self, uml_code, file_path):
+        """
+        Sauvegarde le code UML généré dans un fichier.
+        """
+        with open(file_path, 'w') as file:
+            file.write(uml_code)
