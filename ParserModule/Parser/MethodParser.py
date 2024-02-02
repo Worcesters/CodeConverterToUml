@@ -3,10 +3,13 @@ import re
 
 class MethodParser(ParseInterface):
     def __init__(self, registry, dispatcher):
+        print('Initialisation MethodParser')
+        print('└─────────────────────────│')
         self.registry = registry
         self.dispatcher = dispatcher
 
     def parse(self, line: str):
+        print('MethodParser -----> [START]')
         # Récupérer le motif regex pour les méthodes
         method_pattern_str = self.dispatcher.get_pattern('method_pattern')
         method_pattern = re.compile(method_pattern_str, re.MULTILINE | re.DOTALL)
@@ -29,6 +32,7 @@ class MethodParser(ParseInterface):
             }
 
             self.registry.get_root().add_child(method_info)
+        print('MehtodParser -----> [DONE]')
 
     def parse_parameters(self, params_str, param_pattern):
         return [match.groupdict() for match in re.finditer(param_pattern, params_str)]

@@ -5,13 +5,10 @@ class Language(Enum):
     PYTHON = "Python"
     JAVA = "Java"
 
+    @staticmethod
     def from_value(value):
-        print(value)
         for lang in Language:
             if lang.value == value:
                 return lang
         return None
-
-# Ajouter un print ou un assert pour confirmer
-print("Méthode from_value définie dans Language")
 

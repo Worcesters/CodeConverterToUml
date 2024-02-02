@@ -3,10 +3,13 @@ import re
 
 class AttributeParser(ParseInterface):
     def __init__(self, registry, dispatcher):
+        print('Initialisation AttributeParser')
+        print('└────────────────────────────│')
         self.registry = registry
         self.dispatcher = dispatcher
 
     def parse(self, code: str):
+        print('AttributeParser -----> [START]')
         # Récupérer le motif regex pour les attributs
         attribute_pattern_str = self.dispatcher.get_pattern('attribute_pattern')
         attribute_pattern = re.compile(attribute_pattern_str, re.MULTILINE | re.DOTALL)
@@ -21,5 +24,6 @@ class AttributeParser(ParseInterface):
                 "visibility": visibility,
                 "type": attribute_type
             }
-
+            
             self.registry.get_root().add_child(attribute_info)
+        print('AttributeParser -----> [DONE]')

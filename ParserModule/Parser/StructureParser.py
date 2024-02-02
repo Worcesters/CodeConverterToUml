@@ -3,10 +3,13 @@ import re
 
 class StructureParser(ParseInterface):
     def __init__(self, registry, dispatcher):
+        print('Initialisation StructureParser')
+        print('└────────────────────────────│')
         self.registry = registry
         self.dispatcher = dispatcher
 
     def parse(self, code: str):
+        print('StructureParser -----> [START]')
         # Récupérer le motif regex pour les structures (classes, interfaces, etc.)
         structure_pattern_str = self.dispatcher.get_pattern('structure_pattern')
         structure_pattern = re.compile(structure_pattern_str, re.MULTILINE | re.DOTALL)
@@ -23,5 +26,6 @@ class StructureParser(ParseInterface):
                 'extends': extends,
                 'implements': implements
             }
-
+            
             self.registry.get_root().add_child(structure_info)
+        print('StructureParser -----> [DONE]')
