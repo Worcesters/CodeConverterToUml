@@ -1,15 +1,20 @@
-from RegistryFactory import Registry
-from ParserModule.Parser.ParseDispatcher import ParseDispatcher
 import os
+from ParserModule.Factory import ParserFactory
+from Registry.RegistryModule import Registry
+from Registry.RegistryElement import RegistryElement
 
 class ParserManager():
-    def __init__(self, dispatcher: ParseDispatcher):
-        self.registry = Registry()
-        print('Registry ----> [DONE]')
+    def __init__(self):
         self.parsers = []
-        self.dispatcher = dispatcher
+        #TODO : Ajouter un objet de configuration pour la racine projet
+        print('initialisation Registry')
+        print('└────────────────────│')
+        self.registry = Registry(RegistryElement.ProgramRegistry())
+        print('Registry -----> [DONE]')
+        print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
+        print('└───────────────────────────────────────────')
     
-    def set_parser(self, parsers: list):
+    def set_parser(self, parsers):
         for parser in parsers:
             self.parsers.append(parser)
     
@@ -23,7 +28,7 @@ class ParserManager():
 
             for line in code.split('\n'):
                 for parser in self.parsers:
-                    parser.parse(line)
+                    parser.parse(line, self.registry)
 
     def parse_files(self, file_paths):
         for file_path in file_paths:

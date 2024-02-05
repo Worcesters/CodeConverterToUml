@@ -1,25 +1,23 @@
-from ParserModule.Interface import ParseInterface
+from ParserModule.Parser import Parser
 import re
 
-class MethodParser(ParseInterface):
-    def __init__(self, registry, dispatcher):
+class MethodParser(Parser):
+    def __init__(self, registry):
+        super().__init__()
         print('Initialisation MethodParser')
         print('└─────────────────────────│')
-        self.registry = registry
-        self.dispatcher = dispatcher
+        
 
     def parse(self, line: str):
         print('MethodParser -----> [START]')
         # Récupérer le motif regex pour les méthodes
-        method_pattern_str = self.dispatcher.get_pattern('method_pattern')
-        method_pattern = re.compile(method_pattern_str, re.MULTILINE | re.DOTALL)
+        method_pattern = re.compile(r"""(?P<visibility>public|protected|private)?\s*(?P<abstract>abstract\s+)?function\s+(?P<method_name>\w+)\s*\((?P<method_params>.*?)\)(?:\s*:\s*(?P<return_type>\w+))?""", re.MULTILINE | re.DOTALL)
 
         for match in re.finditer(method_pattern, line):
             params_str = match.group('method_params')
 
             # Récupérer le motif regex pour les paramètres
-            params_pattern_str = self.dispatcher.get_pattern('param_pattern')
-            param_pattern = re.compile(params_pattern_str)
+            param_pattern = re.compile(r"""(?P<param_type>\w+)?\s*\$(?P<param_name>\w+)""")
 
             param_list = self.parse_parameters(params_str, param_pattern)
 

@@ -1,18 +1,15 @@
-from ParserModule.Interface import ParseInterface
+from ParserModule.Parser import Parser
 import re
 
-class AttributeParser(ParseInterface):
-    def __init__(self, registry, dispatcher):
+class AttributeParser(Parser):
+    def __init__(self, registry):
         print('Initialisation AttributeParser')
         print('└────────────────────────────│')
         self.registry = registry
-        self.dispatcher = dispatcher
 
     def parse(self, code: str):
         print('AttributeParser -----> [START]')
-        # Récupérer le motif regex pour les attributs
-        attribute_pattern_str = self.dispatcher.get_pattern('attribute_pattern')
-        attribute_pattern = re.compile(attribute_pattern_str, re.MULTILINE | re.DOTALL)
+        attribute_pattern = re.compile(r"""(?P<visibility>public|protected|private)?\s*\$(?P<attribute_name>\w+)""", re.MULTILINE | re.DOTALL)
 
         for match in re.finditer(attribute_pattern, code):
             visibility = match.group('visibility') or 'public'  # 'public' par défaut si non spécifié

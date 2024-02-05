@@ -1,7 +1,7 @@
 from ParserModule.ParserManager import ParserManager
-from ParserModule.Parser.ParseDispatcher import ParseDispatcher
-from ParserModule.Parser import MethodParser, StructureParser, AttributeParser
+from ParserModule.Factory import ParserFactory
 from Definition.Language import Language
+from Registry.RegistryModule import Registry
 import os
 import tkinter as tk
 from tkinter import filedialog
@@ -9,11 +9,11 @@ from tkinter import filedialog
 def detect_language(file_path):
     file_extension = os.path.splitext(file_path)[1].lower()
     if file_extension == '.py':
-        return 'Python'
+        return Language.PYTHON
     elif file_extension == '.php':
-        return 'Php'
+        return Language.PHP
     elif file_extension == '.java':
-        return 'Java'
+        return Language.JAVA
     else:
         return None
 
@@ -49,51 +49,37 @@ def main():
                 print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
                 print('└───────────────────────────────────────────')
                 
-                print(f'Vérification de la prise en charge du language {detected_language}') 
+                print('initialisation ParserFactory')
                 print('└────────────────────│')
-                lang_enum = Language.from_value(detected_language)
-                if lang_enum:
-                    print('Language -----> [DONE]')
-                    print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
-                    print('└───────────────────────────────────────────')
-                    
-                    print('initialisation ParseDispatcher')
-                    print('└────────────────────│')
-                    dispatcher = ParseDispatcher(lang_enum)
-                    print('ParseDispatcher -----> [DONE]')
-                    print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
-                    print('└───────────────────────────────────────────')
-                    
-                    print('initialisation ParserManager')
-                    print('└────────────────────│')
-                    parser_manager = ParserManager(dispatcher)
-                    print('ParserManager -----> [DONE]')
-                    print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
-                    print('└───────────────────────────────────────────')
-                    
-                    print('Initialisation des parsers')
-                    print('└────────────────────────│')
-                    parser_manager.set_parser([
-                        StructureParser.StructureParser(parser_manager.registry, parser_manager.dispatcher),
-                        AttributeParser.AttributeParser(parser_manager.registry, parser_manager.dispatcher),
-                        MethodParser.MethodParser(parser_manager.registry, parser_manager.dispatcher)
-                    ])
-                    print('Début du Parsage fichier(s)')
-                    print('└────────────────────────│')
-                    parser_manager.parse_file([file_path])
-                    print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
-                    print('└───────────────────────────────────────────')
-                    
-                    print('Restitution des informations')
-                    print('└────────────────────────│')
-                    print(parser_manager.registry.get_root().get_children())
-                    
-                else:
-                    print( '┌──────────────────────────────────────────────────┐')
-                    print( '│                    ERREUR                        │')
-                    print( '│           Langue non prise en charge             │')
-                    print( '└──────────────────────────────────────────────────┘')
-                    print(detected_language)
+                parser_factory = ParserFactory.get_instance(detected_language)
+                print('ParserFactory -----> [DONE]')
+                print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
+                print('└───────────────────────────────────────────')
+                
+                print('initialisation ParserManager')
+                print('└────────────────────│')
+                parser_manager = ParserManager()
+                print('ParserManager -----> [DONE]')
+                print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
+                print('└───────────────────────────────────────────')
+
+                print('initialisation parser_manager.set_parser')
+                print('└────────────────────│')
+                parsers = parser_factory.get_parsers()
+                parser_manager.set_parser(parsers)
+                print('ParserManager set_parser() -----> [DONE]')
+                print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
+                print('└───────────────────────────────────────────')
+                
+                print('Début du Parsage fichier(s)')
+                print('└────────────────────────│')
+                parser_manager.parse_file([file_path])
+                print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
+                print('└───────────────────────────────────────────')
+                
+                print('Restitution des informations')
+                print('└────────────────────────│')
+                print(parser_manager.registry.get_root().get_children())
             else:
                 print( '┌───────────────────────────────────────────────────┐')
                 print( '│                     ERREUR                        │')

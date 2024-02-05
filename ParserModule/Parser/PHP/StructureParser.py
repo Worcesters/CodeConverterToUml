@@ -1,20 +1,21 @@
-from ParserModule.Interface import ParseInterface
+from ParserModule.Parser import Parser
+from Registry.RegistryModule import Registry
 import re
 
-class StructureParser(ParseInterface):
-    def __init__(self, registry, dispatcher):
+class StructureParser(Parser):
+    def __init__(self):
+        super().set_level(1)
         print('Initialisation StructureParser')
         print('└────────────────────────────│')
-        self.registry = registry
-        self.dispatcher = dispatcher
 
-    def parse(self, code: str):
+         
+    def parse(self, line: str, registry: Registry):
         print('StructureParser -----> [START]')
-        # Récupérer le motif regex pour les structures (classes, interfaces, etc.)
-        structure_pattern_str = self.dispatcher.get_pattern('structure_pattern')
-        structure_pattern = re.compile(structure_pattern_str, re.MULTILINE | re.DOTALL)
-
-        for match in re.finditer(structure_pattern, code):
+        
+        structure_pattern = re.compile(r"""(?P<type>class|interface|enum)\s+(?P<name>\w+)\s*(?:extends\s+(?P<extends>\w+)\s*)?(?:implements\s+(?P<implements>[\w\s,]+))?""", re.MULTILINE | re.DOTALL)
+        
+        print(structure_pattern)
+        for match in re.finditer(structure_pattern, line):
             structure_type = match.group('type')
             structure_name = match.group('name')
             extends = match.group('extends') or 'None'
@@ -27,5 +28,5 @@ class StructureParser(ParseInterface):
                 'implements': implements
             }
             
-            self.registry.get_root().add_child(structure_info)
+            registry.get_root().add_child(structure_info)
         print('StructureParser -----> [DONE]')

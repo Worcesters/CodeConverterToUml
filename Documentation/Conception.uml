@@ -5,10 +5,10 @@ class Registry {
 }
 
 package "ParserModule" {
- interface ParseInterface {
+ interface IParser {
     + {abstract} parse(line: str)
  }
- ParseInterface --> Registry
+ IParser --> Registry
 
  class MethodParser {
    + visibility
@@ -17,20 +17,20 @@ package "ParserModule" {
    + abstract: bool
    + params: []
  }
- MethodParser ..|> ParseInterface
+ MethodParser ..|> IParser
 
  class AttributeParser {
    + name: str
    + visibility: str
    + type
  }
- AttributeParser ..|> ParseInterface
+ AttributeParser ..|> IParser
 
  class StructureParser {
    + name: str
    + visibility: str
  }
- StructureParser ..|> ParseInterface
+ StructureParser ..|> IParser
 }
 
 enum Language {
@@ -45,7 +45,7 @@ class ParseDispatcher{
     + get_pattern(pattern_key)
 }
 Language <-- ParseDispatcher: uses >
-ParseDispatcher o-- ParseInterface: dispatches >
+ParseDispatcher o-- IParser: dispatches >
 
 package "TreeModule" {
  class Tree {
@@ -76,7 +76,7 @@ class CodeStructureDiagram {
 
 class ParseManager {
     - registry: Registry 
-    - parsers: ParseInterface[]
+    - parsers: IParser[]
     + parse_file(file_path)
     + parse_files(file_paths)
     + parse_folders(folder_path)
@@ -84,7 +84,7 @@ class ParseManager {
     + reset_parsers()
 }
 
-ParseManager o-- ParseInterface 
+ParseManager o-- IParser 
 Registry --> CodeStructureDiagram
 
 @enduml
