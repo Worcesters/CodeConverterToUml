@@ -1,10 +1,15 @@
 from ParserModule.Parser import Parser
 from Registry.RegistryModule import Registry
+from Registry.RegistryElement import (
+    MethodRegistry,
+    VisibilityRegistry,
+    TypeRegistry,
+    ParamsRegistry
+)
 import re
 
 class MethodParser(Parser):
-    def __init__(self ):
-        super().set_level(2)
+    def __init__(self):
         print('Initialisation MethodParser')
         print('└─────────────────────────│')
         
@@ -20,20 +25,26 @@ class MethodParser(Parser):
             # Récupérer le motif regex pour les paramètres
             param_pattern = re.compile(r"""(?P<param_type>\w+)?\s*\$(?P<param_name>\w+)""")
 
-            param_list = self.parse_parameters(params_str, param_pattern)
-            # INSTANCIATION DES REGISTRY
-            # set_MethodName
-            # set_mon cul ...
-            method_info = {
-                "name": match.group('method_name'),
-                "visibility": match.group('visibility'),
-                "abstract": bool(match.group('abstract')),
-                "params": param_list,
-                "return_type": match.group('return_type')
-            }
+            param_list = self.parse_parameters(params_str, param_pattern) #TODO :A voir !!
+       
+            method_element = MethodRegistry()
+            method_element.set_name(match.group('method_name'))
+            method_element.set_return_type(match.group('return_type'))
+            method_element.set_abstract(bool(match.group('abstract')))
+            
+            params_element = ParamsRegistry()
+            params_element.set_params(match.group('param_name'))
+            
+            type_element = TypeRegistry()
+            type_element.set_type(match.group('param_type'))
 
-            registry.get_root().add_child(method_info)
-            registry.get_active_element().add_child(method_info)
+            visibility_element = VisibilityRegistry()
+            visibility_element.set_visibility(match.group('visibility'))
+            
+
+            registry.get_active_element().add_child(method_element)
+            registry.set_active_element()
+            
         print('MehtodParser -----> [DONE]')
 
     def parse_parameters(self, params_str, param_pattern):

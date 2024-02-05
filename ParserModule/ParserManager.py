@@ -1,5 +1,4 @@
 import os
-from ParserModule.Factory import ParserFactory
 from Registry.RegistryModule import Registry
 from Registry.RegistryElement import RegistryElement
 

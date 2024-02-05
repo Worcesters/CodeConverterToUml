@@ -1,10 +1,14 @@
 from ParserModule.Parser import Parser
 from Registry.RegistryModule import Registry
+from Registry.RegistryElement import (
+    StructureRegistry,
+    TypeRegistry,
+    HeritageRegistry
+)
 import re
 
 class StructureParser(Parser):
     def __init__(self):
-        super().set_level(1)
         print('Initialisation StructureParser')
         print('└────────────────────────────│')
 
@@ -13,20 +17,22 @@ class StructureParser(Parser):
         print('StructureParser -----> [START]')
         
         structure_pattern = re.compile(r"""(?P<type>class|interface|enum)\s+(?P<name>\w+)\s*(?:extends\s+(?P<extends>\w+)\s*)?(?:implements\s+(?P<implements>[\w\s,]+))?""", re.MULTILINE | re.DOTALL)
-        
-        print(structure_pattern)
-        for match in re.finditer(structure_pattern, line):
-            structure_type = match.group('type')
-            structure_name = match.group('name')
-            extends = match.group('extends') or 'None'
-            implements = match.group('implements') or 'None'
 
-            structure_info = {
-                'type': structure_type,
-                'name': structure_name,
-                'extends': extends,
-                'implements': implements
-            }
+        for match in re.finditer(structure_pattern, line):
             
-            registry.get_root().add_child(structure_info)
+            # Configuration du type de structure en fonction de l'entité déterminée
+            structure_element = match.group('type').capitalize() + "Registry" # Transforme 'class' en 'ClassRegistry', etc.
+            structure_element.set_name(match.group('name'))
+            
+            # Configuration de l'héritage et des implémentations
+            if match.group('extends') or match.group('implements'):
+                heritage_element = HeritageRegistry()
+                if match.group('extends'):
+                    heritage_element.set_extends(match.group('extends'))
+                if match.group('implements'):
+                    heritage_element.set_implements(match.group('implements'))
+            
+            registry.get_active_element().add_child(structure_element)
+            registry.set_active_element()
+            
         print('StructureParser -----> [DONE]')

@@ -1,10 +1,14 @@
 from ParserModule.Parser import Parser
 from Registry.RegistryModule import Registry
+from Registry.RegistryElement import (
+    AttributeRegistry,
+    VisibilityRegistry,
+    TypeRegistry
+)
 import re
 
 class AttributeParser(Parser):
     def __init__(self):
-        super().set_level(2)
         print('Initialisation AttributeParser')
         print('└────────────────────────────│')
         
@@ -13,15 +17,16 @@ class AttributeParser(Parser):
         attribute_pattern = re.compile(r"""(?P<visibility>public|protected|private)?\s*\$(?P<attribute_name>\w+)""", re.MULTILINE | re.DOTALL)
 
         for match in re.finditer(attribute_pattern, line):
-            visibility = match.group('visibility') or 'public'  # 'public' par défaut si non spécifié
-            attribute_name = match.group('attribute_name')
-            attribute_type = match.group('attribute_type') or 'mixed'  # 'mixed' par défaut si non spécifié
-
-            attribute_info = {
-                "name": attribute_name,
-                "visibility": visibility,
-                "type": attribute_type
-            }
             
-            registry.get_root().add_child(attribute_info)
+            attribute_element = AttributeRegistry()
+            attribute_element.set_name(match.group('attribute_name'))
+            
+            visibility_element = VisibilityRegistry()
+            visibility_element.set_visibility(match.group('visibility'))
+            
+            type_element = TypeRegistry()
+            type_element.set_type(match.group('attribute_type'))
+            
+            registry.get_active_element().add_child(attribute_element)
+            registry.set_active_element()
         print('AttributeParser -----> [DONE]')

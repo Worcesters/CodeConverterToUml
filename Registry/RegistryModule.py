@@ -3,7 +3,7 @@ from Registry.RegistryElement import RegistryElement
 class Registry(Tree):
     
     root_element: RegistryElement
-    active_elements: dict = {"level": None}
+    active_elements: RegistryElement
     
     def __init__(self, root_element):
         super().__init__()

@@ -8,10 +8,4 @@ from typing import Optional, Type
 class Parser(IParser):
 
     def __init__(self):
-        self.level = 0
-
-    def set_level(self, level: int):
-        self.level = level
-    
-    def get_level(self):
-        return self.level
+        pass
