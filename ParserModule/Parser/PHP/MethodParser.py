@@ -1,5 +1,5 @@
 from ParserModule.Parser import Parser
-from Registry.RegistryModule import Registry
+from Registry.Registry import Registry
 from Registry.RegistryElement import (
     MethodRegistry,
     VisibilityRegistry,
@@ -25,7 +25,7 @@ class MethodParser(Parser):
             # Récupérer le motif regex pour les paramètres
             param_pattern = re.compile(r"""(?P<param_type>\w+)?\s*\$(?P<param_name>\w+)""")
 
-            param_list = self.parse_parameters(params_str, param_pattern) #TODO :A voir !!
+            param_list = self.parse_parameters(params_str, param_pattern)
        
             method_element = MethodRegistry()
             method_element.set_name(match.group('method_name'))
@@ -33,7 +33,7 @@ class MethodParser(Parser):
             method_element.set_abstract(bool(match.group('abstract')))
             
             params_element = ParamsRegistry()
-            params_element.set_params(match.group('param_name'))
+            params_element.set_params(param_list)
             
             type_element = TypeRegistry()
             type_element.set_type(match.group('param_type'))

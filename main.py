@@ -1,7 +1,7 @@
 from ParserModule.ParserManager import ParserManager
 from ParserModule.Factory import ParserFactory
 from Definition.Language import Language
-from Registry.RegistryModule import Registry
+from Registry.Registry import Registry
 import os
 import tkinter as tk
 from tkinter import filedialog

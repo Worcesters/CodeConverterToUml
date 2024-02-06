@@ -5,10 +5,3 @@ class Language(Enum):
     PYTHON = "Python"
     JAVA = "Java"
 
-    @staticmethod
-    def from_value(value):
-        for lang in Language:
-            if lang.value == value:
-                return lang
-        return None
-

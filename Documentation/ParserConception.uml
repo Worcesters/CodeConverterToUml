@@ -1,0 +1,103 @@
+
+@startuml
+
+
+
+package "ParserModule" {
+
+    interface IParser {
+        {abstract} + parse(line: str, registry: Registry): void
+    }
+
+    abstract class Parser implements IParser {
+    }
+
+    package "PHP" {
+        class MethodParser {
+        }
+
+        class StructureParser {
+        }
+
+        class AttributeParser {
+        }
+    }
+
+}
+package "RegistryModule" {
+    class Registry {
+        - root_element: RegistryElement
+        - active_element: RegistryElement
+        + __init__(root_element: RegistryElement)
+        + set_active_element(active_element: RegistryElement): void
+        + get_active_element(): RegistryElement
+    }
+    
+    abstract class RegistryElement {
+        {abstract} + buildUml(): String
+    }
+
+}
+
+package "TreeModule" {
+    class Tree {
+        - root: TreeElement
+        + __init__()
+        + set_root(element: TreeElement): void
+        + get_root(): TreeElement
+    }
+
+    class TreeElement {
+        - element
+        - children: List[TreeElement]
+        - parent: TreeElement
+        + __init__(element)
+        + set_parent(parent: TreeElement): void
+        + add_child(child: TreeElement): void
+        + add_children(children: List[TreeElement]): void
+        + get_child(element): TreeElement
+        + get_children(): List[TreeElement]
+        + get_parent(): TreeElement
+    }
+}
+
+enum Language {
+    PHP = "Php"
+    PYTHON = "Python"
+    JAVA = "Java"
+}
+
+class ParserFactory {
+    - __parser_factory_instance: Optional[ParserFactory]
+    - __language: Optional[Language]
+    - __parser_instance: Optional[IParser]
+    + get_instance(cls, language: Language): ParserFactory
+    + get_parsers(): IParser[]
+}
+
+
+class ParserManager {
+    - parsers: list
+    - registry: Registry
+    + __init__()
+    + set_parser(parsers: list): void
+    + reset_parsers(): void
+    + parse_file(file_paths: list): void
+    + parse_files(file_paths: list): void
+    + parse_folders(folder_path: str): void
+}
+
+Tree -up-> TreeElement
+ParserFactory -up-> IParser
+ParserManager --> IParser
+ParserFactory -up-> Language
+IParser -up-> Registry
+Registry --> RegistryElement
+
+RegistryElement --|> TreeElement
+Registry -up-|> Tree
+
+MethodParser -up-|> Parser
+StructureParser -up-|> Parser
+AttributeParser -up-|> Parser
+@enduml

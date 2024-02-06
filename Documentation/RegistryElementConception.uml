@@ -1,0 +1,72 @@
+@startuml
+
+title titre a en devenir
+
+/'''
+
+Structure
+
+'''/
+
+interface ElementRegistery{
+
+}
+
+enum Language {
+  PHP
+  // Ajoutez d'autres langages au besoin
+}
+
+abstract class Modificateur implements ElementRegistery{
+}
+
+class Visibility extends Modificateur{
+}
+
+class Mutability extends Modificateur{
+
+}
+
+class Type extends Modificateur{
+
+}
+
+class Stage extends Modificateur{
+
+}
+
+class Relation implements ElementRegistery{
+}
+
+class Class implements ElementRegistery{
+
+}
+
+class Method implements ElementRegistery{
+}
+
+
+class Interface implements ElementRegistery{
+}
+
+class Attribute implements ElementRegistery{
+
+}
+
+class Parameter implements ElementRegistery{
+
+}
+
+
+/'''
+
+Relation
+
+'''/
+
+
+Class *-- Method
+Interface *-- Method
+Class *-- Attribute
+Method*-- Parameter
+@enduml

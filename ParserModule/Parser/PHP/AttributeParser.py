@@ -1,5 +1,5 @@
 from ParserModule.Parser import Parser
-from Registry.RegistryModule import Registry
+from Registry.Registry import Registry
 from Registry.RegistryElement import (
     AttributeRegistry,
     VisibilityRegistry,

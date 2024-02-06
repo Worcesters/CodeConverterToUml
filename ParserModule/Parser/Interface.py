@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from Registry.RegistryModule import Registry
+from Registry.Registry import Registry
 
 class IParser(ABC):
     @abstractmethod
