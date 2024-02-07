@@ -1,4 +1,4 @@
-from ParserModule.Parser import Parser
+from ParserModule.Parser.PHP import Parser
 import re
 
 class AttributeParser(Parser):

@@ -1,10 +1,10 @@
-from ParserModule.Parser import Parser
+from ParserModule.Parser.PHP import Parser
 from Registry.Registry import Registry
-from Registry.RegistryElement import (
-    MethodRegistry,
-    VisibilityRegistry,
-    TypeRegistry,
-    ParamsRegistry
+from Registry.RegistryModule.StructuralRegistry.Structure import (
+    RegistryMethod, 
+    RegistryVisibility,
+    RegistryType,
+    RegistryAttribute
 )
 import re
 
@@ -27,20 +27,13 @@ class MethodParser(Parser):
 
             param_list = self.parse_parameters(params_str, param_pattern)
        
-            method_element = MethodRegistry()
+            method_element = RegistryMethod()
             method_element.set_name(match.group('method_name'))
-            method_element.set_return_type(match.group('return_type'))
             method_element.set_abstract(bool(match.group('abstract')))
+            method_element.set_visibility(self.get_visibility(match.group('visibility')))
+            method_element.set_type(self.get_type(match.group('return_type')))
             
-            params_element = ParamsRegistry()
-            params_element.set_params(param_list)
-            
-            type_element = TypeRegistry()
-            type_element.set_type(match.group('param_type'))
-
-            visibility_element = VisibilityRegistry()
-            visibility_element.set_visibility(match.group('visibility'))
-            
+            #TODO : Parse Parameters
 
             registry.get_active_element().add_child(method_element)
             registry.set_active_element()

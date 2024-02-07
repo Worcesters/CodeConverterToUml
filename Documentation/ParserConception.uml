@@ -25,6 +25,10 @@ package "ParserModule" {
 
 }
 package "RegistryModule" {
+    interface IUmlBuilder {
+        {abstract} + buildUml(): String
+    }
+
     class Registry {
         - root_element: RegistryElement
         - active_element: RegistryElement
@@ -33,8 +37,12 @@ package "RegistryModule" {
         + get_active_element(): RegistryElement
     }
     
-    abstract class RegistryElement {
-        {abstract} + buildUml(): String
+    abstract class StructuralElement {
+        
+    }
+
+    abstract class RelationalElement {
+        
     }
 
 }
@@ -87,14 +95,19 @@ class ParserManager {
     + parse_folders(folder_path: str): void
 }
 
+
+
+RelationalElement .up.|> IUmlBuilder
+StructuralElement .up.|> IUmlBuilder
+
 Tree -up-> TreeElement
 ParserFactory -up-> IParser
 ParserManager --> IParser
 ParserFactory -up-> Language
 IParser -up-> Registry
-Registry --> RegistryElement
+Registry --> StructuralElement 
 
-RegistryElement --|> TreeElement
+StructuralElement --|> TreeElement
 Registry -up-|> Tree
 
 MethodParser -up-|> Parser

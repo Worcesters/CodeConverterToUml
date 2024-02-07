@@ -1,6 +1,6 @@
 import os
 from Registry.Registry import Registry
-from Registry.RegistryElement import RegistryElement
+from Registry.StructuralElement import StructuralElement
 
 class ParserManager():
     def __init__(self):
@@ -8,7 +8,7 @@ class ParserManager():
         #TODO : Ajouter un objet de configuration pour la racine projet
         print('initialisation Registry')
         print('└────────────────────│')
-        self.registry = Registry(RegistryElement.ProgramRegistry())
+        self.registry = Registry(StructuralElement.ProgramRegistry())
         print('Registry -----> [DONE]')
         print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
         print('└───────────────────────────────────────────')

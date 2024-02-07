@@ -4,18 +4,18 @@
 
 package "RegistryModule" {
     class Registry {
-        - root_element: RegistryElement
-        - active_element: RegistryElement
-        + __init__(root_element: RegistryElement)
-        + set_active_element(active_element: RegistryElement): void
-        + get_active_element(): RegistryElement
+        - root_element: StructuralElement
+        - active_element: StructuralElement
+        + __init__(root_element: StructuralElement)
+        + set_active_element(active_element: StructuralElement): void
+        + get_active_element(): StructuralElement
     }
     
-    abstract class RegistryElement {
+    abstract class StructuralElement {
         {abstract} + buildUml(): String
     }
 
-    package "SubRegistryElements" {
+    package "SubStructuralElements" {
         
         class StructureRegistry {
             + set_name()
@@ -61,10 +61,10 @@ package "RegistryModule" {
     }
 }
 
-Registry --> RegistryElement
-RegistryElement --|> TreeElement
+Registry --> StructuralElement
+StructuralElement --|> TreeElement
 
-StructureRegistry -up-|> RegistryElement
+StructureRegistry -up-|> StructuralElement
 ParamsRegistry --|> StructureRegistry
 VisibilityRegistry --|> StructureRegistry
 AttributeRegistry --|> StructureRegistry

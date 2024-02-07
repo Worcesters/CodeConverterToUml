@@ -1,10 +1,6 @@
-from ParserModule.Parser import Parser
+from ParserModule.Parser.PHP import Parser
 from Registry.Registry import Registry
-from Registry.RegistryElement import (
-    AttributeRegistry,
-    VisibilityRegistry,
-    TypeRegistry
-)
+from Registry.RegistryModule.StructuralRegistry.Structure import RegistryAttribute
 import re
 
 class AttributeParser(Parser):
@@ -18,14 +14,10 @@ class AttributeParser(Parser):
 
         for match in re.finditer(attribute_pattern, line):
             
-            attribute_element = AttributeRegistry()
+            attribute_element = RegistryAttribute()
             attribute_element.set_name(match.group('attribute_name'))
-            
-            visibility_element = VisibilityRegistry()
-            visibility_element.set_visibility(match.group('visibility'))
-            
-            type_element = TypeRegistry()
-            type_element.set_type(match.group('attribute_type'))
+            attribute_element.set_visibility(self.get_visibility(match.group('visibility')))
+            attribute_element.set_type(self.get_type(match.group('attribute_type')))
             
             registry.get_active_element().add_child(attribute_element)
             registry.set_active_element()

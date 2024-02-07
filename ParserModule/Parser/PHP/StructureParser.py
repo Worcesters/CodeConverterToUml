@@ -1,10 +1,6 @@
-from ParserModule.Parser import Parser
+from ParserModule.Parser.PHP import Parser
 from Registry.Registry import Registry
-from Registry.RegistryElement import (
-    StructureRegistry,
-    TypeRegistry,
-    HeritageRegistry
-)
+from Registry.RegistryModule.StructuralRegistry.Structure import (RegistryClass, RegistryInterface, RegistryEnum)
 import re
 
 class StructureParser(Parser):
@@ -21,10 +17,11 @@ class StructureParser(Parser):
         for match in re.finditer(structure_pattern, line):
             
             # Configuration du type de structure en fonction de l'entité déterminée
-            structure_element = match.group('type').capitalize() + "Registry" # Transforme 'class' en 'ClassRegistry', etc.
+            structure_element = "Registry" + match.group('type').capitalize() # Transforme 'class' en 'RegistryClass', etc.
             structure_element.set_name(match.group('name'))
             
-            # Configuration de l'héritage et des implémentations
+            
+            # TODO : Configuration de l'héritage et des implémentations
             if match.group('extends') or match.group('implements'):
                 heritage_element = HeritageRegistry()
                 if match.group('extends'):

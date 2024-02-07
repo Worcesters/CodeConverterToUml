@@ -1,16 +1,12 @@
 from TreeModule.TreeElement import TreeElement
 from abc import ABC, abstractmethod
+from Registry.IUmlBuilder import IUmlBuider
 
-
-class RegistryElement(TreeElement):
+class StructuralElement(TreeElement, IUmlBuider):
     def __init__(self):
         pass
     
-    @abstractmethod
-    def buildUml(self):
-        pass
-
-class ProgramRegistry(RegistryElement):
+class RegistryProgram(StructuralElement):
     def __init__(self):
         pass
     
