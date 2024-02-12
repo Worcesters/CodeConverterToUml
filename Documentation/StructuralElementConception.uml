@@ -1,0 +1,76 @@
+
+@startuml
+
+
+package "-- RegistryModule --" {
+    class Registry {
+        - root_element: StructuralElement
+        - active_element: StructuralElement
+        + __init__(root_element: StructuralElement)
+        + set_active_element(active_element: StructuralElement): void
+        + get_active_element(): StructuralElement
+    }
+    
+    abstract class StructuralElement {
+        {abstract} + buildUml(): String
+    }
+
+    package "-- StructuralElement --" {
+        
+        class RegistryCommonElement{
+            + set_name()
+            + set_visibility()
+            + set_type()
+            + set_mutability()
+        }
+
+        class Structure{
+            + add_attribute()
+            + add_method()
+        }
+       
+        class RegistryAttribute {
+        }
+
+        class RegistryMethod {
+            + set_abstract()
+        }
+
+        class RegistryParameter {
+        }
+
+        enum RegistryVisibility {
+        }
+
+        enum RegistryType {
+        }
+
+        class RegistryClass {
+        }
+
+        class RegistryInterface {
+        }
+
+        class RegistryEnum {
+        }
+
+    }
+}
+
+
+Registry --> StructuralElement
+StructuralElement --|> TreeElement
+
+RegistryCommonElement -up-|> StructuralElement
+
+Structure -up-|> RegistryCommonElement
+
+RegistryParameter--|> RegistryCommonElement
+RegistryAttribute --|> RegistryCommonElement
+RegistryMethod--|> RegistryCommonElement
+
+RegistryEnum -up-|> Structure
+RegistryInterface -up-|> Structure
+RegistryClass -up-|> Structure
+
+@enduml

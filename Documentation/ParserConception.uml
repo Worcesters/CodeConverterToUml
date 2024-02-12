@@ -1,8 +1,6 @@
 
 @startuml
 
-
-
 package "ParserModule" {
 
     interface IParser {
@@ -42,7 +40,14 @@ package "RegistryModule" {
     }
 
     abstract class RelationalElement {
-        
+        {abstract} + set_source( pole: 'Pole' ): 'Pole'
+        {abstract} + get_source( ): 'Pole'
+        {abstract} + set_destination( pole: 'Pole' ): 'Pole'
+        {abstract} + get_destination( ): 'Pole'
+    }
+    
+    class RegistryProgram extends StructuralElement {
+        + buildUml()
     }
 
 }

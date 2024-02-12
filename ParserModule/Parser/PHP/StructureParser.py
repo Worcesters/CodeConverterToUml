@@ -3,13 +3,13 @@ from Registry.Registry import Registry
 from Registry.RegistryModule.StructuralRegistry.Structure import (RegistryClass, RegistryInterface, RegistryEnum)
 import re
 
-class StructureParser(Parser):
-    def __init__(self):
+class StructureParser( Parser ):
+    def __init__( self ):
         print('Initialisation StructureParser')
         print('└────────────────────────────│')
 
          
-    def parse(self, line: str, registry: Registry):
+    def parse( self, line: str, registry: Registry ):
         print('StructureParser -----> [START]')
         
         structure_pattern = re.compile(r"""(?P<type>class|interface|enum)\s+(?P<name>\w+)\s*(?:extends\s+(?P<extends>\w+)\s*)?(?:implements\s+(?P<implements>[\w\s,]+))?""", re.MULTILINE | re.DOTALL)

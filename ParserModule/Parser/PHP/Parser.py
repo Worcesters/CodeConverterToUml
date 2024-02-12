@@ -5,9 +5,9 @@ from typing import Optional, Type
 from Registry.RegistryModule.StructuralRegistry.Structure import (RegistryVisibility, RegistryType)
 
 
-class Parser(IParser):
+class Parser( IParser ):
 
-    def __init__(self):
+    def __init__( self ):
         self.visibility_mapping: dict = {
             'public': RegistryVisibility.PUBLIC,
             'protected': RegistryVisibility.PROTECTED,
@@ -38,8 +38,8 @@ class Parser(IParser):
             'unknown': RegistryType.UNKNOWN
         }
         
-    def get_visibility(self, visibility: str) -> RegistryVisibility:
+    def get_visibility( self, visibility: str ) -> RegistryVisibility:
         return self.visibility_mapping[visibility] if self.visibility_mapping[visibility] is not None else RegistryVisibility.PUBLIC  
     
-    def get_type(self, type: str) -> RegistryType:
+    def get_type( self, type: str ) -> RegistryType:
         return self.type_mapping[type] if self.type_mapping[type] is not None else RegistryType.UNKNOWN  

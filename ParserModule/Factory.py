@@ -10,11 +10,11 @@ class ParserFactory():
     __language: 'Optional[Language]' = None
     __parser_instance: 'Optional[IParser]' = None
     
-    def __init__(self):
+    def __init__( self ):
         pass
     
     @staticmethod
-    def get_instance(cls, language: Language):
+    def get_instance( cls, language: Language ):
         if language is None and cls.__language is None:
             raise ValueError("La langue n'a pas été initialisée")
             
@@ -25,9 +25,9 @@ class ParserFactory():
         return cls.__parser_factory_instance
     
     @classmethod
-    def get_parsers(cls) -> IParser:
+    def get_parsers( cls ) -> IParser:
         nom_module = f"ParserModule.Parser.{cls.language}"
-        parsers = importlib.import_module(nom_module)
+        parsers = importlib.import_module( nom_module )
         
         print('Initialisation des parsers')
         print('└────────────────────────│')

@@ -2,5 +2,5 @@ from abc import ABC, abstractmethod
 class IUmlBuilder:
 
     @abstractmethod
-    def buildUml(self):
+    def buildUml( self ):
         pass

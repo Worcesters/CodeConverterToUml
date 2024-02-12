@@ -4,7 +4,7 @@ from Registry.RegistryModule.StructuralRegistry.Structure import RegistryAttribu
 import re
 
 class AttributeParser(Parser):
-    def __init__(self):
+    def __init__( self ):
         print('Initialisation AttributeParser')
         print('└────────────────────────────│')
         
