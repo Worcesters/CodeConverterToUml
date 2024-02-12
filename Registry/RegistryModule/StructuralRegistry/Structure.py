@@ -75,9 +75,7 @@ class RegistryClass( Structure ):
         super().__init__()
     
     def buildUml(self):
-        attributes_uml = '\n    '.join([attr.buildUml() for attr in self.attributes])
-        methods_uml = '\n    '.join([meth.buildUml() for meth in self.methods])
-        return f"class {self.name} {{\n    {attributes_uml}\n    {methods_uml}\n}}\n"
+        return self.name + ' {\n\t' + '\n\t'.join([attribute.buildUml() for attribute in self.attributes]) + '\n\t' + '\n\t'.join([method.buildUml() for method in self.methods]) + '\n}'
 
 
 class RegistryInterface( Structure ):
@@ -99,9 +97,11 @@ class RegistryAttribute( RegistryCommonElement ):
     def __init__( self ):
         super().__init__()
     
-    def buildUml( self ):
-        #TODO : voir pour la condition de la mutabilité
-        return f"{self.visibility.value} {self.name} : {self.type.value}"
+    def buildUml(self):
+        if self.mutability:
+            return self.visibility + ' ' + self.name
+        else:
+            return self.visibility + ' ' + ' const ' + self.name + ' : ' + self.type
         
 class RegistryMethod( RegistryCommonElement ):
     def __init__( self ):
@@ -120,5 +120,5 @@ class RegistryParameter( RegistryCommonElement ):
     def __init__( self ):
         super().__init__()
         
-    def buildUml( self ):
-        return f"{self.name} : {self.type.value}"
+    def buildUml(self):
+        return self.name + ': ' + self.type
