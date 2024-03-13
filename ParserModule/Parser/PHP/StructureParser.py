@@ -1,7 +1,9 @@
-from ParserModule.Parser.PHP import Parser
+import re
+from ParserModule.Parser.PHP.Parser import Parser
 from Registry.Registry import Registry
 from Registry.RegistryModule.RelationalRegistry.Link import (Heritage, Implementation)
-import re
+
+
 
 class StructureParser( Parser ):
     def __init__( self ):

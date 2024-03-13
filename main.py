@@ -78,9 +78,15 @@ def main():
                 print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
                 print('└───────────────────────────────────────────')
 
-                print('initialisation parser_manager.set_parser')
+                print('initialisation parser_manager.get_parsers')
                 print('└────────────────────│')
                 parsers = parser_factory.get_parsers()
+                print('parser_factory.get_parsers() -----> [DONE]')
+                print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
+                print('└───────────────────────────────────────────')
+
+                print('initialisation parser_manager.set_parser')
+                print('└────────────────────│')
                 parser_manager.set_parser(parsers)
                 print('ParserManager set_parser() -----> [DONE]')
                 print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')

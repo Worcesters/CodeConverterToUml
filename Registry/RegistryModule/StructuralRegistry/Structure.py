@@ -1,13 +1,12 @@
 from enum import Enum
+from typing import List
 from Registry.StructuralElement import StructuralElement
-from typing import Optional, List
-from abc import ABC, abstractmethod
 
 class RegistryVisibility( Enum ):
     PUBLIC = "+"
     PROTECTED = "#"
     PRIVATE = "-"
-    
+
 class RegistryType( Enum ):
     STRING = "string"
     INT = "int"
@@ -45,26 +44,26 @@ class RegistryCommonElement( StructuralElement ):
     def set_name( self, name: str ):
         if name:
             self.name = name
-    
+
     def set_visibility( self, visibility: 'RegistryVisibility' ):
         if visibility:
             self.visibility = visibility
-    
+
     def set_type( self, type: 'RegistryType' ):
         if type:
             self.type = type
-    
+
 class Structure( RegistryCommonElement ):
     def __init__( self ):
         super().__init__()
         self.attributes: 'List[RegistryAttribute]' = []  # Liste vide par défaut
         self.methods: 'List[RegistryMethod]' = []  # Liste vide par défaut
-    
+
     def add_attribute( self, attribute: 'RegistryAttribute' ):
         if isinstance( attribute, RegistryAttribute ):  # Correction pour vérifier le type correct
             self.attributes.append(attribute)
             attribute.set_owner( self )
-        
+
     def add_method( self, method: 'RegistryMethod' ):
         if isinstance( method, RegistryMethod ):
             self.methods.append(method)
@@ -73,7 +72,7 @@ class Structure( RegistryCommonElement ):
 class RegistryClass( Structure ):
     def __init__( self ):
         super().__init__()
-    
+
     def buildUml(self):
         return self.name + ' {\n\t' + '\n\t'.join([attribute.buildUml() for attribute in self.attributes]) + '\n\t' + '\n\t'.join([method.buildUml() for method in self.methods]) + '\n}'
 
@@ -81,7 +80,7 @@ class RegistryClass( Structure ):
 class RegistryInterface( Structure ):
     def __init__( self ):
         super().__init__()
-        
+
     def buildUml(self):
         methods_uml = '\n    '.join([meth.buildUml() for meth in self.methods])
         return f"interface {self.name} {{\n    {methods_uml}\n}}\n"
@@ -89,29 +88,37 @@ class RegistryInterface( Structure ):
 class RegistryEnum( Structure ):
     def __init__( self ):
         super().__init__()
-        
+
     def buildUml( self ):
         return 'enum ' + self.name
 
 class RegistryAttribute( RegistryCommonElement ):
     def __init__( self ):
         super().__init__()
-    
+        self.owner = None
+
+    def set_owner( self, owner ):
+        self.owner = owner
+
     def buildUml(self):
         if self.mutability:
             return self.visibility + ' ' + self.name
         else:
             return self.visibility + ' ' + ' const ' + self.name + ' : ' + self.type
-        
+
 class RegistryMethod( RegistryCommonElement ):
     def __init__( self ):
         super().__init__()
         self.parameters: 'List[RegistryParameter]' = []
         self.abstract: bool = False
-            
+        self.owner = None
+
     def set_abstract( self, abstract: bool ):
         self.abstract = abstract
-    
+
+    def set_owner( self, owner ):
+        self.owner = owner
+
     def buildUml(self):
         parameters_uml = ', '.join([param.buildUml() for param in self.parameters])
         return f"{self.visibility.value} {self.name}({parameters_uml}) : {self.type.value}"
@@ -119,6 +126,6 @@ class RegistryMethod( RegistryCommonElement ):
 class RegistryParameter( RegistryCommonElement ):
     def __init__( self ):
         super().__init__()
-        
+
     def buildUml(self):
         return self.name + ': ' + self.type

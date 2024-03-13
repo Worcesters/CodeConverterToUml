@@ -1,9 +1,10 @@
+"""Module providing a abstract class for python."""
 from abc import ABC, abstractmethod
 from enum import Enum
 from Registry.IUmlBuilder import IUmlBuilder
 
 
-class RelationalElement(IUmlBuilder, ABC):
+class RelationalElement( IUmlBuilder, ABC ):
     """
     This class represents a relational element
     and provides methods for setting source and destination poles.
@@ -53,12 +54,33 @@ class RelationalElement(IUmlBuilder, ABC):
             Pole: The destination pole.
         """
 
-class Pole():
+class Pole:
+    """
+    This class represents a pole of a relational element.
+
+    A pole is a named connection point on a relational element.
+    """
+
     def __init__( self ) -> None:
+        """
+        Initializes a new instance of the Pole class.
+
+        Args:
+            name (str): The name of the pole.
+        """
         self.name: str = ''
         self.cardinality: int = 1
 
 class Cardinality( Enum ):
+    """
+    Enumeration of the cardinalities that a pole can have.
+
+    The cardinalities are:
+    - ZERO: Zero or no relationships.
+    - ONE: One relationship.
+    - MANY: Many relationships.
+    """
+
     ZERO = 0
     ONE = 1
     MANY = 2
