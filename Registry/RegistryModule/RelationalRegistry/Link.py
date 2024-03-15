@@ -1,5 +1,5 @@
-from abc import ABC, abstractmethod
-from Registry.RelationalElement import RelationalElement
+from abc import ABC
+from Registry.RelationalElement import Pole, RelationalElement
 
 class Link( RelationalElement, ABC ):
     """
@@ -7,13 +7,25 @@ class Link( RelationalElement, ABC ):
     It provides methods for getting the source and destination of the link.
     """
 
-    @abstractmethod
-    def get_source( self ):
-        pass
+    def __init__(self):
+        self._source = None
+        self._destination = None
 
-    @abstractmethod
-    def get_Destination( self ):
-        pass
+    def set_destination(self, pole: Pole) -> Pole:
+        previous = self._destination
+        self._destination = pole
+        return previous
+
+    def set_source(self, pole: Pole) -> Pole:
+        previous = self._source
+        self._source = pole
+        return previous
+
+    def get_destination(self) -> Pole:
+        return self._destination
+
+    def get_source(self) -> Pole:
+        return self._source
 
 class Composition( Link ):
     """
@@ -26,7 +38,7 @@ class Composition( Link ):
     """
 
     def buildUml( self ):
-        return self.get_source() + ' *-- ' + self.get_Destination()
+        return self.get_source() + ' *-- ' + self.get_destination()
 
 class Heritage( Link ):
     """
@@ -45,7 +57,7 @@ class Heritage( Link ):
         Returns:
             str: The UML representation of this heritage link.
         """
-        return self.get_source() + ' --|> ' + self.get_Destination()
+        return self.get_source() + ' --|> ' + self.get_destination()
 
 
 class Association(Link):
@@ -65,27 +77,60 @@ class Association(Link):
         Returns:
             str: The UML representation of this association link.
         """
-        return self.get_source() + ' --> ' + self.get_Destination()
+        return self.get_source() + ' --> ' + self.get_destination()
+
+class Aggregation(Link):
+    """
+    Represents an aggregation link in the system.
+
+    An aggregation link is a link that has an 'is-part-of' relationship,
+    which means that the destination is part of the source.
+
+    This class provides methods for getting the source and destination of the link.
+    """
+
+    def buildUml(self):
+        """
+        Builds the UML representation of this aggregation link.
+
+        Returns:
+            str: The UML representation of this aggregation link.
+        """
+        return self.get_source() + ' o-- ' + self.get_destination()
+
+class Implementation(Link):
+    """
+    Represents an implementation link in the system.
+
+    An implementation link is a link that has an 'implements' relationship,
+    which means that the source implements the destination.
+
+    This class provides methods for getting the source and destination of the link.
+    """
+
+    def buildUml(self):
+        """
+        Builds the UML representation of this implementation link.
+
+        Returns:
+            str: The UML representation of this implementation link.
+        """
+        return self.get_source() + ' <|.. ' + self.get_destination()
 
 
 
-class Aggregation( Link ):
-    def __init__( self ):
-        pass
+class Dependance(Link):
+    """
+    Represents a dependece link in the system.
+
+    A dependece link is a link that has a 'depends-on' relationship,
+    which means that the destination depends on the source.
+
+    This class provides methods for getting the source and destination of the link.
+    """
 
     def buildUml( self ):
-        return self.get_source() + ' o--> ' + self.get_Destination()
-
-class Implementation( Link ):
-    def __init__( self ):
-        pass
-
-    def buildUml( self ):
-        return self.get_source() + ' ..|> ' + self.get_Destination()
-
-class Dependance( Link ):
-    def __init__( self ):
-        pass
-
-    def buildUml( self ):
-        return self.get_source() + ' ..> ' + self.get_Destination()
+        """
+        A method that builds a UML representation by concatenating the source and destination.
+        """
+        return self.get_source() + ' ..> ' + self.get_destination()

@@ -8,6 +8,7 @@ from Definition.Language import Language
 from ParserModule.Parser.Interface import IParser
 
 
+
 class ParserFactory():
     """
     This class represents a factory for creating parser instances.
@@ -44,20 +45,30 @@ class ParserFactory():
         Returns:
             List[IParser]: A list of instances of the parser for the specified language.
         """
-        nom_module = ''
-        parsers = None
+
+        parsers = ['StructureParser', 'MethodParser', 'AttributeParser', ]
 
         try:
             if cls.__language is not None :
-                nom_module = f"ParserModule.Parser.{ cls.__language.name }"
-                parsers = importlib.import_module( nom_module )
+                if cls.__language == Language.PHP:
+                    from ParserModule.Parser.PHP.StructureParser import StructureParser
+                    from ParserModule.Parser.PHP.MethodParser import MethodParser
+                    from ParserModule.Parser.PHP.AttributeParser import AttributeParser
+                #elif cls.__language == Language.PYTHON:
+                    # from ParserModule.Parser.PYTHON.StructureParser import StructureParser
+                    # from ParserModule.Parser.PYTHON.MethodParser import MethodParser
+                    # from ParserModule.Parser.PYTHON.AttributeParser import AttributeParser
+                #elif cls.__language == Language.JAVA:
+                    # from ParserModule.Parser.JAVA.StructureParser import StructureParser
+                    # from ParserModule.Parser.JAVA.MethodParser import MethodParser
+                    # from ParserModule.Parser.JAVA.AttributeParser import AttributeParser
 
         except ModuleNotFoundError as exc:
             raise ImportError(f"Parser not found for the specified language. { parsers }") from exc
 
-        structure_parser: IParser = parsers.StructureParser.StructureParser()
-        method_parser: IParser = parsers.MethodParser.MethodParser()
-        attribute_parser: IParser = parsers.AttributeParser.AttributeParser()
+        structure_parser: IParser =  StructureParser()
+        method_parser: IParser = MethodParser()
+        attribute_parser: IParser = AttributeParser()
 
         parsers_list: List[IParser] = [
             structure_parser,

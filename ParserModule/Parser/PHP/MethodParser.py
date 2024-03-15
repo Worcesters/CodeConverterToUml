@@ -1,13 +1,29 @@
-from ParserModule.Parser.PHP import Parser
-from Registry.Registry import Registry
-from Registry.RegistryModule.StructuralRegistry.Structure import (RegistryMethod, RegistryParameter)
+"""
+This module imports necessary dependencies and defines the MethodParser class.
+"""
+
 import re
 
+# Import the Parser class from the PHP.Parser module
+from ParserModule.Parser.PHP.Parser import Parser
+
+# Import the Registry class from the Registry module
+from Registry.Registry import Registry
+
+# Import the necessary classes from the StructuralRegistry.Structure module
+from Registry.RegistryModule.StructuralRegistry.Structure import (RegistryMethod, RegistryParameter)
+
+
+
 class MethodParser( Parser ):
+    """
+    This class parses methods.
+    """
     def __init__( self ):
+        super().__init__()
         print('Initialisation MethodParser')
         print('└─────────────────────────│')
-        
+
 
     def parse( self, line: str, registry: Registry ):
         print('MethodParser -----> [START]')
@@ -17,10 +33,7 @@ class MethodParser( Parser ):
         for match in re.finditer( method_pattern, line ):
             params_str = match.group( 'method_params' )
             self.parse_parameters( params_str )
-            
-            param_element = RegistryParameter()
-            param_element.set_type()
-            param_element.set_name()
+
             method_element = RegistryMethod()
             method_element.set_name( match.group( 'method_name' ) )
             method_element.set_abstract( bool(match.group( 'abstract' )) )
@@ -28,11 +41,21 @@ class MethodParser( Parser ):
             method_element.set_type( self.get_type(match.group( 'return_type' )) )
 
             registry.get_active_element().add_child( method_element )
-            registry.set_active_element()
-            
+            registry.set_active_element(method_element)
+
         print('MethodParser -----> [DONE]')
 
+
     def parse_parameters( self, params_str ):
+        """
+        This function parses the parameters of a method.
+
+        Args:
+            params_str (str): The string containing the parameters.
+
+        Returns:
+            list: A list of RegistryParameter objects.
+        """
         print('parse_parameters -----> [START]')
         param_pattern = re.compile(r"""(?P<param_type>\w+)?\s*\$(?P<param_name>\w+)""")
         param_elements = []

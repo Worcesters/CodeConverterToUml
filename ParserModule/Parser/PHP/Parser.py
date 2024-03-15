@@ -1,20 +1,33 @@
-from abc import ABC, abstractmethod
-from Registry.Registry import Registry
-from ParserModule.Parser.Interface import IParser
-from typing import Optional, Type
+"""
+This module contains the Parser class.
+"""
+
+from abc import ABC
+
+# Import the RegistryVisibility and RegistryType enums from the StructuralRegistry module.
 from Registry.RegistryModule.StructuralRegistry.Structure import (RegistryVisibility, RegistryType)
 
+# Import the IParser interface from the Parser module.
+from ParserModule.Parser.Interface import IParser
 
-class Parser( IParser ):
 
+class Parser( IParser, ABC ):
+    """
+    The Parser class represents a Parser. It inherits from the IParser ABC (Abstract Base Class).
+    """
     def __init__( self ):
-        self.visibility_mapping: dict = {
+        """
+        Initialize the Parser with the visibility and type mappings.
+        """
+        # Mapping for visibility
+        self.visibility_mapping = {
             'public': RegistryVisibility.PUBLIC,
             'protected': RegistryVisibility.PROTECTED,
             'private': RegistryVisibility.PRIVATE
         }
-        
-        self.type_mapping: dict = {
+
+        # Mapping for types
+        self.type_mapping = {
             'string': RegistryType.STRING,
             'int': RegistryType.INT,
             'float': RegistryType.FLOAT,
@@ -37,9 +50,27 @@ class Parser( IParser ):
             'keyword': RegistryType.KEYWORD,
             'unknown': RegistryType.UNKNOWN
         }
-        
-    def get_visibility( self, visibility: str ) -> RegistryVisibility:
-        return self.visibility_mapping[visibility] if self.visibility_mapping[visibility] is not None else RegistryVisibility.PUBLIC  
-    
-    def get_type( self, type: str ) -> RegistryType:
-        return self.type_mapping[type] if self.type_mapping[type] is not None else RegistryType.UNKNOWN  
+
+    def get_visibility(self, visibility: str) -> RegistryVisibility:
+        """
+        Get the visibility from the visibility mapping.
+
+        Args:
+            visibility (str): The visibility to get.
+
+        Returns:
+            RegistryVisibility: The corresponding RegistryVisibility.
+        """
+        return self.visibility_mapping.get(visibility, RegistryVisibility.PUBLIC)
+
+    def get_type(self, element_type: str) -> RegistryType:
+        """
+        Get the type from the type mapping.
+
+        Args:
+            element_type (str): The type to get.
+
+        Returns:
+            RegistryType: The corresponding RegistryType.
+        """
+        return self.type_mapping.get(element_type, RegistryType.UNKNOWN)

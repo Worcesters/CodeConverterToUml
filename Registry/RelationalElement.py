@@ -9,8 +9,6 @@ class RelationalElement( IUmlBuilder, ABC ):
     This class represents a relational element
     and provides methods for setting source and destination poles.
     """
-    def __init__( self ):
-        pass
 
     @abstractmethod
     def set_source( self, pole: 'Pole' ) -> 'Pole':
