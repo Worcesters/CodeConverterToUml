@@ -2,6 +2,7 @@ import re
 from ParserModule.Parser.PHP.Parser import Parser
 from Registry.Registry import Registry
 from Registry.RegistryModule.StructuralRegistry.Structure import RegistryAttribute
+from TreeModule.TreeElement import TreeElement
 
 
 class AttributeParser( Parser ):
@@ -42,7 +43,13 @@ class AttributeParser( Parser ):
             attribute_element.set_visibility(self.get_visibility(match.group('visibility')))
 
             # Add the attribute to the registry
-            registry.get_active_element().add_child(attribute_element)
-            registry.set_active_element(attribute_element)
+            if attribute_element is not None:
+                # print(f"attribute_element is an instance of RegistryAttribute: {isinstance(attribute_element, RegistryAttribute)}")
+                # active_element = registry.get_active_element()
+                #print(f"Type of active_element: {type(active_element)}")
+
+                registry.get_active_element().add_child( TreeElement(attribute_element) )
+                registry.set_active_element(attribute_element)
+
 
         print('AttributeParser -----> [DONE]')

@@ -11,8 +11,9 @@ from ParserModule.Parser.PHP.Parser import Parser
 from Registry.Registry import Registry
 
 # Import the necessary classes from the StructuralRegistry.Structure module
-from Registry.RegistryModule.StructuralRegistry.Structure import (RegistryMethod, RegistryParameter)
+from Registry.RegistryModule.StructuralRegistry.Structure import RegistryMethod, RegistryParameter
 
+from TreeModule.TreeElement import TreeElement
 
 
 class MethodParser( Parser ):
@@ -40,8 +41,9 @@ class MethodParser( Parser ):
             method_element.set_visibility( self.get_visibility(match.group( 'visibility' )) )
             method_element.set_type( self.get_type(match.group( 'return_type' )) )
 
-            registry.get_active_element().add_child( method_element )
-            registry.set_active_element(method_element)
+            if method_element is not None:
+                registry.get_active_element().add_child( TreeElement(method_element) )
+                registry.set_active_element(method_element)
 
         print('MethodParser -----> [DONE]')
 

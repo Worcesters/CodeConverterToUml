@@ -4,6 +4,8 @@ from Registry.Registry import Registry
 from Registry.RegistryModule.RelationalRegistry.Link import (Heritage, Implementation, Pole)
 from Registry.RegistryModule.StructuralRegistry.Structure import (RegistryClass, RegistryEnum, RegistryInterface)
 
+from TreeModule.TreeElement import TreeElement
+
 class StructureParser( Parser ):
     """
     Structure parser for PHP code.
@@ -69,7 +71,8 @@ class StructureParser( Parser ):
                     destination_pole_implements.name = match.group('implements')
                     implementation_element.set_destination(destination_pole_implements)
 
-                registry.get_active_element().add_child(structure_element)
-                registry.set_active_element(structure_element)
+                if structure_element is not None:
+                    registry.get_active_element().add_child( TreeElement(structure_element) )
+                    registry.set_active_element(structure_element)
 
             print('StructureParser -----> [DONE]')

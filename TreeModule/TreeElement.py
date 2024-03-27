@@ -1,4 +1,5 @@
-from typing import List
+from typing import List, Optional
+
 
 class TreeElement:
     def __init__( self, element ):
@@ -17,7 +18,7 @@ class TreeElement:
         for child in children:
             self.add_child(child)
 
-    def get_child( self, element ) -> 'TreeElement':
+    def get_child( self, element ) -> Optional['TreeElement']:
         for child in self.children:
             if child.element == element:
                 return child
