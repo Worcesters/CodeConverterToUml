@@ -30,7 +30,7 @@ class ParserManager():
         #TODO : Ajouter un objet de configuration pour la racine projet
         print('initialisation Registry')
         print('└────────────────────│')
-        self.registry = Registry( RegistryProgram )
+        self.registry = Registry( RegistryProgram() )
         print('Registry -----> [DONE]')
         print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
         print('└───────────────────────────────────────────')

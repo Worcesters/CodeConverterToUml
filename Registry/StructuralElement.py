@@ -27,9 +27,12 @@ class RegistryProgram( StructuralElement ):
     def buildUml( self ):
         uml_str = ''
         root = self.get_root()
+        print(root)
         if root:
             for element in root.get_children():
+                print(element)
                 uml_str += element.buildUml()
+                print( f'str {uml_str}')
 
         return f"""
                 @startuml

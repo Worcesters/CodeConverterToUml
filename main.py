@@ -103,8 +103,8 @@ def main():
                 print('Restitution des informations')
                 print('└────────────────────────│')
 
-                result = my_tree.get_root()
-                print(result)
+                # result = my_tree.get_root()
+                # print(result)
 
                 relation = RegistryProgram()
                 result = relation.buildUml()
