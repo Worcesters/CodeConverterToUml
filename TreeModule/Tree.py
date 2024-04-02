@@ -6,6 +6,6 @@ class Tree:
 
     def set_root(self, element):
         self.root = TreeElement(element)
-        
+
     def get_root( self ):
         return self.root

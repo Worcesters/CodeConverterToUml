@@ -46,10 +46,15 @@ class AttributeParser( Parser ):
             if attribute_element is not None:
                 # print(f"attribute_element is an instance of RegistryAttribute: {isinstance(attribute_element, RegistryAttribute)}")
                 # active_element = registry.get_active_element()
-                #print(f"Type of active_element: {type(active_element)}")
-
-                registry.get_active_element().add_child( TreeElement(attribute_element) )
+                # print(f"Type of active_element: {type(active_element)}")
+                active_element = registry.get_active_element()
+                active_element.add_child(TreeElement(attribute_element))
                 registry.set_active_element(attribute_element)
+
+                # Print the children of the active element
+                # print('Children of Active Element:')
+                # for child in active_element.get_children():
+                #     print(child)
 
 
         print('AttributeParser -----> [DONE]')

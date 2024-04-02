@@ -4,7 +4,8 @@ from tkinter import filedialog
 from ParserModule.ParserManager import ParserManager
 from ParserModule.Factory import ParserFactory
 from Definition.Language import Language
-from Registry.Registry import Registry
+from Registry.StructuralElement import RegistryProgram
+from TreeModule.Tree import Tree
 
 
 def detect_language(file_path):
@@ -60,6 +61,7 @@ def main():
         for file_path in file_paths:
             detected_language = detect_language(file_path)
             if detected_language:
+
                 print(f"Langue détectée pour {file_path}: {detected_language}")
                 print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
                 print('└───────────────────────────────────────────')
@@ -100,7 +102,13 @@ def main():
 
                 print('Restitution des informations')
                 print('└────────────────────────│')
-                print(parser_manager.registry.get_root().get_children())
+
+                result = my_tree.get_root()
+                print(result)
+
+                relation = RegistryProgram()
+                result = relation.buildUml()
+                print(result)
             else:
                 print( '┌───────────────────────────────────────────────────┐')
                 print( '│                     ERREUR                        │')
