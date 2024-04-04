@@ -42,7 +42,8 @@ class MethodParser( Parser ):
             method_element.set_type( self.get_type(match.group( 'return_type' )) )
 
             if method_element is not None:
-                registry.get_active_element().add_child( TreeElement(method_element) )
+                active_element = registry.get_active_element()
+                TreeElement(active_element).add_child(method_element)
                 registry.set_active_element(method_element)
 
         print('MethodParser -----> [DONE]')

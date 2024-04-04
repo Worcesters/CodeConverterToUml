@@ -41,14 +41,13 @@ class AttributeParser( Parser ):
             # Set the attribute name and visibility
             attribute_element.set_name(match.group('attribute_name'))
             attribute_element.set_visibility(self.get_visibility(match.group('visibility')))
-
             # Add the attribute to the registry
             if attribute_element is not None:
                 # print(f"attribute_element is an instance of RegistryAttribute: {isinstance(attribute_element, RegistryAttribute)}")
                 # active_element = registry.get_active_element()
                 # print(f"Type of active_element: {type(active_element)}")
                 active_element = registry.get_active_element()
-                active_element.add_child(TreeElement(attribute_element))
+                TreeElement(active_element).add_child(attribute_element)
                 registry.set_active_element(attribute_element)
 
                 # Print the children of the active element

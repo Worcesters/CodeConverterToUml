@@ -45,6 +45,7 @@ class RegistryCommonElement(StructuralElement):
             visibility (RegistryVisibility): The visibility of the element.
             element_type (RegistryType): The type of the element.
         """
+        super().__init__()
         self.mutability = True  # Whether the element is mutable
         self.name = name  # The name of the element
         self.visibility = visibility  # The visibility of the element
@@ -111,7 +112,7 @@ class Structure( RegistryCommonElement ):
         """
         if isinstance(attribute, RegistryAttribute):  # Check the correct element_type
             self.attributes.append(attribute)
-            attribute.set_owner(self)
+            attribute.set_parent(self)
 
     def add_method( self, method: 'RegistryMethod' ):
         """
@@ -122,7 +123,7 @@ class Structure( RegistryCommonElement ):
         """
         if isinstance(method, RegistryMethod):
             self.methods.append(method)
-            method.set_owner(self)
+            method.set_parent(self)
 
 
 class RegistryClass( Structure ):
@@ -190,14 +191,8 @@ class RegistryAttribute(RegistryCommonElement):
         super().__init__()
         self.owner = None
 
-    def set_owner(self, owner):
-        """
-        Set the owner of the attribute.
-
-        Args:
-            owner: The new owner.
-        """
-        self.owner = owner
+    def set_parent(self, parent):
+        self.owner = parent
 
     def buildUml(self):
         """
@@ -231,14 +226,8 @@ class RegistryMethod(RegistryCommonElement):
         """
         self.abstract = abstract
 
-    def set_owner(self, owner):
-        """
-        Set the owner of the method.
-
-        Args:
-            owner: The new owner.
-        """
-        self.owner = owner
+    def set_parent(self, parent):
+        self.owner = parent
 
     def buildUml(self):
         parameters_uml = ', '.join([param.buildUml() for param in self.parameters])

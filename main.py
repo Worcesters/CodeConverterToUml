@@ -6,6 +6,7 @@ from ParserModule.Factory import ParserFactory
 from Definition.Language import Language
 from Registry.StructuralElement import RegistryProgram
 from TreeModule.Tree import Tree
+from TreeModule.TreeElement import TreeElement
 
 
 def detect_language(file_path):

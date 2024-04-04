@@ -14,10 +14,14 @@ class TreeElement:
         print(f"Setting parent to: {parent}")
         self.parent = parent
 
-    def add_child(self, child: 'TreeElement') -> None:
-        child.set_parent(self)
-        self.children.append(child)
-        print(f"Added child: {child} to parent: {self}")
+    def add_child(self, child) -> None:
+        # Vérifier si l'objet passé en paramètre a une méthode set_parent
+        if hasattr(child, 'set_parent'):
+            child.set_parent(self)
+            self.children.append(child)
+            print(f"Added child: {child} to parent: {self}")
+        else:
+            print(f"Cannot add child. Invalid type.")
 
     def add_children(self, children: List['TreeElement']) -> None:
         for child in children:

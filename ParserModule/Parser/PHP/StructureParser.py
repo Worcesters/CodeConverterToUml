@@ -72,7 +72,8 @@ class StructureParser( Parser ):
                     implementation_element.set_destination(destination_pole_implements)
 
                 if structure_element is not None:
-                    registry.get_active_element().add_child( TreeElement(structure_element) )
+                    active_element = registry.get_active_element()
+                    TreeElement(active_element).add_child(structure_element)
                     registry.set_active_element(structure_element)
 
             print('StructureParser -----> [DONE]')
