@@ -22,12 +22,12 @@ class MethodParser( Parser ):
     """
     def __init__( self ):
         super().__init__()
-        print('Initialisation MethodParser')
-        print('└─────────────────────────│')
+        # print('Initialisation MethodParser')
+        # print('└─────────────────────────│')
 
 
     def parse( self, line: str, registry: Registry ):
-        print('MethodParser -----> [START]')
+        # print('MethodParser -----> [START]')
         # Récupérer le motif regex pour les méthodes
         method_pattern = re.compile(r"""(?P<visibility>public|protected|private)?\s*(?P<abstract>abstract\s+)?function\s+(?P<method_name>\w+)\s*\((?P<method_params>.*?)\)(?:\s*:\s*(?P<return_type>\w+))?""", re.MULTILINE | re.DOTALL)
 
@@ -46,7 +46,7 @@ class MethodParser( Parser ):
                 TreeElement(active_element).add_child(method_element)
                 registry.set_active_element(method_element)
 
-        print('MethodParser -----> [DONE]')
+        # print('MethodParser -----> [DONE]')
 
 
     def parse_parameters( self, params_str ):
@@ -59,7 +59,7 @@ class MethodParser( Parser ):
         Returns:
             list: A list of RegistryParameter objects.
         """
-        print('parse_parameters -----> [START]')
+        # print('parse_parameters -----> [START]')
         param_pattern = re.compile(r"""(?P<param_type>\w+)?\s*\$(?P<param_name>\w+)""")
         param_elements = []
         for match in re.finditer( param_pattern, params_str ):
@@ -67,5 +67,5 @@ class MethodParser( Parser ):
             param_element.set_name( match.group('param_name') )
             param_element.set_type( self.get_type(match.group( 'param_type' )) )
             param_elements.append( param_element )
-        print('parse_parameters -----> [DONE]')
+        # print('parse_parameters -----> [DONE]')
         return param_elements

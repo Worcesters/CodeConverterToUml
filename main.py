@@ -105,7 +105,6 @@ def main():
                 print('└────────────────────────│')
 
                 # result = my_tree.get_root()
-                # print(result)
 
                 relation = RegistryProgram()
                 result = relation.buildUml()

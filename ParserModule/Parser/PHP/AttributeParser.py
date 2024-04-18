@@ -14,8 +14,8 @@ class AttributeParser( Parser ):
 
     def __init__( self ):
         super().__init__()
-        print('Initialisation AttributeParser')
-        print('└────────────────────────────│')
+        # print('Initialisation AttributeParser')
+        # print('└────────────────────────────│')
 
     def parse(self, line: str, registry: Registry):
         """
@@ -27,7 +27,7 @@ class AttributeParser( Parser ):
         """
 
         # Print that parsing has started
-        print('AttributeParser -----> [START]')
+        # print('AttributeParser -----> [START]')
 
         # Define the pattern to find PHP attributes
         attribute_pattern = re.compile(r"""(?P<visibility>public|protected|private)?\s*\$(?P<attribute_name>\w+)""", re.MULTILINE | re.DOTALL)
@@ -56,4 +56,4 @@ class AttributeParser( Parser ):
                 #     print(child)
 
 
-        print('AttributeParser -----> [DONE]')
+        # print('AttributeParser -----> [DONE]')

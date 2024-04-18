@@ -44,7 +44,6 @@ class ParserManager():
         """
 
         self.reset_parsers()
-
         for parser in parsers:
             self.parsers.append( parser )
 
@@ -66,9 +65,7 @@ class ParserManager():
                 code = file.read()
 
             for line in code.split('\n'):
-                # Iterate over all the parsers and parse the current file line
                 for parser in self.parsers:
-                    # Parse the line with the current parser
                     parser.parse( line, self.registry )
 
     def parse_files(self, file_paths):

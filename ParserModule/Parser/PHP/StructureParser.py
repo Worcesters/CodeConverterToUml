@@ -17,12 +17,12 @@ class StructureParser( Parser ):
 
     def __init__( self ):
         super().__init__()
-        print('Initialisation StructureParser')
-        print('└────────────────────────────│')
+        # print('Initialisation StructureParser')
+        # print('└────────────────────────────│')
 
 
     def parse(self, line: str, registry: Registry):
-        print('StructureParser -----> [START]')
+        # print('StructureParser -----> [START]')
 
         structure_pattern = re.compile(
             r"""(?P<type>class|interface|enum)\s+(?P<name>\w+)\s*"""
@@ -41,7 +41,6 @@ class StructureParser( Parser ):
 
             structure_element_type = match.group('type')
             structure_element = type_to_class.get(structure_element_type, lambda: None)()
-
             structure_element.set_name(match.group('name'))
 
             if match.group('extends') or match.group('implements'):
@@ -71,9 +70,9 @@ class StructureParser( Parser ):
                     destination_pole_implements.name = match.group('implements')
                     implementation_element.set_destination(destination_pole_implements)
 
-                if structure_element is not None:
-                    active_element = registry.get_active_element()
-                    TreeElement(active_element).add_child(structure_element)
-                    registry.set_active_element(structure_element)
+            if structure_element is not None:
+                active_element = registry.get_active_element()
+                TreeElement(active_element).add_child(structure_element)
+                registry.set_active_element(structure_element)
 
-            print('StructureParser -----> [DONE]')
+        # print('StructureParser -----> [DONE]')

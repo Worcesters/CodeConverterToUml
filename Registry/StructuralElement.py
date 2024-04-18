@@ -1,9 +1,9 @@
 """Module providing a abstract class for python."""
 from abc import ABC, abstractmethod
-from TreeModule.Tree import Tree
+from TreeModule.TreeElement import TreeElement
 from Registry.IUmlBuilder import IUmlBuilder
 
-class StructuralElement( Tree, IUmlBuilder, ABC ):
+class StructuralElement( TreeElement, IUmlBuilder, ABC ):
     """
     Base class for all structural elements that can be represented in UML
     """
@@ -15,6 +15,7 @@ class StructuralElement( Tree, IUmlBuilder, ABC ):
 
         :return: UML representation of the structural element
         """
+        print(f'Building uml for {self.__class__.__name__}')
 
 class RegistryProgram( StructuralElement ):
     """
@@ -23,15 +24,17 @@ class RegistryProgram( StructuralElement ):
     The registry program is the root of the tree and contains all the other
     structural elements of the code.
     """
-
     def buildUml( self ):
+
+        print(f'Building UML for {self.__class__.__name__}')
+
         uml_str = ''
-        root =  self.get_root()
-        print(root)
-        for element in root.get_children():
-            print(element)
+        for element in self.get_children():
+            print(f'Adding UML for {element.__class__.__name__}')
+            print(f'element.buildUml(): {element.buildUml()}')
             uml_str += element.buildUml()
-            print( f'str {uml_str}')
+
+        print(f'Finished building UML for {self.__class__.__name__}')
 
         return f"""
                 @startuml

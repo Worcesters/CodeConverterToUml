@@ -1,21 +1,11 @@
 from TreeModule.TreeElement import TreeElement
 
 class Tree:
-    root = None
+    def __init__(self) -> None:
+        self.root = None
 
     def set_root(self, element):
-        if isinstance(element, TreeElement):
-            Tree.root = element
-        else:
-            Tree.root = TreeElement(element)
-        print('TREE set_root() -----> [DONE]')
-        print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
-        print('└───────────────────────────────────────────')
+        self.root = TreeElement(element)
 
     def get_root(self):
-        if Tree.root is None:
-            print("WARNING: Root element is not set.")
-        print('TREE get_root() -----> [DONE]')
-        print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
-        print('└───────────────────────────────────────────')
-        return Tree.root
+        return self.root

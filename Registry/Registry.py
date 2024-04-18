@@ -1,5 +1,7 @@
 from TreeModule.Tree import Tree
+from TreeModule.TreeElement import TreeElement
 from Registry.StructuralElement import StructuralElement
+from Registry.StructuralElement import RegistryProgram
 
 class Registry( Tree ):
     """
@@ -10,18 +12,18 @@ class Registry( Tree ):
     current structural element.
     """
 
-    root_element: StructuralElement
-    active_element: StructuralElement
-
     def __init__( self, root_element ):
         super().__init__()
-        self.set_root( root_element )
+
+        if not isinstance(root_element, RegistryProgram):
+            raise TypeError("The root_element should be an instance of RegistryProgram.")
+
+        if self.get_root() is None:
+            self.set_root( TreeElement(root_element) )
         self.set_active_element( root_element )
 
     def set_active_element( self, active_element: StructuralElement ):
-        """Set the active element of the registry"""
         self.active_element = active_element
 
     def get_active_element( self ):
-        """Get the active element of the registry"""
         return self.active_element

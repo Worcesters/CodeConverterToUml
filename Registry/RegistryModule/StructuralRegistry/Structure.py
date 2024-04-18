@@ -45,7 +45,7 @@ class RegistryCommonElement(StructuralElement):
             visibility (RegistryVisibility): The visibility of the element.
             element_type (RegistryType): The type of the element.
         """
-        super().__init__()
+
         self.mutability = True  # Whether the element is mutable
         self.name = name  # The name of the element
         self.visibility = visibility  # The visibility of the element
@@ -183,7 +183,7 @@ class RegistryEnum( Structure ):
         return f"enum {self.name}"
 
 
-class RegistryAttribute(RegistryCommonElement):
+class RegistryAttribute( RegistryCommonElement ):
     """
     Attribute structure.
     """
@@ -207,7 +207,7 @@ class RegistryAttribute(RegistryCommonElement):
             return f"{self.visibility} const {self.name} : {self.element_type}"
 
 
-class RegistryMethod(RegistryCommonElement):
+class RegistryMethod( RegistryCommonElement ):
     """
     Method structure.
     """
