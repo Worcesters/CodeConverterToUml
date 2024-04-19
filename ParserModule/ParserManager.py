@@ -10,6 +10,7 @@ from typing import List
 
 from Registry.Registry import Registry
 from Registry.StructuralElement import RegistryProgram
+from TreeModule.TreeElement import TreeElement
 
 
 # --------------------------------------------------------------------------- #
@@ -27,13 +28,12 @@ class ParserManager():
     """
     def __init__( self ):
         self.parsers = []
-        #TODO : Ajouter un objet de configuration pour la racine projet
-        print('initialisation Registry')
-        print('└────────────────────│')
-        self.registry = Registry( RegistryProgram() )
-        print('Registry -----> [DONE]')
-        print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
-        print('└───────────────────────────────────────────')
+        self.config = {'root_project': 'current_project'}
+        self.tree_element = TreeElement()
+        self.registry = Registry( RegistryProgram(self.config, self.tree_element) )
+        # print('Registry -----> [DONE]')
+        # print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
+        # print('└───────────────────────────────────────────')
 
     def set_parser( self, parsers ):
         """
@@ -66,7 +66,7 @@ class ParserManager():
 
             for line in code.split('\n'):
                 for parser in self.parsers:
-                    parser.parse( line, self.registry )
+                    parser.parse( line, self.registry, self.tree_element )
 
     def parse_files(self, file_paths):
         """
@@ -84,7 +84,7 @@ class ParserManager():
                 # Iterate over all the parsers and parse the current file line
                 for parser in self.parsers:
                     # Parse the line with the current parser
-                    parser.parse(line, self.registry)
+                    parser.parse( line, self.registry, self.tree_element )
         for file_path in file_paths:
             self.parse_file( file_path )
 

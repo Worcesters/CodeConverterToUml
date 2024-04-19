@@ -21,7 +21,7 @@ class StructureParser( Parser ):
         # print('└────────────────────────────│')
 
 
-    def parse(self, line: str, registry: Registry):
+    def parse(self, line: str, registry: Registry, tree_element: TreeElement):
         # print('StructureParser -----> [START]')
 
         structure_pattern = re.compile(
@@ -71,8 +71,9 @@ class StructureParser( Parser ):
                     implementation_element.set_destination(destination_pole_implements)
 
             if structure_element is not None:
-                active_element = registry.get_active_element()
-                TreeElement(active_element).add_child(structure_element)
-                registry.set_active_element(structure_element)
+                active_tree_element = registry.get_active_element()
+                tree_element.add_child(structure_element)
+                registry.set_active_element(tree_element)
+
 
         # print('StructureParser -----> [DONE]')

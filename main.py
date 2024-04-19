@@ -4,10 +4,6 @@ from tkinter import filedialog
 from ParserModule.ParserManager import ParserManager
 from ParserModule.Factory import ParserFactory
 from Definition.Language import Language
-from Registry.StructuralElement import RegistryProgram
-from TreeModule.Tree import Tree
-from TreeModule.TreeElement import TreeElement
-
 
 def detect_language(file_path):
     """
@@ -104,10 +100,10 @@ def main():
                 print('Restitution des informations')
                 print('└────────────────────────│')
 
-                # result = my_tree.get_root()
+                root_program = parser_manager.registry.get_root().element
 
-                relation = RegistryProgram()
-                result = relation.buildUml()
+                # Now, you can build UML from the root of the Registry program
+                result = root_program.buildUml()
                 print(result)
             else:
                 print( '┌───────────────────────────────────────────────────┐')
@@ -117,13 +113,13 @@ def main():
                 print(file_path)
 
     except Exception as e:
+
         print( '┌───────────────────────────────────────────────────┐')
         print( '│                     ERREUR                        │')
         print( '│            Une erreur est survenue                │')
         print( '└───────────────────────────────────────────────────┘')
-        print(e)
         # Consignation de l'erreur
-        raise NotImplementedError("Une erreur non spécifiée a été détectée !")
+        raise NotImplementedError(f"Une erreur non spécifiée a été détectée ! {e}")
 
 if __name__ == "__main__":
     main()

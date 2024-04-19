@@ -17,7 +17,7 @@ class AttributeParser( Parser ):
         # print('Initialisation AttributeParser')
         # print('└────────────────────────────│')
 
-    def parse(self, line: str, registry: Registry):
+    def parse( self, line: str, registry: Registry, tree_element: TreeElement ):
         """
         Parse a PHP line and add attributes to the registry.
 
@@ -43,17 +43,6 @@ class AttributeParser( Parser ):
             attribute_element.set_visibility(self.get_visibility(match.group('visibility')))
             # Add the attribute to the registry
             if attribute_element is not None:
-                # print(f"attribute_element is an instance of RegistryAttribute: {isinstance(attribute_element, RegistryAttribute)}")
-                # active_element = registry.get_active_element()
-                # print(f"Type of active_element: {type(active_element)}")
-                active_element = registry.get_active_element()
-                TreeElement(active_element).add_child(attribute_element)
-                registry.set_active_element(attribute_element)
-
-                # Print the children of the active element
-                # print('Children of Active Element:')
-                # for child in active_element.get_children():
-                #     print(child)
-
-
-        # print('AttributeParser -----> [DONE]')
+                active_tree_element = registry.get_active_element()
+                tree_element.add_child(attribute_element)
+                registry.set_active_element(tree_element)

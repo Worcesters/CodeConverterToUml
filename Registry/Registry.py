@@ -20,6 +20,7 @@ class Registry( Tree ):
 
         if self.get_root() is None:
             self.set_root( TreeElement(root_element) )
+            print(f"Registry root: {self.get_root()}")
         self.set_active_element( root_element )
 
     def set_active_element( self, active_element: StructuralElement ):

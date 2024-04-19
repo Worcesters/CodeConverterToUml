@@ -26,7 +26,7 @@ class MethodParser( Parser ):
         # print('└─────────────────────────│')
 
 
-    def parse( self, line: str, registry: Registry ):
+    def parse( self, line: str, registry: Registry, tree_element: TreeElement ):
         # print('MethodParser -----> [START]')
         # Récupérer le motif regex pour les méthodes
         method_pattern = re.compile(r"""(?P<visibility>public|protected|private)?\s*(?P<abstract>abstract\s+)?function\s+(?P<method_name>\w+)\s*\((?P<method_params>.*?)\)(?:\s*:\s*(?P<return_type>\w+))?""", re.MULTILINE | re.DOTALL)
@@ -42,9 +42,9 @@ class MethodParser( Parser ):
             method_element.set_type( self.get_type(match.group( 'return_type' )) )
 
             if method_element is not None:
-                active_element = registry.get_active_element()
-                TreeElement(active_element).add_child(method_element)
-                registry.set_active_element(method_element)
+                active_tree_element = registry.get_active_element()
+                tree_element.add_child(method_element)
+                registry.set_active_element(tree_element)
 
         # print('MethodParser -----> [DONE]')
 
