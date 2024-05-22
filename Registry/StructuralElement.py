@@ -39,6 +39,7 @@ class RegistryProgram( StructuralElement ):
         for element in self.tree_element.get_children():
             # print(f'Adding UML for {element.__class__.__name__}')
             # print(f'element.buildUml(): {element.buildUml()}')
+            # print(element)
             uml_str += element.buildUml()
 
         return f"""

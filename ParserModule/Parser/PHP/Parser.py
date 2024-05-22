@@ -1,7 +1,3 @@
-"""
-This module contains the Parser class.
-"""
-
 from abc import ABC
 
 # Import the RegistryVisibility and RegistryType enums from the StructuralRegistry module.
@@ -61,7 +57,7 @@ class Parser( IParser, ABC ):
         Returns:
             RegistryVisibility: The corresponding RegistryVisibility.
         """
-        return self.visibility_mapping.get(visibility, RegistryVisibility.PUBLIC)
+        return self.visibility_mapping.get(visibility, RegistryVisibility.PUBLIC).value
 
     def get_type(self, element_type: str) -> RegistryType:
         """
@@ -73,4 +69,4 @@ class Parser( IParser, ABC ):
         Returns:
             RegistryType: The corresponding RegistryType.
         """
-        return self.type_mapping.get(element_type, RegistryType.UNKNOWN)
+        return self.type_mapping.get(element_type, RegistryType.UNKNOWN).value

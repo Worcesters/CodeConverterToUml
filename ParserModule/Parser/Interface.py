@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from Registry.Registry import Registry
+from TreeModule.TreeElement import TreeElement
 
 class IParser( ABC ):
     """
@@ -9,15 +10,16 @@ class IParser( ABC ):
     """
 
     @abstractmethod
-    def parse(self, line: str, registry: 'Registry') -> None:
+    def parse(self, line: str, registry: 'Registry', tree_element: 'TreeElement') -> None:
         """
-        Parse a line of code and update the registry accordingly.
+        Parses a single line of code and updates the registry and the active tree element.
 
-        Args:
-            line (str): The line of code to parse.
-            registry (Registry): The registry to update.
+        Parameters:
+            line: The line of code to parse.
+            registry: The registry to update.
+            tree_element: The active tree element to update.
 
         Raises:
-            NotImplementedError: If the method is not implemented in a subclass.
+            NotImplementedError: If the method is not overridden in a subclass.
         """
         raise NotImplementedError("La méthode parse doit être implémentée dans les sous-classes.")

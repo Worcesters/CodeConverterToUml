@@ -15,32 +15,28 @@ class StructureParser( Parser ):
     added to the registry.
     """
 
-    def __init__( self ):
-        super().__init__()
-        # print('Initialisation StructureParser')
-        # print('└────────────────────────────│')
-
+    # def __init__( self ):
+    #     super().__init__()
 
     def parse(self, line: str, registry: Registry, tree_element: TreeElement):
-        # print('StructureParser -----> [START]')
-
         structure_pattern = re.compile(
-            r"""(?P<type>class|interface|enum)\s+(?P<name>\w+)\s*"""
-            r"""(?:extends\s+(?P<extends>\w+)\s*)?"""
-            r"""(?:implements\s+(?P<implements>[\w\s,]+))?""",
-            re.MULTILINE | re.DOTALL
+            r"""\b(?P<type>class|interface|enum)\s+(?P<name>[A-Z][\w]*)\b"""  # Match the type and name.
+            r"""(?:\s+extends\s+(?P<extends>[\\\w]+))?"""  # Optionally match the 'extends' clause.
+            r"""(?:\s+implements\s+(?P<implements>(?:[\\\w]+\s*,\s*)*[\\\w]+))?""",  # Optionally match the 'implements' clause.
+            re.VERBOSE | re.MULTILINE | re.DOTALL
         )
 
         for match in re.finditer(structure_pattern, line):
-
-            type_to_class = {
-                'class': RegistryClass,
-                'interface': RegistryInterface,
-                'enum': RegistryEnum
-            }
-
             structure_element_type = match.group('type')
-            structure_element = type_to_class.get(structure_element_type, lambda: None)()
+
+            if (structure_element_type == 'enum'):
+                structure_element = RegistryEnum()
+            elif (structure_element_type == 'interface'):
+                structure_element = RegistryInterface()
+            else:
+                print('class detect')
+                structure_element = RegistryClass()
+
             structure_element.set_name(match.group('name'))
 
             if match.group('extends') or match.group('implements'):
@@ -71,6 +67,7 @@ class StructureParser( Parser ):
                     implementation_element.set_destination(destination_pole_implements)
 
             if structure_element is not None:
+                print(structure_element)
                 active_tree_element = registry.get_active_element()
                 tree_element.add_child(structure_element)
                 registry.set_active_element(tree_element)

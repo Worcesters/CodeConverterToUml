@@ -3,11 +3,38 @@ from typing import List
 from Registry.StructuralElement import StructuralElement
 
 class RegistryVisibility( Enum ):
+    """
+    The RegistryVisibility Enum represents the different visibility
+    modifiers that can be used to indicate how an element can be
+    accessed from outside its defining scope.
+
+    Attributes:
+        PUBLIC: The public visibility modifier.
+        PROTECTED: The protected visibility modifier.
+        PRIVATE: The private visibility modifier.
+    """
     PUBLIC = "+"
     PROTECTED = "#"
     PRIVATE = "-"
 
 class RegistryType( Enum ):
+    """
+    The RegistryType Enum represents the different types
+    of elements that can be stored in the registry.
+
+    Attributes:
+        STRING: The string type.
+        INT: The integer type.
+        FLOAT: The float type.
+        BOOL: The boolean type.
+        ARRAY: The array type.
+        OBJECT: The object type.
+        NULL: The null type.
+        VOID: The void type.
+        RESOURCE: The resource type.
+        MIXED: The mixed type.
+    """
+
     STRING = "string"
     INT = "int"
     FLOAT = "float"
@@ -130,11 +157,12 @@ class RegistryClass( Structure ):
     """
     Class structure.
     """
-    def __init__( self ):
-        """
-        Initialize a new class structure.
-        """
-        super().__init__()
+    # def __init__( self ):
+    #     """
+    #     Initialize a new class structure.
+    #     """
+    #     super().__init__()
+
 
     def buildUml( self ):
         """
@@ -143,17 +171,20 @@ class RegistryClass( Structure ):
         Returns:
             str: The UML representation of the class.
         """
+
+        print('class builder')
         attributes_uml = '\n\t'.join([attr.buildUml() for attr in self.attributes])
         methods_uml = '\n\t'.join([meth.buildUml() for meth in self.methods])
-        return f"class {self.name} {{\n\t{attributes_uml}\n\t{methods_uml}\n}}"
+        class_uml = f"class {self.name} {{\n\t{attributes_uml}\n\t{methods_uml}\n}}\n"
+        return class_uml
 
 
 class RegistryInterface( Structure ):
     """
     Interface structure.
     """
-    def __init__( self ):
-        super().__init__()
+    # def __init__( self ):
+    #     super().__init__()
 
     def buildUml( self ):
         """
@@ -162,16 +193,17 @@ class RegistryInterface( Structure ):
         Returns:
             str: The UML representation of the interface.
         """
+        print('interface builder')
         methods_uml = '\n    '.join([meth.buildUml() for meth in self.methods])
-        return f"interface {self.name} {{\n    {methods_uml}\n}}"
+        return f"interface {self.name} {{\n {methods_uml}\n}}\n"
 
 
 class RegistryEnum( Structure ):
     """
     Enum structure.
     """
-    def __init__(self):
-        super().__init__()
+    # def __init__(self):
+    #     super().__init__()
 
     def buildUml(self):
         """
@@ -180,7 +212,8 @@ class RegistryEnum( Structure ):
         Returns:
             str: The UML representation of the enum.
         """
-        return f"enum {self.name}"
+        print ('enum builder')
+        return f"enum {self.name}\n\n"
 
 
 class RegistryAttribute( RegistryCommonElement ):
@@ -230,12 +263,16 @@ class RegistryMethod( RegistryCommonElement ):
         self.owner = parent
 
     def buildUml(self):
-        parameters_uml = ', '.join([param.buildUml() for param in self.parameters])
-        return f"{self.visibility.value} {self.name}({parameters_uml}) : {self.element_type.value}"
+        self.parameters = ", ".join([param.buildUml() for param in self.parameters])
+        return f"{self.visibility} {self.name}({self.parameters}) : {self.element_type}\n\n"
 
 class RegistryParameter( RegistryCommonElement ):
     def __init__( self ):
         super().__init__()
+        self.owner = None
+
+    def set_parent(self, parent):
+        self.owner = parent
 
     def buildUml(self):
-        return self.name + ': ' + self.element_type
+        return  f"{self.name}: {self.element_type}"

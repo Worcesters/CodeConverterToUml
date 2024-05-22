@@ -1,2 +1,5 @@
 {
+    "codeium.enableConfig": {
+        "*": true
+    }
 }
