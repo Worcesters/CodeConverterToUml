@@ -1,123 +1,9 @@
-from enum import Enum
 from typing import List
 from Registry.StructuralElement import StructuralElement
 
-class RegistryVisibility( Enum ):
-    """
-    The RegistryVisibility Enum represents the different visibility
-    modifiers that can be used to indicate how an element can be
-    accessed from outside its defining scope.
 
-    Attributes:
-        PUBLIC: The public visibility modifier.
-        PROTECTED: The protected visibility modifier.
-        PRIVATE: The private visibility modifier.
-    """
-    PUBLIC = "+"
-    PROTECTED = "#"
-    PRIVATE = "-"
 
-class RegistryType( Enum ):
-    """
-    The RegistryType Enum represents the different types
-    of elements that can be stored in the registry.
-
-    Attributes:
-        STRING: The string type.
-        INT: The integer type.
-        FLOAT: The float type.
-        BOOL: The boolean type.
-        ARRAY: The array type.
-        OBJECT: The object type.
-        NULL: The null type.
-        VOID: The void type.
-        RESOURCE: The resource type.
-        MIXED: The mixed type.
-    """
-
-    STRING = "string"
-    INT = "int"
-    FLOAT = "float"
-    BOOL = "bool"
-    ARRAY = "array"
-    OBJECT = "object"
-    NULL = "null"
-    VOID = "void"
-    RESOURCE = "resource"
-    MIXED = "mixed"
-    CLASS = "class"
-    TRAIT = "trait"
-    FUNCTION = "function"
-    CONSTANT = "constant"
-    INTERFACE = "interface"
-    ENUM = "enum"
-    NAMESPACE = "namespace"
-    TUPLE = "tuple"
-    UNION = "union"
-    KEYWORD = "keyword"
-    UNKNOWN = "unknown"
-
-class RegistryCommonElement(StructuralElement):
-    """
-    Base class for common elements in the registry.
-    """
-
-    def __init__(self, name: str = '', visibility: 'RegistryVisibility' = RegistryVisibility.PUBLIC,
-                 element_type: 'RegistryType' = RegistryType.UNKNOWN):
-        """
-        Initialize a new RegistryCommonElement.
-
-        Args:
-            name (str): The name of the element.
-            visibility (RegistryVisibility): The visibility of the element.
-            element_type (RegistryType): The type of the element.
-        """
-
-        self.mutability = True  # Whether the element is mutable
-        self.name = name  # The name of the element
-        self.visibility = visibility  # The visibility of the element
-        self.element_type = element_type  # The type of the element
-
-    def set_mutability(self, mutability: bool):
-        """
-        Set the mutability of the element.
-
-        Args:
-            mutability (bool): The new mutability value.
-        """
-        self.mutability = mutability
-
-    def set_name(self, name: str):
-        """
-        Set the name of the element.
-
-        Args:
-            name (str): The new name.
-        """
-        if name:
-            self.name = name
-
-    def set_visibility( self, visibility: 'RegistryVisibility' ):
-        """
-        Set the visibility of the element.
-
-        Args:
-            visibility (RegistryVisibility): The new visibility.
-        """
-        if visibility:
-            self.visibility = visibility
-
-    def set_type( self, element_type: 'RegistryType' ):
-        """
-        Set the type of the element.
-
-        Args:
-            element_type (RegistryType): The new type.
-        """
-        if element_type:
-            self.element_type = element_type
-
-class Structure( RegistryCommonElement ):
+class Structure( StructuralElement ):
     """
     Base class for structural elements.
 
@@ -172,10 +58,10 @@ class RegistryClass( Structure ):
             str: The UML representation of the class.
         """
 
-        print('class builder')
-        attributes_uml = '\n\t'.join([attr.buildUml() for attr in self.attributes])
-        methods_uml = '\n\t'.join([meth.buildUml() for meth in self.methods])
-        class_uml = f"class {self.name} {{\n\t{attributes_uml}\n\t{methods_uml}\n}}\n"
+
+        # attributes_uml = ''.join([attr.buildUml() for attr in self.attributes])
+        # methods_uml = ''.join([meth.buildUml() for meth in self.methods])
+        class_uml = "class "+ self.name + " {\n"
         return class_uml
 
 
@@ -216,7 +102,7 @@ class RegistryEnum( Structure ):
         return f"enum {self.name}\n\n"
 
 
-class RegistryAttribute( RegistryCommonElement ):
+class RegistryAttribute( StructuralElement ):
     """
     Attribute structure.
     """
@@ -227,6 +113,9 @@ class RegistryAttribute( RegistryCommonElement ):
     def set_parent(self, parent):
         self.owner = parent
 
+    def get_parent(self):
+        return self.owner
+
     def buildUml(self):
         """
         Build the UML representation of the attribute.
@@ -235,12 +124,12 @@ class RegistryAttribute( RegistryCommonElement ):
             str: The UML representation of the attribute.
         """
         if self.mutability:
-            return f"{self.visibility} {self.name}"
+            return f"{self.visibility} {self.name}\n\n"
         else:
-            return f"{self.visibility} const {self.name} : {self.element_type}"
+            return f"{self.visibility} const {self.name} : {self.element_type}\n\n"
 
 
-class RegistryMethod( RegistryCommonElement ):
+class RegistryMethod( StructuralElement ):
     """
     Method structure.
     """
@@ -260,19 +149,38 @@ class RegistryMethod( RegistryCommonElement ):
         self.abstract = abstract
 
     def set_parent(self, parent):
+        """
+        Set the parent of the method.
+
+        Args:
+            parent (RegistryMethod | RegistryFunction): The new parent of the method.
+        """
         self.owner = parent
 
     def buildUml(self):
-        self.parameters = ", ".join([param.buildUml() for param in self.parameters])
-        return f"{self.visibility} {self.name}({self.parameters}) : {self.element_type}\n\n"
+        self.parameters = [param.buildUml() if isinstance(param, RegistryParameter) else param for param in self.parameters]
+        return f"{self.visibility} {self.name}({', '.join(self.parameters)}) : {self.element_type}\n\n"
 
-class RegistryParameter( RegistryCommonElement ):
-    def __init__( self ):
+class RegistryParameter( StructuralElement ):
+    """
+    Parameter structure.
+    """
+    def __init__(self):
+        """
+        Initialize a new RegistryParameter.
+
+        """
         super().__init__()
-        self.owner = None
+        self.owner = None  # The owner of the parameter, can be a method or a function
 
     def set_parent(self, parent):
-        self.owner = parent
+        """
+        Set the parent of the parameter.
+
+        Args:
+            parent (RegistryMethod | RegistryFunction): The new parent of the parameter.
+        """
+        self.owner = parent  # Set the owner of the parameter to the given parent
 
     def buildUml(self):
         return  f"{self.name}: {self.element_type}"

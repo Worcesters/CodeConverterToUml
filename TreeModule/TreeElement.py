@@ -2,48 +2,99 @@ from typing import List, Optional
 
 
 class TreeElement:
+    """
+    Represents a tree element, which is an element of a tree structure.
+
+    A tree element has a parent element and zero or more child elements.
+    """
+
     def __init__(self, element: Optional[object] = None):
+        """
+        Initializes the tree element.
+
+        The tree element is empty after initialization.
+        """
         self.element = element
         self.children: List['TreeElement'] = []
+        self.parents: List['TreeElement'] = []
         self.parent: Optional['TreeElement'] = None
+        self.heritages: List['TreeElement'] = []
 
-    # def __str__(self):
-    #     # print(f"TREE __str__ - element: {self.element} - children: {self.children} - parent: {self.parent}")
-    #     return f"Element: {self.element}, Children: {self.children}, Parent: {self.parent}"
+
+    def add_herits(self, heritage: 'TreeElement') -> None:
+        """
+        Adds a child element to the tree element.
+
+        Args:
+            child: The child element to add.
+        """
+        #child.set_parent(self)
+        self.heritages.append(heritage)
 
     def set_parent(self, parent: 'TreeElement') -> None:
-        # print(f"TREE set_parent - parent: {parent}")
+        """
+        Sets the parent element of the tree element.
+
+        Args:
+            parent: The parent element to set.
+        """
         self.parent = parent
 
+    def add_parent(self, parent: 'TreeElement') -> None:
+        self.parents.append(parent)
+
     def add_child(self, child: 'TreeElement') -> None:
-        # print(f"TREE add_child - child: {child}")
-        # Vérifier si l'objet passé en paramètre a une méthode set_parent
-        if hasattr(child, 'set_parent'):
-            # print(f"TREE add_child - calling child.set_parent(self) - child: {child} - self: {self}")
-            child.set_parent(self)
-            self.children.append(child)
-            # print(f"TREE add_child - added child: {child} to parent: {self}")
-        else:
-            # print(f"TREE add_child - Cannot add child. Invalid type. child: {child}")
-            pass
+        """
+        Adds a child element to the tree element.
+
+        Args:
+            child: The child element to add.
+        """
+        #child.set_parent(self)
+        self.children.append(child)
 
     def add_children(self, children: List['TreeElement']) -> None:
-        # print(f"TREE add_children - children: {children}")
+        """
+        Adds multiple child elements to the tree element.
+
+        Args:
+            children: The child elements to add.
+        """
         for child in children:
             self.add_child(child)
 
     def get_child(self, element) -> Optional['TreeElement']:
-        # print(f"TREE get_child - element: {element}")
+        """
+        Returns a child element with the given element or None.
+
+        Args:
+            element: The element to search for.
+
+        Returns:
+            The child element with the given element or None.
+        """
         for child in self.children:
             if child.element == element:
                 return child
         return None
 
     def get_children(self) -> List['TreeElement']:
+        """
+        Returns a list of all child elements.
+
+        Returns:
+            A list of all child elements.
+        """
         return self.children
 
     def get_parent(self) -> Optional["TreeElement"]:
-        """Return the parent element or None."""
-        # print(f"TREE get_parent")
         return self.parent
 
+    def get_parents(self) -> List['TreeElement']:
+        return self.parents
+
+    # def get_herit(self) -> Optional["TreeElement"]:
+    #     return self.heritage
+
+    def get_herits(self) -> List['TreeElement']:
+        return self.heritages

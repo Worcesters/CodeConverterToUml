@@ -1,0 +1,60 @@
+@startuml
+
+class RelationalElement {
+    +set_source(pole: Pole) -> Pole
+    +set_destination(pole: Pole) -> Pole
+    +get_source() -> Pole
+    +get_destination() -> Pole
+}
+
+class Link {
+    +set_destination(pole: Pole) -> Pole
+    +set_source(pole: Pole) -> Pole
+    +get_destination() -> Pole
+    +get_source() -> Pole
+}
+
+class Composition {
+    +buildUml() -> String
+}
+
+class Heritage {
+    +buildUml() -> String
+}
+
+class Association {
+    +buildUml() -> String
+}
+
+class Aggregation {
+    +buildUml() -> String
+}
+
+class Implementation {
+    +buildUml() -> String
+}
+
+class Dependance {
+    +buildUml() -> String
+}
+
+class Pole {
+    -name: String
+    -cardinality: Cardinality
+}
+
+class Cardinality {
+    ZERO
+    ONE
+    MANY
+}
+
+RelationalElement <|-- Link
+Link <|-- Composition
+Link <|-- Heritage
+Link <|-- Association
+Link <|-- Aggregation
+Link <|-- Implementation
+Link <|-- Dependance
+
+@enduml

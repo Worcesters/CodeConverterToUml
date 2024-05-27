@@ -2,75 +2,82 @@
 @startuml
 
 
-package "-- RegistryModule --" {
-    class Registry {
-        - root_element: StructuralElement
-        - active_element: StructuralElement
-        + __init__(root_element: StructuralElement)
-        + set_active_element(active_element: StructuralElement): void
-        + get_active_element(): StructuralElement
+package "-- StructuralElement --" {
+
+    class StructuralElement{
+        + mutability
+        + name
+        + visibility
+        + element_type
+        + set_mutability(mutability: bool)
+        + set_name(name: str)
+        + set_visibility(visibility: RegistryVisibility)
+        + set_type(element_type: RegistryType)
     }
-    
-    abstract class StructuralElement {
-        {abstract} + buildUml(): String
+
+    class Structure{
+        - attributes: List[RegistryAttribute]
+        - methods: List[RegistryMethod]
+        + add_attribute(attribute: RegistryAttribute)
+        + add_method(method: RegistryMethod)
     }
 
-    package "-- StructuralElement --" {
-        
-        class RegistryCommonElement{
-            + set_name()
-            + set_visibility()
-            + set_type()
-            + set_mutability()
-        }
-
-        class Structure{
-            + add_attribute()
-            + add_method()
-        }
-       
-        class RegistryAttribute {
-        }
-
-        class RegistryMethod {
-            + set_abstract()
-        }
-
-        class RegistryParameter {
-        }
-
-        enum RegistryVisibility {
-        }
-
-        enum RegistryType {
-        }
-
-        class RegistryClass {
-        }
-
-        class RegistryInterface {
-        }
-
-        class RegistryEnum {
-        }
-
+    class RegistryAttribute {
+        + owner: RegistryClass | RegistryInterface
+        + set_parent(parent)
+        + get_parent()
+        + buildUml(): str
     }
+
+    class RegistryMethod {
+        + parameters: List[RegistryParameter | str]
+        + abstract: bool
+        + owner: RegistryClass | RegistryInterface
+        + set_abstract(abstract: bool)
+        + set_parent(parent)
+        + buildUml(): str
+    }
+
+    class RegistryParameter {
+        + owner: RegistryMethod | RegistryFunction
+        + set_parent(parent)
+        + buildUml(): str
+    }
+
+    enum RegistryVisibility {
+    }
+
+    enum RegistryType {
+    }
+
+    class RegistryClass {
+        + buildUml(): str
+    }
+
+    class RegistryInterface {
+        + buildUml(): str
+    }
+
+    class RegistryEnum {
+        + buildUml(): str
+    }
+
 }
 
 
-Registry --> StructuralElement
-StructuralElement --|> TreeElement
 
-RegistryCommonElement -up-|> StructuralElement
+RegistryType -left- StructuralElement
+RegistryVisibility -right- StructuralElement
 
-Structure -up-|> RegistryCommonElement
 
-RegistryParameter--|> RegistryCommonElement
-RegistryAttribute --|> RegistryCommonElement
-RegistryMethod--|> RegistryCommonElement
+Structure -down-|> StructuralElement
 
-RegistryEnum -up-|> Structure
-RegistryInterface -up-|> Structure
-RegistryClass -up-|> Structure
+RegistryParameter -up-|> StructuralElement
+RegistryAttribute -up-|> StructuralElement
+RegistryMethod -up-|> StructuralElement
+
+RegistryEnum -down-|> Structure
+RegistryInterface -down-|> Structure
+RegistryClass -down-|> Structure
 
 @enduml

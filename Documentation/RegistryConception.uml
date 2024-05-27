@@ -3,76 +3,38 @@
 
 
 package "RegistryModule" {
-    class Registry {
-        - root_element: StructuralElement
-        - active_element: StructuralElement
-        + __init__(root_element: StructuralElement)
-        + set_active_element(active_element: StructuralElement): void
-        + get_active_element(): StructuralElement
+    class RegistryProgram {
+        -config: Config
+        -tree_element: TreeElement
+        +__init__(self, config: Config, tree_element: TreeElement): void
+        +buildUml(): string
     }
-    
-    abstract class StructuralElement {
+    abstract class RegistryElement {
         {abstract} + buildUml(): String
     }
-
-    package "SubStructuralElements" {
-        
-        class StructureRegistry {
-            + set_name()
-        }
-
-        class AttributeRegistry {
-        }
-
-        class MethodRegistry {
-            + set_visibility()
-            + set_abstract()
-            + set_return_type()
-        }
-
-        class ParamsRegistry {
-            + set_params()
-        }
-
-        class VisibilityRegistry {
-            + set_visibility()
-        }
-
-        class TypeRegistry {
-            + set_type()
-        }
-
-        class HeritageRegistry {
-            + set_extends()
-            + set_implements()
-        }
-
-        class ClassRegistry {
-        }
-
-        class InterfaceRegistry {
-        }
-
-        class EnumRegistry {
-        }
-
-        class ProgramRegistry {
-        }
+    class StructuralElement{
+        + mutability
+        + name
+        + visibility
+        + element_type
+        + set_mutability(mutability: bool)
+        + set_name(name: str)
+        + set_visibility(visibility: RegistryVisibility)
+        + set_type(element_type: RegistryType)
     }
+    class RelationalElement{
+
+    }
+    abstract class Relational{
+
+    }
+
 }
 
-Registry --> StructuralElement
-StructuralElement --|> TreeElement
-
-StructureRegistry -up-|> StructuralElement
-ParamsRegistry --|> StructureRegistry
-VisibilityRegistry --|> StructureRegistry
-AttributeRegistry --|> StructureRegistry
-EnumRegistry --|> StructureRegistry
-TypeRegistry -up-|> StructureRegistry
-MethodRegistry -up-|> StructureRegistry
-HeritageRegistry -up-|> StructureRegistry
-InterfaceRegistry -up-|> StructureRegistry
-ClassRegistry -up-|> StructureRegistry
+RelationalElement -up-|> Relational
+RegistryProgram -up-|> StructuralElement
+RegistryProgram -up-|> RelationalElement
+StructuralElement -up-|> RegistryElement
+Relational -up-|> RegistryElement
 
 @enduml

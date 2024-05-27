@@ -7,10 +7,6 @@ class Link( RelationalElement, ABC ):
     It provides methods for getting the source and destination of the link.
     """
 
-    def __init__(self):
-        self._source = None
-        self._destination = None
-
     def set_destination(self, pole: Pole) -> Pole:
         previous = self._destination
         self._destination = pole
@@ -38,7 +34,7 @@ class Composition( Link ):
     """
 
     def buildUml( self ):
-        return self.get_source() + ' *-- ' + self.get_destination()
+        return str(self.get_source().get_value()) + ' *-- ' + str(self.get_destination().get_value()) + '\n\n\n'
 
 class Heritage( Link ):
     """
@@ -57,8 +53,7 @@ class Heritage( Link ):
         Returns:
             str: The UML representation of this heritage link.
         """
-        return self.get_source() + ' --|> ' + self.get_destination()
-
+        return str(self.get_source().get_value()) + ' --|> ' + str(self.get_destination().get_value()) + '\n\n\n'
 
 class Association(Link):
     """
@@ -77,7 +72,7 @@ class Association(Link):
         Returns:
             str: The UML representation of this association link.
         """
-        return self.get_source() + ' --> ' + self.get_destination()
+        return str(self.get_source().get_value()) + ' --> ' + str(self.get_destination().get_value()) + '\n\n\n'
 
 class Aggregation(Link):
     """
@@ -96,7 +91,7 @@ class Aggregation(Link):
         Returns:
             str: The UML representation of this aggregation link.
         """
-        return self.get_source() + ' o-- ' + self.get_destination()
+        return str(self.get_source().get_value()) + ' o-- ' + str(self.get_destination().get_value()) + '\n\n\n'
 
 class Implementation(Link):
     """
@@ -115,7 +110,7 @@ class Implementation(Link):
         Returns:
             str: The UML representation of this implementation link.
         """
-        return self.get_source() + ' <|.. ' + self.get_destination()
+        return str(self.get_source().get_value()) + ' <|.. ' + str(self.get_destination().get_value()) + '\n\n\n'
 
 
 
@@ -133,4 +128,4 @@ class Dependance(Link):
         """
         A method that builds a UML representation by concatenating the source and destination.
         """
-        return self.get_source() + ' ..> ' + self.get_destination()
+        return str(self.get_source().get_value()) + ' ..> ' + str(self.get_destination().get_value()) + '\n\n\n'

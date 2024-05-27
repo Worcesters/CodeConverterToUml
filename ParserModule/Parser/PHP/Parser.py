@@ -1,7 +1,7 @@
 from abc import ABC
 
 # Import the RegistryVisibility and RegistryType enums from the StructuralRegistry module.
-from Registry.RegistryModule.StructuralRegistry.Structure import (RegistryVisibility, RegistryType)
+from Registry.Enum import RegistryVisibility, RegistryType
 
 # Import the IParser interface from the Parser module.
 from ParserModule.Parser.Interface import IParser
@@ -44,7 +44,7 @@ class Parser( IParser, ABC ):
             'tuple': RegistryType.TUPLE,
             'union': RegistryType.UNION,
             'keyword': RegistryType.KEYWORD,
-            'unknown': RegistryType.UNKNOWN
+            'unknown': RegistryType.UNKNOWN,
         }
 
     def get_visibility(self, visibility: str) -> RegistryVisibility:

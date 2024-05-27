@@ -8,8 +8,7 @@ of a given project.
 import os
 from typing import List
 
-from Registry.Registry import Registry
-from Registry.StructuralElement import RegistryProgram
+from Registry.Registry import Registry, RegistryProgram
 from TreeModule.TreeElement import TreeElement
 
 

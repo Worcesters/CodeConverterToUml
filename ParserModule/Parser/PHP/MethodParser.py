@@ -13,6 +13,7 @@ from Registry.Registry import Registry
 # Import the necessary classes from the StructuralRegistry.Structure module
 from Registry.RegistryModule.StructuralRegistry.Structure import RegistryMethod, RegistryParameter
 
+
 from TreeModule.TreeElement import TreeElement
 
 
@@ -20,11 +21,6 @@ class MethodParser( Parser ):
     """
     This class parses methods.
     """
-    def __init__( self ):
-        super().__init__()
-        # print('Initialisation MethodParser')
-        # print('└─────────────────────────│')
-
 
     def parse( self, line: str, registry: Registry, tree_element: TreeElement ):
         # print('MethodParser -----> [START]')
@@ -51,9 +47,6 @@ class MethodParser( Parser ):
                 tree_element.add_child(method_element)
                 registry.set_active_element(tree_element)
 
-        # print('MethodParser -----> [DONE]')
-
-
     def parse_parameters(self, params_str, method_element):
         """
         This function parses the parameters of a method.
@@ -66,15 +59,18 @@ class MethodParser( Parser ):
             list: A list of RegistryParameter objects.
         """
 
-        param_pattern = re.compile(r"""(?P<param_type>\w+)?\s*\$(?P<param_name>\w+)""", re.MULTILINE | re.DOTALL)
+        param_pattern = re.compile(r"""(?P<param_type>(?:\\Exception)?)\s*\$(?P<param_name>\w+)""", re.MULTILINE | re.DOTALL)
         param_elements = []
         for match in re.finditer(param_pattern, params_str):
             param_element = RegistryParameter()
             param_element.set_name(match.group('param_name'))
-            param_element.set_type(self.get_type(match.group('param_type')))
+
+            if self.get_type(match.group('param_type')) == 'unknown':
+                param_element.set_type(match.group('param_type'))
+            else:
+                param_element.set_type(self.get_type(match.group('param_type')))
 
             # Set the parent of the parameter element to the method element
             param_element.set_parent(method_element)
-
             param_elements.append(param_element)
         return param_elements

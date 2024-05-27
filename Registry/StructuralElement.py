@@ -1,53 +1,65 @@
-"""Module providing a abstract class for python."""
-from abc import ABC, abstractmethod
-from Registry.IUmlBuilder import IUmlBuilder
-from TreeModule.TreeElement import TreeElement
+from Registry.Enum import RegistryVisibility, RegistryType
+from Registry.RegistryElement import RegistryElement
 
-class StructuralElement( IUmlBuilder, ABC ):
+class StructuralElement( RegistryElement ):
     """
-    Base class for all structural elements that can be represented in UML
+    Base class for common elements in the registry.
     """
 
-    @abstractmethod
-    def buildUml( self ) -> str:
+    def __init__(self, name: str = '', visibility: 'RegistryVisibility' = RegistryVisibility.PUBLIC,
+                 element_type: 'RegistryType' = RegistryType.UNKNOWN):
         """
-        Builds UML representation of the structural element
+        Initialize a new RegistryCommonElement.
 
-        :return: UML representation of the structural element
+        Args:
+            name (str): The name of the element.
+            visibility (RegistryVisibility): The visibility of the element.
+            element_type (RegistryType): The type of the element.
         """
-        print(f'Building uml for {self.__class__.__name__}')
 
-class RegistryProgram( StructuralElement ):
-    """
-    Represents a registry program, which is the top level element of the registry
+        self.mutability = True  # Whether the element is mutable
+        self.name = name  # The name of the element
+        self.visibility = visibility  # The visibility of the element
+        self.element_type = element_type  # The type of the element
 
-    The registry program is the root of the tree and contains all the other
-    structural elements of the code.
-    """
+    def set_mutability(self, mutability: bool):
+        """
+        Set the mutability of the element.
 
-    def __init__(self, config, tree_element: TreeElement) -> None:
-        self.config = config
-        self.tree_element = tree_element
+        Args:
+            mutability (bool): The new mutability value.
+        """
+        self.mutability = mutability
 
-    def buildUml( self ) -> str:
+    def set_name(self, name: str):
+        """
+        Set the name of the element.
 
-        # print(f'Building UML for {self.__class__.__name__}')
-        # print(self.tree_element)
-        # print(f'Children count: {len(self.tree_element.get_children())}')
+        Args:
+            name (str): The new name.
+        """
+        if name:
+            self.name = name
 
-        uml_str = ''
-        for element in self.tree_element.get_children():
-            # print(f'Adding UML for {element.__class__.__name__}')
-            # print(f'element.buildUml(): {element.buildUml()}')
-            # print(element)
-            uml_str += element.buildUml()
+    def set_visibility( self, visibility: 'RegistryVisibility' ):
+        """
+        Set the visibility of the element.
 
-        return f"""
-                @startuml
+        Args:
+            visibility (RegistryVisibility): The new visibility.
+        """
+        if visibility:
+            self.visibility = visibility
 
-                skinparam classAttributeIconSize 0
+    def set_type( self, element_type: 'RegistryType' ):
+        """
+        Set the type of the element.
 
-                {uml_str}
+        Args:
+            element_type (RegistryType): The new type.
+        """
+        if element_type:
+            self.element_type = element_type
 
-                @enduml
-        """.format( uml_str=uml_str )
+    def get_name(self):
+        return self.name

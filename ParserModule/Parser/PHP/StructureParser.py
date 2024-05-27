@@ -2,6 +2,7 @@ import re
 from ParserModule.Parser.PHP.Parser import Parser
 from Registry.Registry import Registry
 from Registry.RegistryModule.RelationalRegistry.Link import (Heritage, Implementation, Pole)
+# from Registry.RelationalElement import Pole
 from Registry.RegistryModule.StructuralRegistry.Structure import (RegistryClass, RegistryEnum, RegistryInterface)
 
 from TreeModule.TreeElement import TreeElement
@@ -14,9 +15,6 @@ class StructureParser( Parser ):
     such as class, interface, and enum definitions. The extracted information is then
     added to the registry.
     """
-
-    # def __init__( self ):
-    #     super().__init__()
 
     def parse(self, line: str, registry: Registry, tree_element: TreeElement):
         structure_pattern = re.compile(
@@ -34,13 +32,13 @@ class StructureParser( Parser ):
             elif (structure_element_type == 'interface'):
                 structure_element = RegistryInterface()
             else:
-                print('class detect')
                 structure_element = RegistryClass()
 
             structure_element.set_name(match.group('name'))
 
             if match.group('extends') or match.group('implements'):
                 if match.group('extends'):
+                    print('heritage match extends')
                     heritage_element = Heritage()
 
                     # Create Pole object for source
@@ -53,7 +51,12 @@ class StructureParser( Parser ):
                     destination_pole_extends.name = match.group('extends')
                     heritage_element.set_destination(destination_pole_extends)
 
+                    tree_element.add_herits(heritage_element)
+                    print(f'tree_element: {tree_element}')
+                    print(f'heritage_element: {heritage_element}')
+
                 if match.group('implements'):
+                    print('heritage match implements')
                     implementation_element = Implementation()
 
                     # Create Pole object for source
@@ -65,12 +68,13 @@ class StructureParser( Parser ):
                     destination_pole_implements = Pole()
                     destination_pole_implements.name = match.group('implements')
                     implementation_element.set_destination(destination_pole_implements)
+                    tree_element.add_herits(implementation_element)
+                    print(f'tree_element: {tree_element}')
+                    print(f'implementation_element: {implementation_element}')
 
             if structure_element is not None:
-                print(structure_element)
                 active_tree_element = registry.get_active_element()
-                tree_element.add_child(structure_element)
+
+                tree_element.add_parent(structure_element)
                 registry.set_active_element(tree_element)
 
-
-        # print('StructureParser -----> [DONE]')
