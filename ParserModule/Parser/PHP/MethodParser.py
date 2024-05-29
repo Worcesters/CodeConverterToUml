@@ -36,16 +36,15 @@ class MethodParser( Parser ):
             method_element.set_visibility(self.get_visibility(match.group('visibility')))
             method_element.set_type(self.get_type(match.group('return_type')))
 
-            # Set the parent of the method element to the current tree element
-            method_element.set_parent(tree_element)
-
             # Parse the parameters and set their registry
             method_element.parameters = self.parse_parameters(params_str, method_element)
 
             if method_element is not None:
                 active_tree_element = registry.get_active_element()
-                tree_element.add_child(method_element)
-                registry.set_active_element(tree_element)
+                print (f'active_tree_element --------------- {active_tree_element}')
+                if active_tree_element is not None:
+                    method_element.set_parent(active_tree_element)
+                    tree_element.add_child(method_element)
 
     def parse_parameters(self, params_str, method_element):
         """

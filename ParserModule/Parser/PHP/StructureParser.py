@@ -38,7 +38,6 @@ class StructureParser( Parser ):
 
             if match.group('extends') or match.group('implements'):
                 if match.group('extends'):
-                    print('heritage match extends')
                     heritage_element = Heritage()
 
                     # Create Pole object for source
@@ -52,11 +51,8 @@ class StructureParser( Parser ):
                     heritage_element.set_destination(destination_pole_extends)
 
                     tree_element.add_herits(heritage_element)
-                    print(f'tree_element: {tree_element}')
-                    print(f'heritage_element: {heritage_element}')
 
                 if match.group('implements'):
-                    print('heritage match implements')
                     implementation_element = Implementation()
 
                     # Create Pole object for source
@@ -69,12 +65,10 @@ class StructureParser( Parser ):
                     destination_pole_implements.name = match.group('implements')
                     implementation_element.set_destination(destination_pole_implements)
                     tree_element.add_herits(implementation_element)
-                    print(f'tree_element: {tree_element}')
-                    print(f'implementation_element: {implementation_element}')
 
             if structure_element is not None:
                 active_tree_element = registry.get_active_element()
-
-                tree_element.add_parent(structure_element)
-                registry.set_active_element(tree_element)
+                if active_tree_element is None or active_tree_element != tree_element:
+                    print ('----------------------------')
+                    registry.set_active_element(structure_element)
 

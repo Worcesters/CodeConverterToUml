@@ -36,5 +36,6 @@ class AttributeParser(Parser):
                 # Add the attribute to the registry
                 if attribute_element is not None:
                     active_tree_element = registry.get_active_element()
-                    tree_element.add_child(attribute_element)
-                    registry.set_active_element(tree_element)
+                    if active_tree_element is not None:
+                        attribute_element.set_parent(active_tree_element)
+                        tree_element.add_child(attribute_element)

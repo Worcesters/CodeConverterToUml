@@ -51,12 +51,15 @@ class RegistryProgram( RegistryElement ):
 
     def buildUml( self ) -> str:
 
-        uml_str = ''
-        for parent in self.tree_element.get_parents():
+        uml_str = '\n'
+        parents = set(child.get_parent() for child in self.tree_element.get_children())
+        print(parents)
+        for parent in parents:
             uml_str += parent.buildUml()
             for child in self.tree_element.get_children():
-                uml_str += child.buildUml()
-            uml_str += " }\n\n\n"
+                if child.get_parent() == parent:
+                    uml_str += f"  {child.buildUml()}"
+            uml_str += "}\n\n\n"
 
         for heritage in self.tree_element.heritages:
             uml_str += heritage.buildUml()

@@ -107,13 +107,13 @@ class RegistryAttribute( StructuralElement ):
     """
     def __init__(self):
         super().__init__()
-        self.owner = None
+        self.parent = None
 
     def set_parent(self, parent):
-        self.owner = parent
+        self.parent = parent
 
     def get_parent(self):
-        return self.owner
+        return self.parent
 
     def buildUml(self):
         """
@@ -136,7 +136,7 @@ class RegistryMethod( StructuralElement ):
         super().__init__()
         self.parameters: List['RegistryParameter'] = []
         self.abstract: bool = False
-        self.owner = None
+        self.parent = None
 
     def set_abstract(self, abstract: bool):
         """
@@ -154,7 +154,10 @@ class RegistryMethod( StructuralElement ):
         Args:
             parent (RegistryMethod | RegistryFunction): The new parent of the method.
         """
-        self.owner = parent
+        self.parent = parent
+
+    def get_parent(self):
+        return self.parent
 
     def buildUml(self):
         self.parameters = [param.buildUml() if isinstance(param, RegistryParameter) else param for param in self.parameters]
@@ -170,7 +173,7 @@ class RegistryParameter( StructuralElement ):
 
         """
         super().__init__()
-        self.owner = None  # The owner of the parameter, can be a method or a function
+        self.parent = None  # The owner of the parameter, can be a method or a function
 
     def set_parent(self, parent):
         """
@@ -179,7 +182,10 @@ class RegistryParameter( StructuralElement ):
         Args:
             parent (RegistryMethod | RegistryFunction): The new parent of the parameter.
         """
-        self.owner = parent  # Set the owner of the parameter to the given parent
+        self.parent = parent  # Set the owner of the parameter to the given parent
+
+    def get_parent(self):
+        return self.parent
 
     def buildUml(self):
         return  f"{self.name}: {self.element_type}"
