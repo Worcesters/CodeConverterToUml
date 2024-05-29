@@ -55,62 +55,61 @@ def main():
             raise ValueError('\n' + error_message)
 
         print('Départ de la boucle de reconnaissance de la prise en charge du language')
-        for file_path in file_paths:
-            detected_language = detect_language(file_path)
-            if detected_language:
 
-                print(f"Langue détectée pour {file_path}: {detected_language}")
-                print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
-                print('└───────────────────────────────────────────')
+        detected_language = detect_language(file_paths[0])
+        if detected_language:
 
-                print('initialisation ParserFactory')
-                print('└────────────────────│')
-                parser_factory = ParserFactory.get_instance(detected_language)
-                print('ParserFactory -----> [DONE]')
-                print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
-                print('└───────────────────────────────────────────')
+            print(f"Langue détectée pour {file_paths}: {detected_language}")
+            print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
+            print('└───────────────────────────────────────────')
 
-                print('initialisation ParserManager')
-                print('└────────────────────│')
-                parser_manager = ParserManager()
-                print('ParserManager -----> [DONE]')
-                print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
-                print('└───────────────────────────────────────────')
+            print('initialisation ParserFactory')
+            print('└────────────────────│')
+            parser_factory = ParserFactory.get_instance(detected_language)
+            print('ParserFactory -----> [DONE]')
+            print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
+            print('└───────────────────────────────────────────')
 
-                print('initialisation parser_manager.get_parsers')
-                print('└────────────────────│')
-                parsers = parser_factory.get_parsers()
-                print('parser_factory.get_parsers() -----> [DONE]')
-                print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
-                print('└───────────────────────────────────────────')
+            print('initialisation ParserManager')
+            print('└────────────────────│')
+            parser_manager = ParserManager()
+            print('ParserManager -----> [DONE]')
+            print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
+            print('└───────────────────────────────────────────')
 
-                print('initialisation parser_manager.set_parser')
-                print('└────────────────────│')
-                parser_manager.set_parser(parsers)
-                print('ParserManager set_parser() -----> [DONE]')
-                print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
-                print('└───────────────────────────────────────────')
+            print('initialisation parser_manager.get_parsers')
+            print('└────────────────────│')
+            parsers = parser_factory.get_parsers()
+            print('parser_factory.get_parsers() -----> [DONE]')
+            print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
+            print('└───────────────────────────────────────────')
 
-                print('Début du Parsage fichier(s)')
-                print('└────────────────────────│')
-                parser_manager.parse_file([file_path])
-                print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
-                print('└───────────────────────────────────────────')
+            print('initialisation parser_manager.set_parser')
+            print('└────────────────────│')
+            parser_manager.set_parser(parsers)
+            print('ParserManager set_parser() -----> [DONE]')
+            print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
+            print('└───────────────────────────────────────────')
 
-                print('Restitution des informations')
-                print('└────────────────────────│')
+            print('Début du Parsage fichier(s)')
+            print('└────────────────────────│')
+            parser_manager.parse_files([file_paths])
+            print('├──├──├──├──├──├──├──│├──├──├──├──├──├──├──│')
+            print('└───────────────────────────────────────────')
 
-                root_program = parser_manager.registry.get_root().element
+            print('Restitution des informations')
+            print('└────────────────────────│')
 
-                # Now, you can build UML from the root of the Registry program
-                result = root_program.buildUml()
-                print(result)
-            else:
-                print( '┌───────────────────────────────────────────────────┐')
-                print( '│                     ERREUR                        │')
-                print( '│        Langue non détectée pour le fichier        │')
-                print( '└───────────────────────────────────────────────────┘')
-                print(file_path)
+            root_program = parser_manager.registry.get_root().element
+
+            # Now, you can build UML from the root of the Registry program
+            result = root_program.buildUml()
+            print(result)
+        else:
+            print( '┌───────────────────────────────────────────────────┐')
+            print( '│                     ERREUR                        │')
+            print( '│        Langue non détectée pour le fichier        │')
+            print( '└───────────────────────────────────────────────────┘')
 
     except Exception as e:
 

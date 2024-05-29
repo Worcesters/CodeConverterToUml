@@ -34,9 +34,9 @@ package "RegistryModule" {
         + set_active_element(active_element: RegistryElement): void
         + get_active_element(): RegistryElement
     }
-    
+
     abstract class StructuralElement {
-        
+
     }
 
     abstract class RelationalElement {
@@ -45,7 +45,7 @@ package "RegistryModule" {
         {abstract} + set_destination( pole: 'Pole' ): 'Pole'
         {abstract} + get_destination( ): 'Pole'
     }
-    
+
     class RegistryProgram extends StructuralElement {
         + buildUml()
     }
@@ -110,7 +110,7 @@ ParserFactory -up-> IParser
 ParserManager --> IParser
 ParserFactory -up-> Language
 IParser -up-> Registry
-Registry --> StructuralElement 
+Registry --> StructuralElement
 
 StructuralElement --|> TreeElement
 Registry -up-|> Tree
