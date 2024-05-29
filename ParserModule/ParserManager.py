@@ -80,16 +80,11 @@ class ParserManager():
                 try:
                     with open(file_path, mode="r", encoding="utf-8") as file:
                         file_content = file.read()
-                        print(f"Contents of {file_path}:")
-                        print(file_content)  # Debug statement to print file content
                         concatenated_code += file_content + '\n'  # Adding a newline character for separation
                 except FileNotFoundError:
                     print(f"File {file_path} not found.")
                 except Exception as e:
                     print(f"An error occurred while reading {file_path}: {e}")
-
-        print("Concatenated code:")
-        print(concatenated_code)  # Debug statement to print concatenated code
 
         # Split the concatenated code into lines
         lines = concatenated_code.split('\n')

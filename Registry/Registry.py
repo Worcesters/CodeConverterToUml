@@ -62,8 +62,38 @@ class RegistryProgram( RegistryElement ):
             uml_str += heritage.buildUml()
 
         return f"""@startuml
+skinparam backgroundColor #F5F5F5
+skinparam shadowing false
 
-skinparam classAttributeIconSize 0
+skinparam class {{
+  BackgroundColor #FFFFFF
+  BorderColor #4A4A4A
+  FontName Helvetica
+  FontSize 14
+  FontColor #333333
+  AttributeFontColor #666666
+  AttributeFontSize 12
+  StereotypeFontSize 12
+  StereotypeFontColor #999999
+  RoundCorner 15
+}}
+
+skinparam package {{
+  BackgroundColor #DDDDDD
+  BorderColor #4A4A4A
+  FontName Helvetica
+  FontSize 14
+  FontColor #333333
+  RoundCorner 15
+}}
+
+skinparam Arrow {{
+  Color #4A4A4A
+  Thickness 2
+  FontName Helvetica
+  FontSize 12
+  FontColor #333333
+}}
 
 {uml_str}
 

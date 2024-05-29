@@ -2,7 +2,6 @@ from typing import List
 from Registry.StructuralElement import StructuralElement
 
 
-
 class Structure( StructuralElement ):
     """
     Base class for structural elements.

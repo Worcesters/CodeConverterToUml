@@ -65,10 +65,7 @@ class MethodParser( Parser ):
             param_element = RegistryParameter()
             param_element.set_name(match.group('param_name'))
 
-            if self.get_type(match.group('param_type')) == 'unknown':
-                param_element.set_type(match.group('param_type'))
-            else:
-                param_element.set_type(self.get_type(match.group('param_type')))
+            param_element.set_type(self.get_type(match.group('param_type')))
 
             # Set the parent of the parameter element to the method element
             param_element.set_parent(method_element)
