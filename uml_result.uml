@@ -33,6 +33,72 @@ skinparam Arrow {
 }
 
 
+class DeclarationMandat {
+  - final  serialVersionUID : long
+  - bCot : Boolean
+  - bIdentCfin : Boolean
+  - bCfinAct : Boolean
+  - bJtnPres : Boolean
+  - sSouscp : Date
+  - dval : Date
+  + getBCot() Boolean
+  + getBCo : Boolean
+  + setBCot(bCot: Boolean) void
+  + setBCo : void
+  + getBIdentCfin() Boolean
+  + getBIdentCfi : Boolean
+  + setBIdentCfin(bIdentCfin: Boolean) void
+  + setBIdentCfi : void
+  + getBJtnPres() Boolean
+  + getBJtnPre : Boolean
+  + setBJtnPres(bJtnPres: Boolean) void
+  + setBJtnPre : void
+  + getMJtnPres() byte[]
+  + setMJtnPres(mJtnPres: byte[]) void
+  + setMJtnPre : void
+  + getNsiren() byte[]
+  + setNsiren(nsiren: byte[]) void
+  + setNsire : void
+  + getSSouscp() Date
+  + getSSousc : Date
+  + setSSouscp(sSouscp: Date) void
+  + setSSousc : void
+  + getVFormJurdq() byte[]
+  + setVFormJurdq(vFormJurdq: byte[]) void
+  + setVFormJurd : void
+  + getVLienScte() byte[]
+  + setVLienScte(vLienScte: byte[]) void
+  + setVLienSct : void
+  + getVNatureMand() byte[]
+  + setVNatureMand(vNatureMand: byte[]) void
+  + setVNatureMan : void
+  + getVNomScte() byte[]
+  + setVNomScte(vNomScte: byte[]) void
+  + setVNomSct : void
+  + getvIdentCfin() byte[]
+  + setvIdentCfin(vIdentCfin: byte[]) void
+  + setvIdentCfi : void
+  + getDval() Date
+  + getDva : Date
+  + setDval(dval: Date) void
+  + setDva : void
+  + getbCfinAct() Boolean
+  + getbCfinAc : Boolean
+  + setbCfinAct(bCfinAct: Boolean) void
+  + setbCfinAc : void
+  + getvCfinAct() byte[]
+  + setvCfinAct(vCfinAct: byte[]) void
+  + setvCfinAc : void
+  + getDecactextDeclarationActExts() List<DeclarationActiviteExterieur>
+  + setDecactextDeclarationActExts(decactextDeclarationActExts: List<DeclarationActiviteExterieur>) void
+  + setDecactextDeclarationActExt : void
+  + addDecactextDeclarationActExt(decactextDeclarationActExt: DeclarationActiviteExterieur) DeclarationActiviteExterieur
+  + addDecactextDeclarationActEx : DeclarationActiviteExterieur
+  + removeDecactextDeclarationActExt(decactextDeclarationActExt: DeclarationActiviteExterieur) DeclarationActiviteExterieur
+  + removeDecactextDeclarationActEx : DeclarationActiviteExterieur
+}
+
+
 class DeclarationTitreNonCote {
   - final  serialVersionUID : long
   - bRepresGouv : Boolean
@@ -321,93 +387,13 @@ class Declaration {
 }
 
 
-class DeclarationMandat {
-  - final  serialVersionUID : long
-  - bCot : Boolean
-  - bIdentCfin : Boolean
-  - bCfinAct : Boolean
-  - bJtnPres : Boolean
-  - sSouscp : Date
-  - dval : Date
-  + getBCot() Boolean
-  + getBCo : Boolean
-  + setBCot(bCot: Boolean) void
-  + setBCo : void
-  + getBIdentCfin() Boolean
-  + getBIdentCfi : Boolean
-  + setBIdentCfin(bIdentCfin: Boolean) void
-  + setBIdentCfi : void
-  + getBJtnPres() Boolean
-  + getBJtnPre : Boolean
-  + setBJtnPres(bJtnPres: Boolean) void
-  + setBJtnPre : void
-  + getMJtnPres() byte[]
-  + setMJtnPres(mJtnPres: byte[]) void
-  + setMJtnPre : void
-  + getNsiren() byte[]
-  + setNsiren(nsiren: byte[]) void
-  + setNsire : void
-  + getSSouscp() Date
-  + getSSousc : Date
-  + setSSouscp(sSouscp: Date) void
-  + setSSousc : void
-  + getVFormJurdq() byte[]
-  + setVFormJurdq(vFormJurdq: byte[]) void
-  + setVFormJurd : void
-  + getVLienScte() byte[]
-  + setVLienScte(vLienScte: byte[]) void
-  + setVLienSct : void
-  + getVNatureMand() byte[]
-  + setVNatureMand(vNatureMand: byte[]) void
-  + setVNatureMan : void
-  + getVNomScte() byte[]
-  + setVNomScte(vNomScte: byte[]) void
-  + setVNomSct : void
-  + getvIdentCfin() byte[]
-  + setvIdentCfin(vIdentCfin: byte[]) void
-  + setvIdentCfi : void
-  + getDval() Date
-  + getDva : Date
-  + setDval(dval: Date) void
-  + setDva : void
-  + getbCfinAct() Boolean
-  + getbCfinAc : Boolean
-  + setbCfinAct(bCfinAct: Boolean) void
-  + setbCfinAc : void
-  + getvCfinAct() byte[]
-  + setvCfinAct(vCfinAct: byte[]) void
-  + setvCfinAc : void
-  + getDecactextDeclarationActExts() List<DeclarationActiviteExterieur>
-  + setDecactextDeclarationActExts(decactextDeclarationActExts: List<DeclarationActiviteExterieur>) void
-  + setDecactextDeclarationActExt : void
-  + addDecactextDeclarationActExt(decactextDeclarationActExt: DeclarationActiviteExterieur) DeclarationActiviteExterieur
-  + addDecactextDeclarationActEx : DeclarationActiviteExterieur
-  + removeDecactextDeclarationActExt(decactextDeclarationActExt: DeclarationActiviteExterieur) DeclarationActiviteExterieur
-  + removeDecactextDeclarationActEx : DeclarationActiviteExterieur
-}
-
-
 DeclarationTitreNonCote --|> Declaration
-
-
 DeclarationTitreNonCote <|.. Serializable
-
-
 DeclarationMandat --|> Declaration
-
-
 DeclarationMandat <|.. Serializable
-
-
 DeclarationCompteTitre --|> Declaration
-
-
 DeclarationCompteTitre <|.. Serializable
-
-
 Declaration <|.. Serializable
-
-
 
 
 @enduml

@@ -102,9 +102,11 @@ def main():
 
             root_program = parser_manager.registry.get_root().element
 
-            # Now, you can build UML from the root of the Registry program
-            result = root_program.buildUml()
-            print(result)
+            # Ajouter du contenu à un fichier existant
+            with open("uml_result.uml", "a") as fichier:
+                fichier.write(root_program.buildUml())
+                print('Done !')
+
         else:
             print( '┌───────────────────────────────────────────────────┐')
             print( '│                     ERREUR                        │')
