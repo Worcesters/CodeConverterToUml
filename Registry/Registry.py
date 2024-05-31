@@ -53,7 +53,6 @@ class RegistryProgram( RegistryElement ):
 
         uml_str = '\n'
         parents = set(child.get_parent() for child in self.tree_element.get_children())
-        print(parents)
         for parent in parents:
             uml_str += parent.buildUml()
             for child in self.tree_element.get_children():

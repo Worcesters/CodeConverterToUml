@@ -1,5 +1,6 @@
 from typing import List
 from Registry.StructuralElement import StructuralElement
+from Registry.Enum import RegistryType
 
 
 class Structure( StructuralElement ):
@@ -37,17 +38,10 @@ class Structure( StructuralElement ):
             self.methods.append(method)
             method.set_parent(self)
 
-
 class RegistryClass( Structure ):
     """
     Class structure.
     """
-    # def __init__( self ):
-    #     """
-    #     Initialize a new class structure.
-    #     """
-    #     super().__init__()
-
 
     def buildUml( self ):
         """
@@ -57,19 +51,19 @@ class RegistryClass( Structure ):
             str: The UML representation of the class.
         """
 
-
         # attributes_uml = ''.join([attr.buildUml() for attr in self.attributes])
         # methods_uml = ''.join([meth.buildUml() for meth in self.methods])
-        class_uml = "class "+ self.name + " {\n"
-        return class_uml
+        str_uml = ''
+        if self.mutability:
+            str_uml += self.mutability
+        str_uml += "class "+ self.name + " {\n"
+        return str_uml
 
 
 class RegistryInterface( Structure ):
     """
     Interface structure.
     """
-    # def __init__( self ):
-    #     super().__init__()
 
     def buildUml( self ):
         """
@@ -78,7 +72,6 @@ class RegistryInterface( Structure ):
         Returns:
             str: The UML representation of the interface.
         """
-        print('interface builder')
         methods_uml = '\n    '.join([meth.buildUml() for meth in self.methods])
         return f"interface {self.name} {{\n {methods_uml}\n}}\n"
 
@@ -87,8 +80,6 @@ class RegistryEnum( Structure ):
     """
     Enum structure.
     """
-    # def __init__(self):
-    #     super().__init__()
 
     def buildUml(self):
         """
@@ -97,23 +88,17 @@ class RegistryEnum( Structure ):
         Returns:
             str: The UML representation of the enum.
         """
-        print ('enum builder')
-        return f"enum {self.name}\n\n"
+        return f"enum {self.name}\n"
 
 
 class RegistryAttribute( StructuralElement ):
     """
     Attribute structure.
     """
+
     def __init__(self):
         super().__init__()
-        self.parent = None
 
-    def set_parent(self, parent):
-        self.parent = parent
-
-    def get_parent(self):
-        return self.parent
 
     def buildUml(self):
         """
@@ -122,21 +107,22 @@ class RegistryAttribute( StructuralElement ):
         Returns:
             str: The UML representation of the attribute.
         """
+        uml_str = f'{self.visibility}'
         if self.mutability:
-            return f"{self.visibility} {self.name}\n\n"
-        else:
-            return f"{self.visibility} const {self.name} : {self.element_type}\n\n"
+            uml_str += f' {self.mutability}'
+        uml_str += f" {self.name} : {self.element_type}\n"
+        return uml_str
 
 
 class RegistryMethod( StructuralElement ):
     """
     Method structure.
     """
+
     def __init__(self):
         super().__init__()
         self.parameters: List['RegistryParameter'] = []
         self.abstract: bool = False
-        self.parent = None
 
     def set_abstract(self, abstract: bool):
         """
@@ -147,21 +133,13 @@ class RegistryMethod( StructuralElement ):
         """
         self.abstract = abstract
 
-    def set_parent(self, parent):
-        """
-        Set the parent of the method.
-
-        Args:
-            parent (RegistryMethod | RegistryFunction): The new parent of the method.
-        """
-        self.parent = parent
-
-    def get_parent(self):
-        return self.parent
-
     def buildUml(self):
         self.parameters = [param.buildUml() if isinstance(param, RegistryParameter) else param for param in self.parameters]
-        return f"{self.visibility} {self.name}({', '.join(self.parameters)}) : {self.element_type}\n\n"
+
+        if self.element_type == '':
+            return f"{self.visibility} {self.name}({', '.join(self.parameters)})\n"
+
+        return f"{self.visibility} {self.name}({', '.join(self.parameters)}) {self.element_type}\n"
 
 class RegistryParameter( StructuralElement ):
     """
@@ -173,19 +151,9 @@ class RegistryParameter( StructuralElement ):
 
         """
         super().__init__()
-        self.parent = None  # The owner of the parameter, can be a method or a function
-
-    def set_parent(self, parent):
-        """
-        Set the parent of the parameter.
-
-        Args:
-            parent (RegistryMethod | RegistryFunction): The new parent of the parameter.
-        """
-        self.parent = parent  # Set the owner of the parameter to the given parent
-
-    def get_parent(self):
-        return self.parent
 
     def buildUml(self):
+        if self.element_type == '':
+            return  f"{self.name}"
+
         return  f"{self.name}: {self.element_type}"

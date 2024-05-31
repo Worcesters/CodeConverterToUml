@@ -53,7 +53,7 @@ class Heritage( Link ):
         Returns:
             str: The UML representation of this heritage link.
         """
-        return str(self.get_source().get_value()) + ' --|> ' + str(self.get_destination().get_value()) + '\n\n\n'
+        return str(self.get_source().get_value()) + ' --|> ' + str(self.get_destination().get_value()) + '\n'
 
 class Association(Link):
     """
@@ -72,7 +72,7 @@ class Association(Link):
         Returns:
             str: The UML representation of this association link.
         """
-        return str(self.get_source().get_value()) + ' --> ' + str(self.get_destination().get_value()) + '\n\n\n'
+        return str(self.get_source().get_value()) + ' --> ' + str(self.get_destination().get_value()) + '\n'
 
 class Aggregation(Link):
     """
@@ -91,7 +91,7 @@ class Aggregation(Link):
         Returns:
             str: The UML representation of this aggregation link.
         """
-        return str(self.get_source().get_value()) + ' o-- ' + str(self.get_destination().get_value()) + '\n\n\n'
+        return str(self.get_source().get_value()) + ' o-- ' + str(self.get_destination().get_value()) + '\n'
 
 class Implementation(Link):
     """
@@ -110,7 +110,7 @@ class Implementation(Link):
         Returns:
             str: The UML representation of this implementation link.
         """
-        return str(self.get_source().get_value()) + ' <|.. ' + str(self.get_destination().get_value()) + '\n\n\n'
+        return str(self.get_source().get_value()) + ' <|.. ' + str(self.get_destination().get_value()) + '\n'
 
 
 
@@ -128,4 +128,4 @@ class Dependance(Link):
         """
         A method that builds a UML representation by concatenating the source and destination.
         """
-        return str(self.get_source().get_value()) + ' ..> ' + str(self.get_destination().get_value()) + '\n\n\n'
+        return str(self.get_source().get_value()) + ' ..> ' + str(self.get_destination().get_value()) + '\n'

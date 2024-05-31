@@ -1,5 +1,5 @@
 import re
-from ParserModule.Parser.PHP.Parser import Parser
+from ParserModule.Parser.JAVA.Parser import Parser
 from Registry.Registry import Registry
 from Registry.RegistryModule.RelationalRegistry.Link import (Heritage, Implementation, Pole)
 # from Registry.RelationalElement import Pole
@@ -9,21 +9,23 @@ from TreeModule.TreeElement import TreeElement
 
 class StructureParser( Parser ):
     """
-    Structure parser for PHP code.
+    Structure parser for JAVA code.
 
-    This class is responsible for parsing PHP code and extracting structure information
+    This class is responsible for parsing JAVA code and extracting structure information
     such as class, interface, and enum definitions. The extracted information is then
     added to the registry.
     """
 
     def parse(self, line: str, registry: Registry, tree_element: TreeElement):
         structure_pattern = re.compile(
-            r"""\b(?P<mutability>(static|void|synchronized|native|abstract|transient|volatile|final|\w+)\s+)*"""
-            r"""\b(?P<type>class|interface|enum)\s+(?P<name>[A-Z][\w]*)\b"""
-            r"""(?:\s+extends\s+(?P<extends>[\\\w]+))?"""
-            r"""(?:\s+implements\s+(?P<implements>(?:[\\\w]+(?:\s*,\s*[\\\w]+)*)?))?""",
-            re.VERBOSE | re.MULTILINE | re.DOTALL
-        )
+                            r"""\b(?P<visibility>public|protected|private)\s+"""
+                            r"""\b(?P<mutability>(static|void|synchronized|native|abstract|transient|volatile|final|\w+)\s+)*"""
+                            r"""\b(?P<type>class|interface|enum)\s+"""
+                            r"""(?P<name>[A-Z][\w]*)\b""" # Match the type and name.
+                            r"""(?:\s+extends\s+(?P<extends>[\\\w]+))?""" # Optionally match the 'extends' clause.
+                            r"""(?:\s+implements\s+(?P<implements>(?:[\\\w]+\s*,\s*)*[\\\w]+))?""" # Optionally match the 'implements' clause.
+                            r"""(?:\s*\{[^}]*\})?""", # Optionally match the class body.
+                            re.VERBOSE | re.MULTILINE | re.DOTALL)
 
         for match in re.finditer(structure_pattern, line):
             structure_element_type = match.group('type')
@@ -36,6 +38,7 @@ class StructureParser( Parser ):
                 structure_element = RegistryClass()
 
             structure_element.set_name(match.group('name'))
+            structure_element.set_visibility(match.group('visibility'))
             structure_element.set_mutability(match.group('mutability'))
 
             if match.group('extends') or match.group('implements'):

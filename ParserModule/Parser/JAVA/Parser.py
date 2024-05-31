@@ -19,7 +19,14 @@ class Parser( IParser, ABC ):
         self.visibility_mapping = {
             'public': RegistryVisibility.PUBLIC,
             'protected': RegistryVisibility.PROTECTED,
-            'private': RegistryVisibility.PRIVATE
+            'private': RegistryVisibility.PRIVATE,
+            # 'static': RegistryVisibility.STATIC,
+            # 'volatile': RegistryVisibility.VOLATILE,
+            # 'final': RegistryVisibility.FINAL,
+            # 'transient ': RegistryVisibility.TRANSIENT,
+            # 'void': RegistryVisibility.VOID,
+            # 'native': RegistryVisibility.NATIVE,
+            # 'synchronized': RegistryVisibility.SYNCHRONIZED
         }
 
         # Mapping for types
@@ -27,7 +34,7 @@ class Parser( IParser, ABC ):
         #     'string': RegistryType.STRING,
         #     'int': RegistryType.INT,
         #     'float': RegistryType.FLOAT,
-        #     'bool': RegistryType.BOOL,
+        #     'boolean': RegistryType.BOOL,
         #     'array': RegistryType.ARRAY,
         #     'object': RegistryType.OBJECT,
         #     'null': RegistryType.NULL,
@@ -45,6 +52,11 @@ class Parser( IParser, ABC ):
         #     'union': RegistryType.UNION,
         #     'keyword': RegistryType.KEYWORD,
         #     'unknown': RegistryType.UNKNOWN,
+        #     'byte': RegistryType.BYTE,
+        #     'short': RegistryType.SHORT,
+        #     'long': RegistryType.LONG,
+        #     'double': RegistryType.DOUBLE,
+        #     'char': RegistryType.CHAR
         # }
 
     def get_visibility(self, visibility: str) -> RegistryVisibility:

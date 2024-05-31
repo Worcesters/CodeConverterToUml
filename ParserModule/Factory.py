@@ -57,10 +57,10 @@ class ParserFactory():
                     # from ParserModule.Parser.PYTHON.StructureParser import StructureParser
                     # from ParserModule.Parser.PYTHON.MethodParser import MethodParser
                     # from ParserModule.Parser.PYTHON.AttributeParser import AttributeParser
-                #elif cls.__language == Language.JAVA:
-                    # from ParserModule.Parser.JAVA.StructureParser import StructureParser
-                    # from ParserModule.Parser.JAVA.MethodParser import MethodParser
-                    # from ParserModule.Parser.JAVA.AttributeParser import AttributeParser
+                elif cls.__language == Language.JAVA:
+                    from ParserModule.Parser.JAVA.StructureParser import StructureParser
+                    from ParserModule.Parser.JAVA.MethodParser import MethodParser
+                    from ParserModule.Parser.JAVA.AttributeParser import AttributeParser
 
         except ModuleNotFoundError as exc:
             raise ImportError(f"Parser not found for the specified language. { parsers }") from exc

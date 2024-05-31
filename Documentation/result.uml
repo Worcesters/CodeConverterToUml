@@ -1,0 +1,413 @@
+@startuml
+skinparam backgroundColor #F5F5F5
+skinparam shadowing false
+
+skinparam class {
+  BackgroundColor #FFFFFF
+  BorderColor #4A4A4A
+  FontName Helvetica
+  FontSize 14
+  FontColor #333333
+  AttributeFontColor #666666
+  AttributeFontSize 12
+  StereotypeFontSize 12
+  StereotypeFontColor #999999
+  RoundCorner 15
+}
+
+skinparam package {
+  BackgroundColor #DDDDDD
+  BorderColor #4A4A4A
+  FontName Helvetica
+  FontSize 14
+  FontColor #333333
+  RoundCorner 15
+}
+
+skinparam Arrow {
+  Color #4A4A4A
+  Thickness 2
+  FontName Helvetica
+  FontSize 12
+  FontColor #333333
+}
+
+
+class DeclarationTitreNonCote {
+  - final  serialVersionUID : long
+  - bRepresGouv : Boolean
+  - dval : Date
+  - bCfin : Boolean
+  - bCrowdfunding : Boolean
+  - platformName : String
+  - formVersion : Integer
+  - typeSupport : TypeSupport
+  - typeCrowdfunding : TypeCrowdfunding
+  + getBRepresGouv() Boolean
+  + getBRepresGou : Boolean
+  + setBRepresGouv(bRepresGouv: Boolean) void
+  + setBRepresGou : void
+  + getMTitNc() byte[]
+  + setMTitNc(mTitNc: byte[]) void
+  + setMTitN : void
+  + getNNbDetn() byte[]
+  + setNNbDetn(nNbDetn: byte[]) void
+  + setNNbDet : void
+  + getTDetCapit() byte[]
+  + setTDetCapit(tDetCapit: byte[]) void
+  + setTDetCapi : void
+  + getVNatInsFin() byte[]
+  + setVNatInsFin(vNatInsFin: byte[]) void
+  + setVNatInsFi : void
+  + getVNomSte() byte[]
+  + setVNomSte(vNomSte: byte[]) void
+  + setVNomSt : void
+  + getnSiren() byte[]
+  + setnSiren(nSiren: byte[]) void
+  + setnSire : void
+  + getvRepresGouv() byte[]
+  + setvRepresGouv(vRepresGouv: byte[]) void
+  + setvRepresGou : void
+  + getbCfin() Boolean
+  + getbCfi : Boolean
+  + setbCfin(bCfin: Boolean) void
+  + setbCfi : void
+  + getvCfin() byte[]
+  + setvCfin(vCfin: byte[]) void
+  + setvCfi : void
+  + getDval() Date
+  + getDva : Date
+  + setDval(dval: Date) void
+  + setDva : void
+  + getbRepresGouv() Boolean
+  + getbRepresGou : Boolean
+  + setbRepresGouv(bRepresGouv: Boolean) void
+  + setbRepresGou : void
+  + getmTitNc() byte[]
+  + setmTitNc(mTitNc: byte[]) void
+  + setmTitN : void
+  + getnNbDetn() byte[]
+  + setnNbDetn(nNbDetn: byte[]) void
+  + setnNbDet : void
+  + gettDetCapit() byte[]
+  + settDetCapit(tDetCapit: byte[]) void
+  + settDetCapi : void
+  + getvNatInsFin() byte[]
+  + setvNatInsFin(vNatInsFin: byte[]) void
+  + setvNatInsFi : void
+  + getvNomSte() byte[]
+  + setvNomSte(vNomSte: byte[]) void
+  + setvNomSt : void
+  + getnIsin() byte[]
+  + setnIsin(nIsin: byte[]) void
+  + setnIsi : void
+  + getbCrowdfunding() Boolean
+  + getbCrowdfundin : Boolean
+  + setbCrowdfunding(bCrowdfunding: Boolean) void
+  + setbCrowdfundin : void
+  + getPlatformName() String
+  + getPlatformNam : String
+  + setPlatformName(platformName: String) void
+  + setPlatformNam : void
+  + getFormVersion() Integer
+  + getFormVersio : Integer
+  + setFormVersion(formVersion: Integer) void
+  + setFormVersio : void
+  + getvActSte() byte[]
+  + setvActSte(vActSte: byte[]) void
+  + setvActSt : void
+  + getTypeSupport() TypeSupport
+  + getTypeSuppor : TypeSupport
+  + setTypeSupport(typeSupport: TypeSupport) void
+  + setTypeSuppor : void
+  + getTypeCrowdfunding() TypeCrowdfunding
+  + getTypeCrowdfundin : TypeCrowdfunding
+  + setTypeCrowdfunding(typeCrowdfunding: TypeCrowdfunding) void
+  + setTypeCrowdfundin : void
+}
+
+
+class DeclarationCompteTitre {
+  - final  serialVersionUID : long
+  - nIdentCoti : Integer
+  - nModFoncCpt : Integer
+  - nNatCpt : Integer
+  - nTypePers : Integer
+  - vAutrModFoncCpt : String
+  - vAutreTypePers : String
+  - dval : Date
+  - dfival : Date
+  + getnIdentCoti() Integer
+  + getnIdentCot : Integer
+  + setnIdentCoti(nIdentCoti: Integer) void
+  + setnIdentCot : void
+  + getId() DeclarationPK
+  + getI : DeclarationPK
+  + setId(id: DeclarationPK) void
+  + setI : void
+  + getCompteTitrePK() DeclarationCompteTitrePK
+  + getCompteTitreP : DeclarationCompteTitrePK
+  + setCompteTitrePK(id: DeclarationCompteTitrePK) void
+  + setCompteTitreP : void
+  + getNCodeAgen() byte[]
+  + setNCodeAgen(nCodeAgen: byte[]) void
+  + setNCodeAge : void
+  + getNCodeEtab() byte[]
+  + setNCodeEtab(nCodeEtab: byte[]) void
+  + setNCodeEta : void
+  + getNCodeGuic() byte[]
+  + setNCodeGuic(nCodeGuic: byte[]) void
+  + setNCodeGui : void
+  + getNModFoncCpt() Integer
+  + getNModFoncCp : Integer
+  + setNModFoncCpt(nModFoncCpt: Integer) void
+  + setNModFoncCp : void
+  + getNNatCpt() Integer
+  + getNNatCp : Integer
+  + setNNatCpt(nNatCpt: Integer) void
+  + setNNatCp : void
+  + getNNomCpt() byte[]
+  + setNNomCpt(nNomCpt: byte[]) void
+  + setNNomCp : void
+  + getNTypePers() Integer
+  + getNTypePer : Integer
+  + setNTypePers(nTypePers: Integer) void
+  + setNTypePer : void
+  + getVAutNatCpt() byte[]
+  + setVAutNatCpt(vAutNatCpt: byte[]) void
+  + setVAutNatCp : void
+  + getVAutrModFoncCpt() String
+  + getVAutrModFoncCp : String
+  + setVAutrModFoncCpt(vAutrModFoncCpt: String) void
+  + setVAutrModFoncCp : void
+  + getVAutreTypePers() String
+  + getVAutreTypePer : String
+  + setVAutreTypePers(vAutreTypePers: String) void
+  + setVAutreTypePer : void
+  + getVNomEtab() byte[]
+  + setVNomEtab(vNomEtab: byte[]) void
+  + setVNomEta : void
+  + getTiTitres() List<Titre>
+  + setTiTitres(tiTitres: List<Titre>) void
+  + setTiTitre : void
+  + getDval() Date
+  + getDva : Date
+  + setDval(dval: Date) void
+  + setDva : void
+  + getDfival() Date
+  + getDfiva : Date
+  + setDfival(dfival: Date) void
+  + setDfiva : void
+  + getvCmntSaie() byte[]
+  + setvCmntSaie(vCmntSaie: byte[]) void
+  + setvCmntSai : void
+  + getDemandesTrp() List<DemandeTrp>
+  + setDemandesTrp(demandesTrp: List<DemandeTrp>) void
+  + setDemandesTr : void
+}
+
+
+class Declaration {
+  - final  serialVersionUID : long
+  - id : DeclarationPK
+  - nTypeDecl : TypeDeclaration
+  - stdeStatutDecl : StatutDeclaration
+  - dcrenr : Date
+  - dmoden : Date
+  - tblrhoin2 : RessourceHumaines
+  - tblrhoin1 : RessourceHumaines
+  - tblrhoin3 : RessourceHumaines
+  - campagneControles : CampagneControles
+  - nMtfClotr : Integer
+  - bDetenDeclar : Boolean
+  - bIdentCfinDccp : Boolean
+  - bDeclFerme : Boolean
+  + getnTypeDecl() TypeDeclaration
+  + getnTypeDec : TypeDeclaration
+  + setnTypeDecl(nTypeDecl: TypeDeclaration) void
+  + setnTypeDec : void
+  + getvCmntSaie() byte[]
+  + setvCmntSaie(vCmntSaie: byte[]) void
+  + setvCmntSai : void
+  + getTblrhoin2() RessourceHumaines
+  + getTblrhoin : RessourceHumaines
+  + hasTblrhoin2() boolean
+  + hasTblrhoin : boolean
+  + setTblrhoin2(tblrhoin2: RessourceHumaines) void
+  + setTblrhoin : void
+  + getTblrhoin3() RessourceHumaines
+  + getTblrhoin : RessourceHumaines
+  + hasTblrhoin3() boolean
+  + hasTblrhoin : boolean
+  + setTblrhoin3(tblrhoin3: RessourceHumaines) void
+  + setTblrhoin : void
+  + getTblrhoin1() RessourceHumaines
+  + getTblrhoin : RessourceHumaines
+  + hasTblrhoin1() boolean
+  + hasTblrhoin : boolean
+  + setTblrhoin1(tblrhoin1: RessourceHumaines) void
+  + setTblrhoin : void
+  + getId() DeclarationPK
+  + getI : DeclarationPK
+  + setId(id: DeclarationPK) void
+  + setI : void
+  + getDeclCts() List<DeclarationCompteTitre>
+  + setDeclCts(declCts: List<DeclarationCompteTitre>) void
+  + setDeclCt : void
+  + getStdeStatutDecl() StatutDeclaration
+  + getStdeStatutDec : StatutDeclaration
+  + setStdeStatutDecl(stdeStatutDecl: StatutDeclaration) void
+  + setStdeStatutDec : void
+  + getHideHistoDecls() List<HistoDeclaration>
+  + setHideHistoDecls(hideHistoDecls: List<HistoDeclaration>) void
+  + setHideHistoDecl : void
+  + addHideHistoDecl(hideHistoDecl: HistoDeclaration) HistoDeclaration
+  + addHideHistoDec : HistoDeclaration
+  + removeHideHistoDecl(hideHistoDecl: HistoDeclaration) HistoDeclaration
+  + removeHideHistoDec : HistoDeclaration
+  + getPjdePieceJointeDecls() List<PieceJointeDecl>
+  + setPjdePieceJointeDecls(pjdePieceJointeDecls: List<PieceJointeDecl>) void
+  + setPjdePieceJointeDecl : void
+  + addPjdePieceJointeDecl(pjdePieceJointeDecl: PieceJointeDecl) PieceJointeDecl
+  + addPjdePieceJointeDec : PieceJointeDecl
+  + removePjdePieceJointeDecl(pjdePieceJointeDecl: PieceJointeDecl) PieceJointeDecl
+  + removePjdePieceJointeDec : PieceJointeDecl
+  + getDcrenr() Date
+  + getDcren : Date
+  + setDcrenr(dcrenr: Date) void
+  + setDcren : void
+  + getDmoden() Date
+  + getDmode : Date
+  + setDmoden(dmoden: Date) void
+  + setDmode : void
+  + getRetourdccpdeclarations() List<RetourDccpDeclaration>
+  + setRetourdccpdeclaration(retourdccpdeclarations: List<RetourDccpDeclaration>) void
+  + setRetourdccpdeclaratio : void
+  + getCampagneControles() CampagneControles
+  + getCampagneControle : CampagneControles
+  + setCampagneControles(campagneControles: CampagneControles) void
+  + setCampagneControle : void
+  + getnMtfClotr() Integer
+  + getnMtfClot : Integer
+  + setnMtfClotr(nMtfClotr: Integer) void
+  + setnMtfClot : void
+  + getbDetenDeclar() Boolean
+  + getbDetenDecla : Boolean
+  + setbDetenDeclar(bDetenDeclar: Boolean) void
+  + setbDetenDecla : void
+  + getbIdentCfinDccp() Boolean
+  + getbIdentCfinDcc : Boolean
+  + setbIdentCfinDccp(bIdentCfinDccp: Boolean) void
+  + setbIdentCfinDcc : void
+  + getvIdentCfinDccp() byte[]
+  + setvIdentCfinDccp(vIdentCfinDccp: byte[]) void
+  + setvIdentCfinDcc : void
+  + getvCmntDccpClotr() byte[]
+  + setvCmntDccpClotr(vCmntDccpClotr: byte[]) void
+  + setvCmntDccpClot : void
+  + getDemandesTrp() List<DemandeTrp>
+  + setDemandesTrp(demandesTrp: List<DemandeTrp>) void
+  + setDemandesTr : void
+  + getLastHistoriqueDeclaration() HistoDeclaration
+  + getLastHistoriqueDeclaratio : HistoDeclaration
+  + getLastSupportedByHistoDeclaration() HistoDeclaration
+  + getLastSupportedByHistoDeclaratio : HistoDeclaration
+  + getLastValidatedStateDeclaration() HistoDeclaration
+  + getLastValidatedStateDeclaratio : HistoDeclaration
+  + getbDeclFerme() Boolean
+  + getbDeclFerm : Boolean
+  + setbDeclFerme(bDeclFerme: Boolean) void
+  + setbDeclFerm : void
+}
+
+
+class DeclarationMandat {
+  - final  serialVersionUID : long
+  - bCot : Boolean
+  - bIdentCfin : Boolean
+  - bCfinAct : Boolean
+  - bJtnPres : Boolean
+  - sSouscp : Date
+  - dval : Date
+  + getBCot() Boolean
+  + getBCo : Boolean
+  + setBCot(bCot: Boolean) void
+  + setBCo : void
+  + getBIdentCfin() Boolean
+  + getBIdentCfi : Boolean
+  + setBIdentCfin(bIdentCfin: Boolean) void
+  + setBIdentCfi : void
+  + getBJtnPres() Boolean
+  + getBJtnPre : Boolean
+  + setBJtnPres(bJtnPres: Boolean) void
+  + setBJtnPre : void
+  + getMJtnPres() byte[]
+  + setMJtnPres(mJtnPres: byte[]) void
+  + setMJtnPre : void
+  + getNsiren() byte[]
+  + setNsiren(nsiren: byte[]) void
+  + setNsire : void
+  + getSSouscp() Date
+  + getSSousc : Date
+  + setSSouscp(sSouscp: Date) void
+  + setSSousc : void
+  + getVFormJurdq() byte[]
+  + setVFormJurdq(vFormJurdq: byte[]) void
+  + setVFormJurd : void
+  + getVLienScte() byte[]
+  + setVLienScte(vLienScte: byte[]) void
+  + setVLienSct : void
+  + getVNatureMand() byte[]
+  + setVNatureMand(vNatureMand: byte[]) void
+  + setVNatureMan : void
+  + getVNomScte() byte[]
+  + setVNomScte(vNomScte: byte[]) void
+  + setVNomSct : void
+  + getvIdentCfin() byte[]
+  + setvIdentCfin(vIdentCfin: byte[]) void
+  + setvIdentCfi : void
+  + getDval() Date
+  + getDva : Date
+  + setDval(dval: Date) void
+  + setDva : void
+  + getbCfinAct() Boolean
+  + getbCfinAc : Boolean
+  + setbCfinAct(bCfinAct: Boolean) void
+  + setbCfinAc : void
+  + getvCfinAct() byte[]
+  + setvCfinAct(vCfinAct: byte[]) void
+  + setvCfinAc : void
+  + getDecactextDeclarationActExts() List<DeclarationActiviteExterieur>
+  + setDecactextDeclarationActExts(decactextDeclarationActExts: List<DeclarationActiviteExterieur>) void
+  + setDecactextDeclarationActExt : void
+  + addDecactextDeclarationActExt(decactextDeclarationActExt: DeclarationActiviteExterieur) DeclarationActiviteExterieur
+  + addDecactextDeclarationActEx : DeclarationActiviteExterieur
+  + removeDecactextDeclarationActExt(decactextDeclarationActExt: DeclarationActiviteExterieur) DeclarationActiviteExterieur
+  + removeDecactextDeclarationActEx : DeclarationActiviteExterieur
+}
+
+
+DeclarationTitreNonCote --|> Declaration
+
+
+DeclarationTitreNonCote <|.. Serializable
+
+
+DeclarationMandat --|> Declaration
+
+
+DeclarationMandat <|.. Serializable
+
+
+DeclarationCompteTitre --|> Declaration
+
+
+DeclarationCompteTitre <|.. Serializable
+
+
+Declaration <|.. Serializable
+
+
+
+
+@enduml

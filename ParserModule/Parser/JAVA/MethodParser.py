@@ -4,8 +4,8 @@ This module imports necessary dependencies and defines the MethodParser class.
 
 import re
 
-# Import the Parser class from the PHP.Parser module
-from ParserModule.Parser.PHP.Parser import Parser
+# Import the Parser class from the JAVA.Parser module
+from ParserModule.Parser.JAVA.Parser import Parser
 
 # Import the Registry class from the Registry module
 from Registry.Registry import Registry
@@ -26,20 +26,20 @@ class MethodParser( Parser ):
         # print('MethodParser -----> [START]')
         # Récupérer le motif regex pour les méthodes
         method_pattern = re.compile(
-            r"""(?P<visibility>public|protected|private)?\s*"""
+            r"""\b(?P<visibility>public|protected|private)\s+"""
             r"""\b(?P<mutability>(static|void|synchronized|native|abstract|transient|volatile|final|\w+)\s+)*"""
-            r"""(?P<method_name>\w+)\s*\("""
-            r"""(?P<method_params>.*?)\)(?:\s*:\s*"""
-            r"""(?P<return_type>\w+))?""", re.MULTILINE | re.DOTALL)
+            r"""(?P<return_type>[a-zA-Z_$][a-zA-Z\d_$]*(\s*<[^>]+>)?(\[\])?)\s+"""
+            r"""(?P<method_name>\w+)\s*\(\s*"""
+            r"""(?P<method_params>[^)]*)\s*\)""", re.VERBOSE | re.MULTILINE | re.DOTALL)
 
         for match in re.finditer( method_pattern, line ):
             params_str = match.group( 'method_params' )
 
             method_element = RegistryMethod()
             method_element.set_name(match.group('method_name'))
-            method_element.set_mutability(match.group('mutability'))
+            #method_element.set_abstract(bool(match.group('abstract')))
             method_element.set_visibility(self.get_visibility(match.group('visibility')))
-            method_element.set_type(match.group('return_type'))
+            method_element.set_type(match.group('return_type'))#self.get_type(match.group('return_type')))
 
             # Parse the parameters and set their registry
             method_element.parameters = self.parse_parameters(params_str, method_element)
@@ -62,7 +62,8 @@ class MethodParser( Parser ):
             list: A list of RegistryParameter objects.
         """
 
-        param_pattern = re.compile(r"""(?P<param_type>(?:\\Exception)?)\s*\$(?P<param_name>\w+)""", re.MULTILINE | re.DOTALL)
+        param_pattern = re.compile(r"""(?P<param_type>[a-zA-Z_$][a-zA-Z\d_$]*(\s*<[^>]+>)?(\[\])?)\s+(?P<param_name>\w+)""", re.VERBOSE | re.MULTILINE | re.DOTALL)
+
         param_elements = []
         for match in re.finditer(param_pattern, params_str):
             param_element = RegistryParameter()
