@@ -73,7 +73,10 @@ class RegistryInterface( Structure ):
             str: The UML representation of the interface.
         """
         methods_uml = '\n    '.join([meth.buildUml() for meth in self.methods])
-        return f"interface {self.name} {{\n {methods_uml}\n}}\n"
+        uml_str = f"interface {self.name}"
+        uml_str += "{\n"
+        uml_str += f"{methods_uml}\n"
+        return uml_str
 
 
 class RegistryEnum( Structure ):

@@ -11,7 +11,7 @@ from ParserModule.Parser.PHP.Parser import Parser
 from Registry.Registry import Registry
 
 # Import the necessary classes from the StructuralRegistry.Structure module
-from Registry.RegistryModule.StructuralRegistry.Structure import RegistryMethod, RegistryParameter
+from Registry.RegistryModule.StructuralRegistry.Structure import RegistryMethod, RegistryParameter, RegistryAnnotation
 
 
 from TreeModule.TreeElement import TreeElement
@@ -23,21 +23,25 @@ class MethodParser( Parser ):
     """
 
     def parse( self, line: str, registry: Registry, tree_element: TreeElement ):
-        # print('MethodParser -----> [START]')
-        # Récupérer le motif regex pour les méthodes
-        method_pattern = re.compile(
-            r"""(?P<visibility>public|protected|private)?\s*(?P<mutability>(?:static|void|synchronized|native|abstract|transient|volatile|final|\w+)\s+)*function\s+(?P<method_name>\w+)\s*\((?P<method_params>.*?)\)(?:\s*:\s*(?P<return_type>\w+))?""", re.MULTILINE | re.DOTALL)
+
+        annotation_pattern = re.compile(r"""^[ \t]*\@(?P<mutability>\w+).*$""", re.VERBOSE | re.MULTILINE | re.DOTALL)
+
+        for match in re.finditer( annotation_pattern, line ):
+            method_element = RegistryAnnotation()
+            print(f"match annotation {match.group('mutability')}")
+            method_element.set_mutability(match.group('mutability'))
+
+
+        method_pattern = re.compile(r"""\bdef\s+(?P<method_name>\w+)\s*\((?P<method_params>.*?)\)(?:\s*->\s*(?P<return_type>[\w\.]+))?\s*:""", re.VERBOSE | re.MULTILINE | re.DOTALL)
 
         for match in re.finditer( method_pattern, line ):
-            params_str = match.group( 'method_params' )
-
             method_element = RegistryMethod()
             method_element.set_name(match.group('method_name'))
-            method_element.set_mutability(match.group('mutability'))
-            method_element.set_visibility(self.get_visibility(match.group('visibility')))
+
+            #method_element.set_visibility(self.get_visibility(match.group('visibility')))
             method_element.set_type(match.group('return_type'))
 
-            # Parse the parameters and set their registry
+            params_str = match.group( 'method_params' )
             method_element.parameters = self.parse_parameters(params_str, method_element)
 
             if method_element is not None:

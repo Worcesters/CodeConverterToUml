@@ -103,7 +103,7 @@ def main():
             root_program = parser_manager.registry.get_root().element
 
             # Ajouter du contenu à un fichier existant
-            with open("uml_result.uml", "a") as fichier:
+            with open("uml_result.uml", "w") as fichier:
                 fichier.write(root_program.buildUml())
                 print('Done !')
 
